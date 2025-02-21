@@ -1,0 +1,456 @@
+pokemon_id,form_name
+1-bulbasaur,Normal
+1-bulbasaur,Fall 2019
+3-venusaur,Normal
+3-venusaur,Mega Evolution
+4-charmander,Normal
+4-charmander,Fall 2019
+6-charizard,Normal
+6-charizard,Mega Evolution X
+6-charizard,Mega Evolution Y
+7-squirtle,Normal
+7-squirtle,Fall 2019
+9-blastoise,Normal
+9-blastoise,Mega Evolution
+15-beedrill,Normal
+15-beedrill,Mega Evolution
+18-pidgeot,Normal
+18-pidgeot,Mega Evolution
+19-rattata,Normal
+19-rattata,Forma de Alola
+20-raticate,Normal
+20-raticate,Forma de Alola
+25-pikachu,Normal
+25-pikachu,Tshirt 02
+25-pikachu,Fall 2019
+25-pikachu,Tshirt 01
+25-pikachu,Flying 02
+25-pikachu,Flying 01
+25-pikachu,Wcs 2022
+25-pikachu,Gofest 2022
+25-pikachu,Flying Okinawa
+25-pikachu,Rock Star
+25-pikachu,Pop Star
+25-pikachu,Kariyushi
+25-pikachu,Flying 5th Anniv
+25-pikachu,Winter 2020
+25-pikachu,Adventure Hat 2020
+25-pikachu,Costume 2020
+25-pikachu,Vs 2019
+26-raichu,Normal
+26-raichu,Forma de Alola
+27-sandshrew,Normal
+27-sandshrew,Forma de Alola
+28-sandslash,Normal
+28-sandslash,Forma de Alola
+37-vulpix,Normal
+37-vulpix,Forma de Alola
+38-ninetales,Normal
+38-ninetales,Forma de Alola
+50-diglett,Normal
+50-diglett,Forma de Alola
+51-dugtrio,Normal
+51-dugtrio,Forma de Alola
+52-meowth,Normal
+52-meowth,Galarian
+52-meowth,Forma de Alola
+53-persian,Normal
+53-persian,Forma de Alola
+58-growlithe,Normal
+58-growlithe,Hisuian
+59-arcanine,Normal
+59-arcanine,Hisuian
+65-alakazam,Normal
+65-alakazam,Mega Evolution
+74-geodude,Normal
+74-geodude,Forma de Alola
+75-graveler,Normal
+75-graveler,Forma de Alola
+76-golem,Normal
+76-golem,Forma de Alola
+77-ponyta,Normal
+77-ponyta,Galarian
+78-rapidash,Normal
+78-rapidash,Galarian
+79-slowpoke,Normal
+79-slowpoke,2020
+79-slowpoke,Galarian
+80-slowbro,Normal
+80-slowbro,2021
+80-slowbro,Galarian
+80-slowbro,Mega Evolution
+199-slowking,Normal
+199-slowking,2022
+199-slowking,Galarian
+83-farfetchd,Normal
+83-farfetchd,Galarian
+88-grimer,Normal
+88-grimer,Forma de Alola
+89-muk,Normal
+89-muk,Forma de Alola
+94-gengar,Normal
+94-gengar,Costume 2020
+94-gengar,Mega Evolution
+208-steelix,Normal
+208-steelix,Mega Evolution
+100-voltorb,Normal
+100-voltorb,Hisuian
+101-electrode,Normal
+101-electrode,Hisuian
+103-exeggutor,Normal
+103-exeggutor,Forma de Alola
+105-marowak,Normal
+105-marowak,Forma de Alola
+110-weezing,Normal
+110-weezing,Galarian
+115-kangaskhan,Normal
+115-kangaskhan,Mega Evolution
+122-mr-mime,Normal
+122-mr-mime,Mime Galarian
+212-scizor,Normal
+212-scizor,Mega Evolution
+127-pinsir,Normal
+127-pinsir,Mega Evolution
+130-gyarados,Normal
+130-gyarados,Mega Evolution
+131-lapras,Normal
+131-lapras,Costume 2020
+142-aerodactyl,Normal
+142-aerodactyl,Mega Evolution
+144-articuno,Normal
+144-articuno,Galarian
+145-zapdos,Normal
+145-zapdos,Galarian
+146-moltres,Normal
+146-moltres,Galarian
+150-mewtwo,Normal
+150-mewtwo,Armored
+181-ampharos,Normal
+181-ampharos,Mega Evolution
+211-qwilfish,Normal
+211-qwilfish,Hisuian
+215-sneasel,Normal
+215-sneasel,Hisuian
+225-delibird,Normal
+225-delibird,Winter 2020
+229-houndoom,Normal
+229-houndoom,Mega Evolution
+243-raikou,Normal
+243-raikou,S
+244-entei,Normal
+244-entei,S
+245-suicune,Normal
+245-suicune,S
+249-lugia,Normal
+249-lugia,S
+250-ho-oh,Normal
+250-ho-oh,Oh S
+254-sceptile,Normal
+254-sceptile,Mega Evolution
+257-blaziken,Normal
+257-blaziken,Mega Evolution
+260-swampert,Normal
+260-swampert,Mega Evolution
+263-zigzagoon,Normal
+263-zigzagoon,Galarian
+264-linoone,Normal
+264-linoone,Galarian
+282-gardevoir,Normal
+282-gardevoir,Mega Evolution
+302-sableye,Normal
+302-sableye,Costume 2020
+306-aggron,Normal
+306-aggron,Mega Evolution
+308-medicham,Normal
+308-medicham,Mega Evolution
+310-manectric,Normal
+310-manectric,Mega Evolution
+334-altaria,Normal
+334-altaria,Mega Evolution
+351-castform,Normal
+351-castform,Sol
+351-castform,Lluvia
+351-castform,Nieve
+354-banette,Normal
+354-banette,Mega Evolution
+359-absol,Normal
+359-absol,Mega Evolution
+362-glalie,Normal
+362-glalie,Mega Evolution
+373-salamence,Normal
+373-salamence,Mega Evolution
+380-latias,Normal
+380-latias,S
+380-latias,Mega Evolution
+381-latios,Normal
+381-latios,S
+381-latios,Mega Evolution
+382-kyogre,Evolution Primal
+383-groudon,Evolution Primal
+386-deoxys,Normal
+386-deoxys,Ataque
+386-deoxys,Defensa
+386-deoxys,Velocidad
+412-burmy,Plant
+412-burmy,Sandy
+412-burmy,Trash
+413-wormadam,Plant
+413-wormadam,Sandy
+413-wormadam,Trash
+421-cherrim,Overcast
+421-cherrim,Sunny
+422-shellos,West Sea
+422-shellos,East Sea
+423-gastrodon,West Sea
+423-gastrodon,East Sea
+428-lopunny,Normal
+428-lopunny,Mega Evolution
+460-abomasnow,Normal
+460-abomasnow,Mega Evolution
+479-rotom,Normal
+479-rotom,Heat
+479-rotom,Wash
+479-rotom,Frost
+479-rotom,Fan
+479-rotom,Mow
+487-giratina,Altered
+487-giratina,Origin
+492-shaymin,Land
+492-shaymin,Sky
+493-arceus,Normal
+493-arceus,Fighting
+493-arceus,Flying
+493-arceus,Poison
+493-arceus,Ground
+493-arceus,Rock
+493-arceus,Bug
+493-arceus,Ghost
+493-arceus,Steel
+493-arceus,Fire
+493-arceus,Water
+493-arceus,Grass
+493-arceus,Electric
+493-arceus,Psychic
+493-arceus,Ice
+493-arceus,Dragon
+493-arceus,Dark
+493-arceus,Fairy
+550-basculin,Red Striped
+550-basculin,Blue Striped
+554-darumaka,Normal
+554-darumaka,Galarian
+555-darmanitan,Standard
+555-darmanitan,Zen
+555-darmanitan,Galarian Standard
+555-darmanitan,Galarian Zen
+562-yamask,Normal
+562-yamask,Galarian
+585-deerling,Spring
+585-deerling,Summer
+585-deerling,Autumn
+585-deerling,Winter
+586-sawsbuck,Spring
+586-sawsbuck,Summer
+586-sawsbuck,Autumn
+586-sawsbuck,Winter
+592-frillish,Normal
+592-frillish,Female
+593-jellicent,Normal
+593-jellicent,Female
+613-cubchoo,Normal
+613-cubchoo,Winter 2020
+614-beartic,Normal
+614-beartic,Winter 2020
+618-stunfisk,Normal
+618-stunfisk,Galarian
+628-braviary,Normal
+628-braviary,Hisuian
+641-tornadus,Incarnate
+641-tornadus,Therian
+642-thundurus,Incarnate
+642-thundurus,Therian
+645-landorus,Incarnate
+645-landorus,Therian
+646-kyurem,Normal
+646-kyurem,White
+646-kyurem,Black
+647-keldeo,Ordinary
+647-keldeo,Resolute
+648-meloetta,Aria
+648-meloetta,Pirouette
+649-genesect,Normal
+649-genesect,Douse
+649-genesect,Shock
+649-genesect,Burn
+649-genesect,Chill
+664-scatterbug,Modern
+664-scatterbug,Tundra
+664-scatterbug,Sun
+664-scatterbug,Savanna
+664-scatterbug,Sandstorm
+664-scatterbug,River
+664-scatterbug,Polar
+664-scatterbug,Pokeball
+664-scatterbug,Ocean
+664-scatterbug,Monsoon
+664-scatterbug,Archipelago
+664-scatterbug,Meadow
+664-scatterbug,Marine
+664-scatterbug,Jungle
+664-scatterbug,Icy Snow
+664-scatterbug,High Plains
+664-scatterbug,Garden
+664-scatterbug,Fancy
+664-scatterbug,Elegant
+664-scatterbug,Continental
+665-spewpa,Modern
+665-spewpa,Tundra
+665-spewpa,Sun
+665-spewpa,Savanna
+665-spewpa,Sandstorm
+665-spewpa,River
+665-spewpa,Polar
+665-spewpa,Pokeball
+665-spewpa,Ocean
+665-spewpa,Monsoon
+665-spewpa,Archipelago
+665-spewpa,Meadow
+665-spewpa,Marine
+665-spewpa,Jungle
+665-spewpa,Icy Snow
+665-spewpa,High Plains
+665-spewpa,Garden
+665-spewpa,Fancy
+665-spewpa,Elegant
+665-spewpa,Continental
+666-vivillon,Modern
+666-vivillon,Tundra
+666-vivillon,Sun
+666-vivillon,Savanna
+666-vivillon,Sandstorm
+666-vivillon,River
+666-vivillon,Polar
+666-vivillon,Pokeball
+666-vivillon,Ocean
+666-vivillon,Monsoon
+666-vivillon,Archipelago
+666-vivillon,Meadow
+666-vivillon,Marine
+666-vivillon,Jungle
+666-vivillon,Icy Snow
+666-vivillon,High Plains
+666-vivillon,Garden
+666-vivillon,Fancy
+666-vivillon,Elegant
+666-vivillon,Continental
+668-pyroar,Normal
+668-pyroar,Female
+669-flabebe,Blue
+669-flabebe,Orange
+669-flabebe,Red
+669-flabebe,White
+669-flabebe,Yellow
+670-floette,Blue
+670-floette,Orange
+670-floette,Red
+670-floette,White
+670-floette,Yellow
+671-florges,Blue
+671-florges,Orange
+671-florges,Red
+671-florges,White
+671-florges,Yellow
+676-furfrou,Natural
+676-furfrou,Heart
+676-furfrou,Star
+676-furfrou,Diamond
+676-furfrou,Debutante
+676-furfrou,Matron
+676-furfrou,Dandy
+676-furfrou,La Reine
+676-furfrou,Kabuki
+676-furfrou,Pharaoh
+678-meowstic,Normal
+678-meowstic,Female
+710-pumpkaboo,Small
+710-pumpkaboo,Average
+710-pumpkaboo,Large
+710-pumpkaboo,Super
+711-gourgeist,Small
+711-gourgeist,Average
+711-gourgeist,Large
+711-gourgeist,Super
+713-avalugg,Normal
+713-avalugg,Hisuian
+720-hoopa,Confined
+720-hoopa,Unbound
+741-oricorio,Baile
+741-oricorio,Pau
+741-oricorio,Pompom
+741-oricorio,Sensu
+745-lycanroc,Dusk
+745-lycanroc,Midday
+745-lycanroc,Midnight
+746-wishiwashi,School
+746-wishiwashi,Solo
+773-silvally,Normal
+773-silvally,Fighting
+773-silvally,Flying
+773-silvally,Poison
+773-silvally,Ground
+773-silvally,Rock
+773-silvally,Bug
+773-silvally,Ghost
+773-silvally,Steel
+773-silvally,Fire
+773-silvally,Water
+773-silvally,Grass
+773-silvally,Electric
+773-silvally,Psychic
+773-silvally,Ice
+773-silvally,Dragon
+773-silvally,Dark
+773-silvally,Fairy
+774-minior,Blue
+774-minior,Green
+774-minior,Indigo
+774-minior,Meteor
+774-minior,Orange
+774-minior,Red
+774-minior,Violet
+774-minior,Yellow
+778-mimikyu,Busted
+778-mimikyu,Disguised
+800-necrozma,Normal
+800-necrozma,Dawn Wings
+800-necrozma,Dusk Mane
+800-necrozma,Ultra
+801-magearna,Normal
+801-magearna,Original Color
+849-toxtricity,Amped
+849-toxtricity,Low Key
+854-sinistea,Antique
+854-sinistea,Phony
+855-polteageist,Antique
+855-polteageist,Phony
+875-eiscue,Ice
+875-eiscue,Noice
+876-indeedee,Female
+876-indeedee,Male
+877-morpeko,Full Belly
+877-morpeko,Hangry
+888-zacian,Crowned Sword
+888-zacian,Hero
+889-zamazenta,Crowned Shield
+889-zamazenta,Hero
+890-eternatus,Normal
+890-eternatus,Eternamax
+892-urshifu,Rapid Strike
+892-urshifu,Single Strike
+898-calyrex,Normal
+898-calyrex,Ice Rider
+898-calyrex,Shadow Rider
+215-sneasel,Normal
+215-sneasel,Hisuian
+211-qwilfish,Normal
+211-qwilfish,Hisuian
