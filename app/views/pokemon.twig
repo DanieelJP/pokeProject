@@ -1,0 +1,33 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{ pokemon.name }} - Pokédex{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2>#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h2>
+        </div>
+        <div class="card-body">
+            {% if pokemon.images and pokemon.images|length > 0 %}
+                {% for image in pokemon.images %}
+                    <img src="/scripts/{{ image.image_path }}" 
+                         alt="{{ pokemon.name }}"
+                         class="img-fluid mb-3"
+                         onerror="this.src='/scripts/pokemon_images/unknown.png'">
+                {% endfor %}
+            {% else %}
+                <img src="/scripts/pokemon_images/unknown.png" 
+                     alt="Imagen no disponible"
+                     class="img-fluid mb-3">
+            {% endif %}
+            
+            <p><strong>Región:</strong> {{ pokemon.region }}</p>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="/" class="btn btn-primary">Volver al listado</a>
+    </div>
+</div>
+{% endblock %}

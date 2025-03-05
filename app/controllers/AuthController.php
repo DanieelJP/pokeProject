@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
+namespace App\Controllers;
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -19,7 +20,7 @@ class AuthController {
         try {
             $decoded = JWT::decode($token, new Key(self::$secretKey, 'HS256'));
             return $decoded->sub;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

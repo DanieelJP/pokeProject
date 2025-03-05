@@ -1,73 +1,36 @@
-{% extends 'layout.twig' %}
+{% extends 'base.twig' %}
 
-{% block title %}Inicio - PokeProject{% endblock %}
+{% block title %}Inicio - Pokédex{% endblock %}
 
 {% block content %}
-    <h1>Bienvenido a PokeProject</h1>
-    <p>Esta es la página de inicio.</p>
-
-    <h2>Pokémons</h2>
+<div class="container">
+    <h2>Listado de Pokémon</h2>
     <div class="row">
         {% for pokemon in pokemons %}
             <div class="col-md-4 mb-4">
-                <div class="card">
+                <div class="card pokemon-card">
+                    <div class="card-header">
+                        <h5 class="card-title">#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h5>
+                    </div>
+                    {% if pokemon.images[0] is defined and pokemon.images[0].image_path %}
+                        <img src="/scripts/{{ pokemon.images[0].image_path }}" 
+                             class="card-img-top pokemon-image" 
+                             alt="{{ pokemon.name }}"
+                             onerror="this.src='/scripts/pokemon_images/unknown.png'">
+                    {% else %}
+                        <img src="/scripts/pokemon_images/unknown.png" 
+                             class="card-img-top pokemon-image" 
+                             alt="Imagen no disponible">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">{{ pokemon.name }}</h5>
-                        <p class="card-text">
-                            <strong>ID:</strong> {{ pokemon.pokemon_id }}<br>
-                            <strong>Región:</strong> {{ pokemon.region }}
-                        </p>
-
-                        <!-- Mostrar imágenes -->
-                        <div class="pokemon-images">
-                            {% for image in pokemon.images %}
-                                <img src="{{ image.image_path }}" alt="{{ pokemon.name }}" class="img-fluid mb-2">
-                            {% endfor %}
-                        </div>
-
-                        <!-- Mostrar movimientos -->
-                        <h6>Movimientos:</h6>
-                        <ul class="list-group">
-                            {% for move in pokemon.moves %}
-                                <li class="list-group-item">
-                                    <strong>{{ move.move_name }}</strong><br>
-                                    Tipo: {{ move.move_type }}<br>
-                                    Daño: {{ move.damage }}<br>
-                                    EPS: {{ move.eps }}<br>
-                                    DPS: {{ move.dps }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <!-- Mostrar raids -->
-                        <h6>Raids:</h6>
-                        <ul class="list-group">
-                            {% for raid in pokemon.raids %}
-                                <li class="list-group-item">
-                                    <strong>Tier:</strong> {{ raid.raid_tier }}<br>
-                                    <strong>CP del Jefe:</strong> {{ raid.boss_cp }}<br>
-                                    <strong>Jugadores Sugeridos:</strong> {{ raid.suggested_players }}<br>
-                                    <strong>HP del Jefe:</strong> {{ raid.boss_hp }}<br>
-                                    <strong>Rango de CP:</strong> {{ raid.caught_cp_range }}<br>
-                                    <strong>CP con Boost:</strong> {{ raid.caught_cp_boosted }}<br>
-                                    <strong>IVs Mínimos:</strong> {{ raid.minimum_ivs }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <!-- Mostrar formas -->
-                        <h6>Formas:</h6>
-                        <ul class="list-group">
-                            {% for form in pokemon.forms %}
-                                <li class="list-group-item">
-                                    <strong>Nombre:</strong> {{ form.pokemon_name }}<br>
-                                    <strong>Forma:</strong> {{ form.form_name }}
-                                </li>
-                            {% endfor %}
-                        </ul>
+                        <p class="card-text">Región: {{ pokemon.region }}</p>
+                        <a href="/pokemon/{{ pokemon.pokemon_id }}" class="btn btn-primary">
+                            Ver detalles
+                        </a>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+</div>
 {% endblock %}

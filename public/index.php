@@ -1,74 +1,75 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+// public/index.php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../app/Router.php';
+require_once __DIR__ . '/../app/controllers/AuthController.php';
+require_once __DIR__ . '/../app/controllers/PokemonController.php';
+require_once __DIR__ . '/../app/models/PokemonModel.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+use App\Router;
+use App\Controllers\PokemonController;
+use App\Controllers\AuthController;
 
-require __DIR__ . '/../app/controllers/AuthController.php';
-require __DIR__ . '/../config/database.php';
+// Configuración de Twig
+$loader = new \Twig\Loader\FilesystemLoader('../app/views');
+$twig = new \Twig\Environment($loader, [
+    'cache' => false,
+    'debug' => true
+]);
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../app/views');
-$twig = new \Twig\Environment($loader, ['cache' => false]);
+// Configuración de internacionalización
+$lang = $_COOKIE['lang'] ?? 'es';
+putenv("LANG=$lang");
+setlocale(LC_ALL, $lang);
+bindtextdomain("messages", "../app/lang");
+textdomain("messages");
 
-$request = $_SERVER['REQUEST_URI'];
+// Añadir filtro de traducción a Twig
+$twig->addFilter(new \Twig\TwigFilter('trans', function ($string) {
+    return gettext($string);
+}));
 
-switch ($request) {
-    case '/':
-        // Obtener datos de la tabla pokemons
-        $stmt = $conn->query("SELECT * FROM pokemons");
-        $pokemons = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Inicializar controladores
+$authController = new AuthController();
+$pokemonController = new PokemonController();
 
-        var_dump($pokemons);
-        // Obtener datos de la tabla moves para cada pokemon
-        /*
-        foreach ($pokemons as &$pokemon) {
-            $stmt = $conn->prepare("SELECT * FROM moves WHERE pokemon_id = :pokemon_id");
-            $stmt->execute(['pokemon_id' => $pokemon['pokemon_id']]);
-            $pokemon['moves'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Configurar router
+$router = new Router($twig, $authController);
 
-            // Obtener datos de la tabla raids para cada pokemon
-            $stmt = $conn->prepare("SELECT * FROM raids WHERE pokemon_id = :pokemon_id");
-            $stmt->execute(['pokemon_id' => $pokemon['pokemon_id']]);
-            $pokemon['raids'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Definir rutas
+error_log("Registrando rutas...");
 
-            // Obtener datos de la tabla pokemon_forms para cada pokemon
-            $stmt = $conn->prepare("SELECT * FROM pokemon_forms WHERE pokemon_id = :pokemon_id");
-            $stmt->execute(['pokemon_id' => $pokemon['pokemon_id']]);
-            $pokemon['forms'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Ruta principal
+$router->add('GET', '/', [$pokemonController, 'home']);
+error_log("Ruta '/' registrada");
 
-            // Obtener datos de la tabla pokemon_images para cada pokemon
-            $stmt = $conn->prepare("SELECT * FROM pokemon_images WHERE pokemon_id = :pokemon_id");
-            $stmt->execute(['pokemon_id' => $pokemon['pokemon_id']]);
-            $pokemon['images'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-*/
-        // Pasar datos a la plantilla
-        echo $twig->render('home.twig', ['pokemons' => $pokemons]);
-        break;
+// Ruta para Pokémon individual
+$router->add('GET', '/pokemon/:id', [$pokemonController, 'showPokemon']);
+error_log("Ruta '/pokemon/:id' registrada");
 
-    case '/admin':
-        $token = $_COOKIE['jwt'] ?? null;
-        if ($token && AuthController::validarToken($token)) {
-            echo $twig->render('admin.twig');
-        } else {
-            header("Location: /login");
-        }
-        break;
+// Otras rutas...
+$router->add('GET', '/admin', [$pokemonController, 'admin'], true);
+$router->add('GET', '/login', [$authController, 'loginPage']);
+$router->add('POST', '/login', [$authController, 'login']);
+$router->add('GET', '/logout', [$authController, 'logout']);
 
-    case '/login':
-        $userId = 1; // Ejemplo: ID del usuario autenticado
-        $token = AuthController::generarToken($userId);
-        setcookie('jwt', $token, time() + 3600, '/');
-        header("Location: /admin");
-        break;
+// Manejar la solicitud actual
+$method = $_SERVER['REQUEST_METHOD'];
+$uri = $_SERVER['REQUEST_URI'];
 
-    default:
-        header("HTTP/1.0 404 Not Found");
-        echo $twig->render('404.twig');
-        break;
+error_log("\n=== PROCESANDO SOLICITUD ===");
+error_log("Método: " . $method);
+error_log("URI: " . $uri);
+
+try {
+    echo $router->handle($method, $uri);
+} catch (Exception $e) {
+    error_log("Error al procesar la solicitud: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
+    echo $twig->render('404.twig', [
+        'error' => 'Error: ' . $e->getMessage()
+    ]);
 }
-?>
