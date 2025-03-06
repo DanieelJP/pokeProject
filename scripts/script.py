@@ -8,6 +8,7 @@ scripts = [
     "dataPokes.py",
     "dataMoves.py",
     "dataForms.py",
+    "dataRaids.py",
     "downloadImage.py",
     "dataImages.py"
 ]

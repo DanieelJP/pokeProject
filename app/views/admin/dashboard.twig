@@ -1,0 +1,142 @@
+{% extends 'base.twig' %}
+
+{% block title %}Panel de Administración - Pokédex{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Tabs para diferentes secciones -->
+    <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pokemons-tab" data-bs-toggle="tab" href="#pokemons" role="tab">
+                Pokémon
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="moves-tab" data-bs-toggle="tab" href="#moves" role="tab">
+                Movimientos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="raids-tab" data-bs-toggle="tab" href="#raids" role="tab">
+                Raids
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="forms-tab" data-bs-toggle="tab" href="#forms" role="tab">
+                Formas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab">
+                Imágenes
+            </a>
+        </li>
+    </ul>
+
+    <!-- Contenido de las tabs -->
+    <div class="tab-content" id="adminTabContent">
+        <!-- Tab Pokémon -->
+        <div class="tab-pane fade show active" id="pokemons" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Gestión de Pokémon</h2>
+                <button class="btn btn-success" onclick="showAddPokemonModal()">
+                    <i class="fas fa-plus"></i> Añadir Pokémon
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Región</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pokemon in pokemons %}
+                        <tr>
+                            <td>{{ pokemon.pokemon_id }}</td>
+                            <td>{{ pokemon.name }}</td>
+                            <td>{{ pokemon.region }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-primary" onclick="editPokemon('{{ pokemon.pokemon_id }}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deletePokemon('{{ pokemon.pokemon_id }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Movimientos -->
+        <div class="tab-pane fade" id="moves" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Gestión de Movimientos</h2>
+                <button class="btn btn-success" onclick="showAddMoveModal()">
+                    <i class="fas fa-plus"></i> Añadir Movimiento
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Pokémon</th>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Daño</th>
+                            <th>EPS</th>
+                            <th>DPS</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for move in moves %}
+                        <tr>
+                            <td>{{ move.pokemon_id }}</td>
+                            <td>{{ move.move_type }}</td>
+                            <td>{{ move.move_name }}</td>
+                            <td>{{ move.damage }}</td>
+                            <td>{{ move.eps }}</td>
+                            <td>{{ move.dps }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-primary" onclick="editMove('{{ move.id }}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteMove('{{ move.id }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Similares secciones para Raids, Forms e Images -->
+        <!-- ... -->
+    </div>
+</div>
+
+<!-- Modales para añadir/editar -->
+{% include 'admin/modals/pokemon-modal.twig' %}
+{% include 'admin/modals/move-modal.twig' %}
+{% include 'admin/modals/raid-modal.twig' %}
+{% include 'admin/modals/form-modal.twig' %}
+{% include 'admin/modals/image-modal.twig' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/js/admin.js"></script>
+{% endblock %} 

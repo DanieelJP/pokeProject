@@ -1,0 +1,87 @@
+{% extends 'layout.twig' %}
+
+{% block title %}{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Pokémon - Panel de Administración{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    {% if success %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ success }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Pokémon</h2>
+                    <a href="/admin" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/pokemon/save" id="pokemonForm">
+                        {% if action == 'edit' and pokemon %}
+                            <input type="hidden" name="id" value="{{ pokemon.pokemon_id }}">
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            <label for="pokemon_id" class="form-label">ID Pokémon</label>
+                            <input type="text" class="form-control" id="pokemon_id" name="pokemon_id" 
+                                   value="{{ pokemon.pokemon_id }}" {{ action == 'edit' ? 'readonly' : '' }} 
+                                   placeholder="Ejemplo: 001" required>
+                            <div class="form-text">Identificador único del Pokémon (no se puede modificar después)</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   value="{{ pokemon.name }}" placeholder="Ejemplo: Bulbasaur" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="region" class="form-label">Región</label>
+                            <select class="form-select" id="region" name="region" required>
+                                <option value="">Selecciona una región</option>
+                                <option value="Kanto" {{ pokemon.region == 'Kanto' ? 'selected' : '' }}>Kanto</option>
+                                <option value="Johto" {{ pokemon.region == 'Johto' ? 'selected' : '' }}>Johto</option>
+                                <option value="Hoenn" {{ pokemon.region == 'Hoenn' ? 'selected' : '' }}>Hoenn</option>
+                                <option value="Sinnoh" {{ pokemon.region == 'Sinnoh' ? 'selected' : '' }}>Sinnoh</option>
+                                <option value="Teselia" {{ pokemon.region == 'Teselia' ? 'selected' : '' }}>Teselia</option>
+                                <option value="Kalos" {{ pokemon.region == 'Kalos' ? 'selected' : '' }}>Kalos</option>
+                                <option value="Alola" {{ pokemon.region == 'Alola' ? 'selected' : '' }}>Alola</option>
+                                <option value="Galar" {{ pokemon.region == 'Galar' ? 'selected' : '' }}>Galar</option>
+                            </select>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 
+                                {{ action == 'edit' ? 'Actualizar' : 'Crear' }} Pokémon
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('pokemonForm').addEventListener('submit', function(e) {
+    if (!confirm('¿Estás seguro de que quieres {{ action == "edit" ? "actualizar" : "crear" }} este Pokémon?')) {
+        e.preventDefault();
+    }
+});
+</script>
+{% endblock %} 
