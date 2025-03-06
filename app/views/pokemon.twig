@@ -4,25 +4,122 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h2>#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h2>
+                </div>
+                <div class="card-body">
+                    {% if pokemon.images and pokemon.images|length > 0 %}
+                        {% for image in pokemon.images %}
+                            <img src="/scripts/{{ image.image_path }}" 
+                                 alt="{{ pokemon.name }}"
+                                 class="img-fluid mb-3"
+                                 onerror="this.src='/scripts/pokemon_images/unknown.png'">
+                        {% endfor %}
+                    {% else %}
+                        <img src="/scripts/pokemon_images/unknown.png" 
+                             alt="Imagen no disponible"
+                             class="img-fluid mb-3">
+                    {% endif %}
+                    
+                    <p><strong>Región:</strong> {{ pokemon.region }}</p>
+
+                    {% if pokemon.forms %}
+                        <h3>Formas</h3>
+                        <ul class="list-group mb-3">
+                            {% for form in pokemon.forms %}
+                                <li class="list-group-item">
+                                    <strong>{{ form.pokemon_name }}</strong>: {{ form.form_name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            {% if pokemon.images and pokemon.images|length > 0 %}
-                {% for image in pokemon.images %}
-                    <img src="/scripts/{{ image.image_path }}" 
-                         alt="{{ pokemon.name }}"
-                         class="img-fluid mb-3"
-                         onerror="this.src='/scripts/pokemon_images/unknown.png'">
-                {% endfor %}
-            {% else %}
-                <img src="/scripts/pokemon_images/unknown.png" 
-                     alt="Imagen no disponible"
-                     class="img-fluid mb-3">
+
+        <div class="col-md-6">
+            {% if pokemon.moves.fast or pokemon.moves.main %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>Movimientos</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if pokemon.moves.fast %}
+                            <h4>Movimientos Rápidos</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Daño</th>
+                                            <th>EPS</th>
+                                            <th>DPS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for move in pokemon.moves.fast %}
+                                            <tr>
+                                                <td>{{ move.name }}</td>
+                                                <td>{{ move.damage }}</td>
+                                                <td>{{ move.eps }}</td>
+                                                <td>{{ move.dps }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+
+                        {% if pokemon.moves.main %}
+                            <h4>Movimientos Principales</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Daño</th>
+                                            <th>EPS</th>
+                                            <th>DPS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for move in pokemon.moves.main %}
+                                            <tr>
+                                                <td>{{ move.name }}</td>
+                                                <td>{{ move.damage }}</td>
+                                                <td>{{ move.eps }}</td>
+                                                <td>{{ move.dps }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             {% endif %}
-            
-            <p><strong>Región:</strong> {{ pokemon.region }}</p>
+
+            {% if pokemon.raid %}
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Información de Raid</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Nivel:</strong> {{ pokemon.raid.tier }}</li>
+                            <li class="list-group-item"><strong>CP del Jefe:</strong> {{ pokemon.raid.boss_cp }}</li>
+                            <li class="list-group-item"><strong>HP del Jefe:</strong> {{ pokemon.raid.boss_hp }}</li>
+                            <li class="list-group-item"><strong>Jugadores Sugeridos:</strong> {{ pokemon.raid.suggested_players }}</li>
+                            <li class="list-group-item"><strong>Rango CP al Capturar:</strong> {{ pokemon.raid.caught_cp_range }}</li>
+                            <li class="list-group-item"><strong>CP Potenciado:</strong> {{ pokemon.raid.caught_cp_boosted }}</li>
+                            <li class="list-group-item"><strong>IVs Mínimos:</strong> {{ pokemon.raid.minimum_ivs }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
     

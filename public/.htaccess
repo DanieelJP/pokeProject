@@ -2,10 +2,10 @@
     RewriteEngine On
     RewriteBase /
     
-    # Permitir acceso directo a archivos existentes
+    # Si el archivo o directorio no existe
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     
-    # Redirigir todo lo demás a index.php
-    RewriteRule ^(.*)$ index.php [QSA,L]
+    # Redirige todo a index.php
+    RewriteRule ^ index.php [QSA,L]
 </IfModule> 
