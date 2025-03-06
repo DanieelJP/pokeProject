@@ -25,6 +25,32 @@ class Router {
         error_log("Método: " . $method);
         error_log("URI: " . $uri);
         
+        // Si es una ruta de API
+        if (strpos($uri, '/api/') === 0) {
+            header('Content-Type: application/json');
+            
+            // Verificar token para rutas protegidas
+            if ($uri !== '/api/login') {
+                $headers = getallheaders();
+                $authHeader = $headers['Authorization'] ?? '';
+                
+                if (!preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+                    $this->sendJsonResponse([
+                        'status' => 'error',
+                        'message' => 'Token no proporcionado'
+                    ], 401);
+                }
+
+                $token = $matches[1];
+                if (!$this->authController->validarToken($token)) {
+                    $this->sendJsonResponse([
+                        'status' => 'error',
+                        'message' => 'Token inválido'
+                    ], 401);
+                }
+            }
+        }
+
         // Limpiamos la URI
         $uri = parse_url($uri, PHP_URL_PATH);
         $uri = rtrim($uri, '/');
@@ -92,5 +118,12 @@ class Router {
         }
         
         return $params;
+    }
+
+    private function sendJsonResponse($data, $statusCode = 200) {
+        header('Content-Type: application/json');
+        http_response_code($statusCode);
+        echo json_encode($data);
+        exit;
     }
 } 
