@@ -135,5 +135,98 @@ class PokemonModel {
             throw $e;
         }
     }
+
+    public function getAllMoves() {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT m.*, p.name as pokemon_name 
+                FROM moves m 
+                LEFT JOIN pokemons p ON m.pokemon_id = p.pokemon_id
+                ORDER BY m.pokemon_id, m.move_type
+            ");
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getAllMoves: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getAllRaids() {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT r.*, p.name as pokemon_name 
+                FROM raids r 
+                LEFT JOIN pokemons p ON r.pokemon_id = p.pokemon_id
+                ORDER BY r.raid_tier DESC, p.name
+            ");
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getAllRaids: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getAllForms() {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT pf.*, p.name as base_pokemon_name 
+                FROM pokemon_forms pf 
+                LEFT JOIN pokemons p ON pf.pokemon_id = p.pokemon_id
+                ORDER BY p.name, pf.form_name
+            ");
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getAllForms: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getAllImages() {
+        try {
+            $stmt = $this->pdo->query("
+                SELECT pi.*, p.name as pokemon_name 
+                FROM pokemon_images pi 
+                LEFT JOIN pokemons p ON pi.pokemon_id = p.pokemon_id
+                ORDER BY p.name
+            ");
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getAllImages: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function addMove($data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO moves (pokemon_id, move_type, move_name, damage, eps, dps)
+                VALUES (:pokemon_id, :move_type, :move_name, :damage, :eps, :dps)
+            ");
+            return $stmt->execute($data);
+        } catch (\PDOException $e) {
+            error_log("Error en addMove: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function updateMove($id, $data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                UPDATE moves 
+                SET pokemon_id = :pokemon_id,
+                    move_type = :move_type,
+                    move_name = :move_name,
+                    damage = :damage,
+                    eps = :eps,
+                    dps = :dps
+                WHERE id = :id
+            ");
+            $data['id'] = $id;
+            return $stmt->execute($data);
+        } catch (\PDOException $e) {
+            error_log("Error en updateMove: " . $e->getMessage());
+            throw $e;
+        }
+    }
 }
 ?>
