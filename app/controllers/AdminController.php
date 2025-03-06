@@ -35,19 +35,11 @@ class AdminController {
             error_log("=== Iniciando carga del dashboard ===");
             
             $data = [
-                'pokemons' => $this->model->getAllPokemons(),
+                'pokemons' => $this->model->getAllPokemonsAdmin(),
                 'moves' => $this->model->getAllMoves(),
                 'raids' => $this->model->getAllRaids(),
-                'forms' => $this->model->getAllForms(),
-                'images' => $this->model->getAllImages()
+                'forms' => $this->model->getAllForms()
             ];
-
-            error_log("Datos cargados:");
-            error_log("Pokemons: " . count($data['pokemons']));
-            error_log("Moves: " . count($data['moves']));
-            error_log("Raids: " . count($data['raids']));
-            error_log("Forms: " . count($data['forms']));
-            error_log("Images: " . count($data['images']));
 
             return $this->twig->render('admin.twig', $data);
         } catch (\Exception $e) {
@@ -61,26 +53,33 @@ class AdminController {
         try {
             $id = $params['id'] ?? null;
             if (!$id) {
-                return $this->twig->render('404.twig', ['error' => 'ID no especificado']);
+                throw new \Exception('ID no especificado');
             }
 
             $pokemon = $this->model->getPokemonById($id);
             if (!$pokemon) {
-                return $this->twig->render('404.twig', ['error' => 'Pokémon no encontrado']);
+                throw new \Exception('Pokémon no encontrado');
             }
 
-            return $this->twig->render('admin/edit.twig', [
-                'pokemon' => $pokemon
+            return $this->twig->render('admin/pokemon/edit.twig', [
+                'pokemon' => $pokemon,
+                'action' => 'edit',
+                'success' => $_GET['success'] ?? null,
+                'error' => $_GET['error'] ?? null
             ]);
         } catch (\Exception $e) {
             error_log("Error en editPokemon: " . $e->getMessage());
-            return $this->twig->render('404.twig', ['error' => 'Error al cargar el Pokémon']);
+            return $this->twig->render('admin/pokemon/edit.twig', [
+                'error' => $e->getMessage(),
+                'action' => 'edit'
+            ]);
         }
     }
 
     public function newPokemon() {
-        return $this->twig->render('admin/edit.twig', [
-            'pokemon' => null
+        return $this->twig->render('admin/pokemon/edit.twig', [
+            'pokemon' => null,
+            'action' => 'new'
         ]);
     }
 
@@ -115,20 +114,60 @@ class AdminController {
 
     public function savePokemon() {
         try {
+            error_log("=== Iniciando savePokemon ===");
+            error_log("Método HTTP: " . $_SERVER['REQUEST_METHOD']);
+            error_log("Datos POST recibidos: " . print_r($_POST, true));
+
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new \Exception('Método no permitido');
+            }
+
             $data = $_POST;
             $id = $data['id'] ?? null;
             
+            error_log("ID del Pokémon: " . ($id ? $id : 'nuevo'));
+            
+            // Validaciones básicas
+            if (empty($data['pokemon_id'])) {
+                throw new \Exception('El ID del Pokémon es requerido');
+            }
+            if (empty($data['name'])) {
+                throw new \Exception('El nombre es requerido');
+            }
+            if (empty($data['region'])) {
+                throw new \Exception('La región es requerida');
+            }
+
+            // Sanitizar datos
+            $pokemonData = [
+                'pokemon_id' => trim($data['pokemon_id']),
+                'name' => trim($data['name']),
+                'region' => trim($data['region'])
+            ];
+
+            error_log("Datos sanitizados: " . print_r($pokemonData, true));
+
             if ($id) {
-                $this->model->updatePokemon($id, $data);
+                error_log("Actualizando Pokémon existente");
+                $success = $this->model->updatePokemon($id, $pokemonData);
+                $message = 'Pokémon actualizado correctamente';
             } else {
-                $this->model->addPokemon($data);
+                error_log("Creando nuevo Pokémon");
+                $success = $this->model->addPokemon($pokemonData);
+                $message = 'Pokémon añadido correctamente';
             }
             
-            header('Location: /admin');
+            error_log("Operación completada. Redirigiendo...");
+            header('Location: /admin?success=' . urlencode($message));
             exit;
         } catch (\Exception $e) {
             error_log("Error en savePokemon: " . $e->getMessage());
-            return $this->twig->render('404.twig', ['error' => 'Error al guardar el Pokémon']);
+            error_log("Stack trace: " . $e->getTraceAsString());
+            return $this->twig->render('admin/pokemon/edit.twig', [
+                'pokemon' => $data ?? null,
+                'action' => $id ? 'edit' : 'new',
+                'error' => $e->getMessage()
+            ]);
         }
     }
 
@@ -225,6 +264,27 @@ class AdminController {
         } catch (\Exception $e) {
             error_log("Error en saveForm: " . $e->getMessage());
             return $this->twig->render('404.twig', ['error' => 'Error al guardar la forma']);
+        }
+    }
+
+    public function deletePokemon($params) {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
+                throw new \Exception('Método no permitido');
+            }
+
+            $id = $params['id'] ?? null;
+            if (!$id) {
+                throw new \Exception('ID no especificado');
+            }
+
+            $result = $this->model->deletePokemon($id);
+            header('Content-Type: application/json');
+            return json_encode(['success' => $result]);
+        } catch (\Exception $e) {
+            error_log("Error en deletePokemon: " . $e->getMessage());
+            header('Content-Type: application/json');
+            return json_encode(['success' => false, 'error' => $e->getMessage()]);
         }
     }
 } 

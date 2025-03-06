@@ -42,57 +42,51 @@
         <div class="tab-pane fade show active" id="pokemons" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Pokémon</h2>
-                <button class="btn btn-success" onclick="location.href='/admin/pokemon/new'">
-                    <i class="fas fa-plus"></i> Añadir Pokémon
-                </button>
+                <a href="/admin/pokemon/new" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Nuevo Pokémon
+                </a>
             </div>
             
-            {% if pokemons|length > 0 %}
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Región</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pokemon in pokemons %}
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Región</th>
-                                <th>Acciones</th>
+                                <td>{{ pokemon.pokemon_id }}</td>
+                                <td>{{ pokemon.name }}</td>
+                                <td>{{ pokemon.region }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="/admin/pokemon/edit/{{ pokemon.pokemon_id }}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                        <button class="btn btn-sm btn-danger" onclick="deletePokemon('{{ pokemon.pokemon_id }}')">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for pokemon in pokemons %}
-                                <tr>
-                                    <td>{{ pokemon.pokemon_id }}</td>
-                                    <td>{{ pokemon.name }}</td>
-                                    <td>{{ pokemon.region }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="/admin/pokemon/edit/{{ pokemon.pokemon_id }}" class="btn btn-sm btn-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <button class="btn btn-sm btn-danger" onclick="deletePokemon('{{ pokemon.pokemon_id }}')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <div class="alert alert-info">
-                    No hay Pokémon registrados.
-                </div>
-            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Tab Movimientos -->
         <div class="tab-pane fade" id="moves" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Movimientos</h2>
-                <button class="btn btn-success" onclick="location.href='/admin/move/new'">
-                    <i class="fas fa-plus"></i> Añadir Movimiento
-                </button>
+                <a href="/admin/move/new" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Editar Movimiento
+                </a>
             </div>
             
             {% if moves|length > 0 %}
@@ -144,9 +138,9 @@
         <div class="tab-pane fade" id="raids" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Raids</h2>
-                <button class="btn btn-success" onclick="location.href='/admin/raid/new'">
-                    <i class="fas fa-plus"></i> Añadir Raid
-                </button>
+                <a href="/admin/raid/new" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Editar Raid
+                </a>
             </div>
             
             {% if raids|length > 0 %}
@@ -202,9 +196,9 @@
         <div class="tab-pane fade" id="forms" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Formas</h2>
-                <button class="btn btn-success" onclick="location.href='/admin/form/new'">
-                    <i class="fas fa-plus"></i> Añadir Forma
-                </button>
+                <a href="/admin/form/new" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Editar Forma
+                </a>
             </div>
             
             {% if forms|length > 0 %}
