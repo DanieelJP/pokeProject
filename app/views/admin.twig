@@ -208,7 +208,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Formas</h2>
                 <a href="/admin/form/new" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Editar Forma
+                    <i class="fas fa-plus"></i> Nueva Forma
                 </a>
             </div>
             
@@ -218,8 +218,7 @@
                         <thead>
                             <tr>
                                 <th>Pokémon Base</th>
-                                <th>Nombre Pokémon</th>
-                                <th>Nombre Forma</th>
+                                <th>Nombre de Forma</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -227,16 +226,17 @@
                             {% for form in forms %}
                                 <tr>
                                     <td>{{ form.base_pokemon_name }}</td>
-                                    <td>{{ form.pokemon_name }}</td>
                                     <td>{{ form.form_name }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="/admin/form/edit/{{ form.id }}" class="btn btn-sm btn-primary">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-edit"></i> Editar
                                             </a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteForm('{{ form.id }}')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form method="POST" action="/admin/form/delete/{{ form.id }}" style="display: inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta forma?')">
+                                                    <i class="fas fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

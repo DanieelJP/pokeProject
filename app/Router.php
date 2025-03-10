@@ -178,6 +178,6 @@ class Router {
         $this->add('GET', '/admin/form/new', [$adminController, 'newForm'], true);
         $this->add('GET', '/admin/form/edit/:id', [$adminController, 'editForm'], true);
         $this->add('POST', '/admin/form/save', [$adminController, 'saveForm'], true);
-        $this->add('DELETE', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
+        $this->add('POST', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
     }
 } 

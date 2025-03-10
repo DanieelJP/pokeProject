@@ -329,10 +329,16 @@ class AdminController {
     }
 
     public function newForm() {
-        return $this->twig->render('admin/form/edit.twig', [
-            'form' => null,
-            'pokemons' => $this->model->getAllPokemons()
-        ]);
+        try {
+            return $this->twig->render('admin/form/edit.twig', [
+                'form' => null,
+                'action' => 'new',
+                'pokemons' => $this->model->getAllPokemons()
+            ]);
+        } catch (\Exception $e) {
+            error_log("Error en newForm: " . $e->getMessage());
+            return $this->twig->render('404.twig', ['error' => $e->getMessage()]);
+        }
     }
 
     public function editForm($params) {
@@ -349,7 +355,10 @@ class AdminController {
 
             return $this->twig->render('admin/form/edit.twig', [
                 'form' => $form,
-                'pokemons' => $this->model->getAllPokemons()
+                'action' => 'edit',
+                'pokemons' => $this->model->getAllPokemons(),
+                'success' => $_GET['success'] ?? null,
+                'error' => $_GET['error'] ?? null
             ]);
         } catch (\Exception $e) {
             error_log("Error en editForm: " . $e->getMessage());
@@ -359,20 +368,56 @@ class AdminController {
 
     public function saveForm() {
         try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new \Exception('Método no permitido');
+            }
+
             $data = $_POST;
             $id = $data['id'] ?? null;
-            
+
+            // Validaciones básicas
+            if (empty($data['pokemon_id'])) {
+                throw new \Exception('El Pokémon base es requerido');
+            }
+            if (empty($data['form_name'])) {
+                throw new \Exception('El nombre de la forma es requerido');
+            }
+
             if ($id) {
                 $this->model->updateForm($id, $data);
+                $message = 'Forma actualizada correctamente';
             } else {
                 $this->model->addForm($data);
+                $message = 'Forma añadida correctamente';
             }
-            
-            header('Location: /admin');
+
+            header('Location: /admin?success=' . urlencode($message));
             exit;
         } catch (\Exception $e) {
             error_log("Error en saveForm: " . $e->getMessage());
-            return $this->twig->render('404.twig', ['error' => 'Error al guardar la forma']);
+            return $this->twig->render('admin/form/edit.twig', [
+                'form' => $data ?? null,
+                'action' => $id ? 'edit' : 'new',
+                'pokemons' => $this->model->getAllPokemons(),
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteForm($params) {
+        try {
+            $id = $params['id'] ?? null;
+            if (!$id) {
+                throw new \Exception('ID no especificado');
+            }
+
+            $this->model->deleteForm($id);
+            header('Location: /admin?success=' . urlencode('Forma eliminada correctamente'));
+            exit;
+        } catch (\Exception $e) {
+            error_log("Error en deleteForm: " . $e->getMessage());
+            header('Location: /admin?error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 

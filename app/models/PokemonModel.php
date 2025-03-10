@@ -532,5 +532,114 @@ class PokemonModel {
             throw new \Exception('Error al eliminar la raid: ' . $e->getMessage());
         }
     }
+
+    public function getFormById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT f.*, p.name as base_pokemon_name 
+                FROM pokemon_forms f 
+                LEFT JOIN pokemons p ON f.pokemon_id = p.pokemon_id
+                WHERE f.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getFormById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function addForm($data) {
+        try {
+            // Primero obtenemos el nombre del Pokémon
+            $stmtPokemon = $this->pdo->prepare("
+                SELECT name FROM pokemons WHERE pokemon_id = :pokemon_id
+            ");
+            $stmtPokemon->execute(['pokemon_id' => $data['pokemon_id']]);
+            $pokemon = $stmtPokemon->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$pokemon) {
+                throw new \Exception('Pokémon no encontrado');
+            }
+
+            $stmt = $this->pdo->prepare("
+                INSERT INTO pokemon_forms (
+                    pokemon_id, pokemon_name, form_name
+                ) VALUES (
+                    :pokemon_id, :pokemon_name, :form_name
+                )
+            ");
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'pokemon_name' => $pokemon['name'],
+                'form_name' => $data['form_name']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en addForm: " . $e->getMessage());
+            throw new \Exception('Error al crear la forma: ' . $e->getMessage());
+        }
+    }
+
+    public function updateForm($id, $data) {
+        try {
+            // Primero obtenemos el nombre del Pokémon
+            $stmtPokemon = $this->pdo->prepare("
+                SELECT name FROM pokemons WHERE pokemon_id = :pokemon_id
+            ");
+            $stmtPokemon->execute(['pokemon_id' => $data['pokemon_id']]);
+            $pokemon = $stmtPokemon->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$pokemon) {
+                throw new \Exception('Pokémon no encontrado');
+            }
+
+            $stmt = $this->pdo->prepare("
+                UPDATE pokemon_forms 
+                SET pokemon_id = :pokemon_id,
+                    pokemon_name = :pokemon_name,
+                    form_name = :form_name
+                WHERE id = :id
+            ");
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'pokemon_name' => $pokemon['name'],
+                'form_name' => $data['form_name']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en updateForm: " . $e->getMessage());
+            throw new \Exception('Error al actualizar la forma: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteForm($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM pokemon_forms WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteForm: " . $e->getMessage());
+            throw new \Exception('Error al eliminar la forma: ' . $e->getMessage());
+        }
+    }
 }
 ?>
