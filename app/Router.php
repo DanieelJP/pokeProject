@@ -166,7 +166,7 @@ class Router {
         $this->add('GET', '/admin/move/new', [$adminController, 'newMove'], true);
         $this->add('GET', '/admin/move/edit/:id', [$adminController, 'editMove'], true);
         $this->add('POST', '/admin/move/save', [$adminController, 'saveMove'], true);
-        $this->add('DELETE', '/admin/move/delete/:id', [$adminController, 'deleteMove'], true);
+        $this->add('POST', '/admin/move/delete/:id', [$adminController, 'deleteMove'], true);
         
         // Rutas CRUD para Raids
         $this->add('GET', '/admin/raid/new', [$adminController, 'newRaid'], true);

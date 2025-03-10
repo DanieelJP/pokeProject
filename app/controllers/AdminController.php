@@ -84,10 +84,16 @@ class AdminController {
     }
 
     public function newMove() {
-        return $this->twig->render('admin/move/edit.twig', [
-            'move' => null,
-            'pokemons' => $this->model->getAllPokemons()
-        ]);
+        try {
+            return $this->twig->render('admin/move/edit.twig', [
+                'move' => null,
+                'action' => 'new',
+                'pokemons' => $this->model->getAllPokemons()
+            ]);
+        } catch (\Exception $e) {
+            error_log("Error en newMove: " . $e->getMessage());
+            return $this->twig->render('404.twig', ['error' => $e->getMessage()]);
+        }
     }
 
     public function editMove($params) {
@@ -104,11 +110,72 @@ class AdminController {
 
             return $this->twig->render('admin/move/edit.twig', [
                 'move' => $move,
-                'pokemons' => $this->model->getAllPokemons()
+                'action' => 'edit',
+                'pokemons' => $this->model->getAllPokemons(),
+                'success' => $_GET['success'] ?? null,
+                'error' => $_GET['error'] ?? null
             ]);
         } catch (\Exception $e) {
             error_log("Error en editMove: " . $e->getMessage());
             return $this->twig->render('404.twig', ['error' => $e->getMessage()]);
+        }
+    }
+
+    public function saveMove() {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new \Exception('Método no permitido');
+            }
+
+            $data = $_POST;
+            $id = $data['id'] ?? null;
+
+            // Validaciones básicas
+            if (empty($data['pokemon_id'])) {
+                throw new \Exception('El Pokémon es requerido');
+            }
+            if (empty($data['move_type'])) {
+                throw new \Exception('El tipo de movimiento es requerido');
+            }
+            if (empty($data['move_name'])) {
+                throw new \Exception('El nombre del movimiento es requerido');
+            }
+
+            if ($id) {
+                $this->model->updateMove($id, $data);
+                $message = 'Movimiento actualizado correctamente';
+            } else {
+                $this->model->addMove($data);
+                $message = 'Movimiento añadido correctamente';
+            }
+
+            header('Location: /admin?success=' . urlencode($message));
+            exit;
+        } catch (\Exception $e) {
+            error_log("Error en saveMove: " . $e->getMessage());
+            return $this->twig->render('admin/move/edit.twig', [
+                'move' => $data ?? null,
+                'action' => $id ? 'edit' : 'new',
+                'pokemons' => $this->model->getAllPokemons(),
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteMove($params) {
+        try {
+            $id = $params['id'] ?? null;
+            if (!$id) {
+                throw new \Exception('ID no especificado');
+            }
+
+            $this->model->deleteMove($id);
+            header('Location: /admin?success=' . urlencode('Movimiento eliminado correctamente'));
+            exit;
+        } catch (\Exception $e) {
+            error_log("Error en deleteMove: " . $e->getMessage());
+            header('Location: /admin?error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 

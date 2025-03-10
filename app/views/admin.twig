@@ -92,7 +92,7 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Gestión de Movimientos</h2>
                 <a href="/admin/move/new" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Editar Movimiento
+                    <i class="fas fa-plus"></i> Nuevo Movimiento
                 </a>
             </div>
             
@@ -122,11 +122,13 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="/admin/move/edit/{{ move.id }}" class="btn btn-sm btn-primary">
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-edit"></i> Editar
                                             </a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteMove('{{ move.id }}')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form method="POST" action="/admin/move/delete/{{ move.id }}" style="display: inline;">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este movimiento?')">
+                                                    <i class="fas fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

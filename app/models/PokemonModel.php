@@ -197,16 +197,46 @@ class PokemonModel {
         }
     }
 
+    public function getMoveById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT m.*, p.name as pokemon_name 
+                FROM moves m 
+                LEFT JOIN pokemons p ON m.pokemon_id = p.pokemon_id
+                WHERE m.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getMoveById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     public function addMove($data) {
         try {
             $stmt = $this->pdo->prepare("
                 INSERT INTO moves (pokemon_id, move_type, move_name, damage, eps, dps)
                 VALUES (:pokemon_id, :move_type, :move_name, :damage, :eps, :dps)
             ");
-            return $stmt->execute($data);
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'move_type' => $data['move_type'],
+                'move_name' => $data['move_name'],
+                'damage' => $data['damage'],
+                'eps' => $data['eps'],
+                'dps' => $data['dps']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear el movimiento');
+            }
+
+            return true;
         } catch (\PDOException $e) {
             error_log("Error en addMove: " . $e->getMessage());
-            throw $e;
+            throw new \Exception('Error al crear el movimiento: ' . $e->getMessage());
         }
     }
 
@@ -222,11 +252,41 @@ class PokemonModel {
                     dps = :dps
                 WHERE id = :id
             ");
-            $data['id'] = $id;
-            return $stmt->execute($data);
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'move_type' => $data['move_type'],
+                'move_name' => $data['move_name'],
+                'damage' => $data['damage'],
+                'eps' => $data['eps'],
+                'dps' => $data['dps']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar el movimiento');
+            }
+
+            return true;
         } catch (\PDOException $e) {
             error_log("Error en updateMove: " . $e->getMessage());
-            throw $e;
+            throw new \Exception('Error al actualizar el movimiento: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteMove($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM moves WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar el movimiento');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteMove: " . $e->getMessage());
+            throw new \Exception('Error al eliminar el movimiento: ' . $e->getMessage());
         }
     }
 
