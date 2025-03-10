@@ -166,18 +166,18 @@ class Router {
         $this->add('GET', '/admin/move/new', [$adminController, 'newMove'], true);
         $this->add('GET', '/admin/move/edit/:id', [$adminController, 'editMove'], true);
         $this->add('POST', '/admin/move/save', [$adminController, 'saveMove'], true);
-        $this->add('DELETE', '/admin/move/delete/:id', [$adminController, 'deleteMove'], true);
+        $this->add('POST', '/admin/move/delete/:id', [$adminController, 'deleteMove'], true);
         
         // Rutas CRUD para Raids
         $this->add('GET', '/admin/raid/new', [$adminController, 'newRaid'], true);
         $this->add('GET', '/admin/raid/edit/:id', [$adminController, 'editRaid'], true);
         $this->add('POST', '/admin/raid/save', [$adminController, 'saveRaid'], true);
-        $this->add('DELETE', '/admin/raid/delete/:id', [$adminController, 'deleteRaid'], true);
+        $this->add('POST', '/admin/raid/delete/:id', [$adminController, 'deleteRaid'], true);
         
         // Rutas CRUD para Formas
         $this->add('GET', '/admin/form/new', [$adminController, 'newForm'], true);
         $this->add('GET', '/admin/form/edit/:id', [$adminController, 'editForm'], true);
         $this->add('POST', '/admin/form/save', [$adminController, 'saveForm'], true);
-        $this->add('DELETE', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
+        $this->add('POST', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
     }
 } 

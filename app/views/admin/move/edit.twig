@@ -1,0 +1,97 @@
+{% extends 'layout.twig' %}
+
+{% block title %}{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Movimiento - Panel de Administración{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Movimiento</h2>
+                    <a href="/admin" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/move/save" id="moveForm">
+                        {% if action == 'edit' and move %}
+                            <input type="hidden" name="id" value="{{ move.id }}">
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="pokemon_id" class="form-label">Pokémon</label>
+                            <select class="form-select" id="pokemon_id" name="pokemon_id" required>
+                                <option value="">Selecciona un Pokémon</option>
+                                {% for pokemon in pokemons %}
+                                    <option value="{{ pokemon.pokemon_id }}" 
+                                            {{ move and move.pokemon_id == pokemon.pokemon_id ? 'selected' : '' }}>
+                                        {{ pokemon.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="move_type" class="form-label">Tipo de Movimiento</label>
+                            <select class="form-select" id="move_type" name="move_type" required>
+                                <option value="">Selecciona un tipo</option>
+                                <option value="fast" {{ move and move.move_type == 'fast' ? 'selected' : '' }}>Rápido</option>
+                                <option value="main" {{ move and move.move_type == 'main' ? 'selected' : '' }}>Principal</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="move_name" class="form-label">Nombre del Movimiento</label>
+                            <input type="text" class="form-control" id="move_name" name="move_name" 
+                                   value="{{ move.move_name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="damage" class="form-label">Daño</label>
+                            <input type="number" class="form-control" id="damage" name="damage" 
+                                   value="{{ move.damage }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="eps" class="form-label">EPS</label>
+                            <input type="number" step="0.1" class="form-control" id="eps" name="eps" 
+                                   value="{{ move.eps }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dps" class="form-label">DPS</label>
+                            <input type="number" step="0.1" class="form-control" id="dps" name="dps" 
+                                   value="{{ move.dps }}" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 
+                                {{ action == 'edit' ? 'Actualizar' : 'Crear' }} Movimiento
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('moveForm').addEventListener('submit', function(e) {
+    if (!confirm('¿Estás seguro de que quieres {{ action == "edit" ? "actualizar" : "crear" }} este movimiento?')) {
+        e.preventDefault();
+    }
+});
+</script>
+{% endblock %} 

@@ -197,16 +197,46 @@ class PokemonModel {
         }
     }
 
+    public function getMoveById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT m.*, p.name as pokemon_name 
+                FROM moves m 
+                LEFT JOIN pokemons p ON m.pokemon_id = p.pokemon_id
+                WHERE m.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getMoveById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     public function addMove($data) {
         try {
             $stmt = $this->pdo->prepare("
                 INSERT INTO moves (pokemon_id, move_type, move_name, damage, eps, dps)
                 VALUES (:pokemon_id, :move_type, :move_name, :damage, :eps, :dps)
             ");
-            return $stmt->execute($data);
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'move_type' => $data['move_type'],
+                'move_name' => $data['move_name'],
+                'damage' => $data['damage'],
+                'eps' => $data['eps'],
+                'dps' => $data['dps']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear el movimiento');
+            }
+
+            return true;
         } catch (\PDOException $e) {
             error_log("Error en addMove: " . $e->getMessage());
-            throw $e;
+            throw new \Exception('Error al crear el movimiento: ' . $e->getMessage());
         }
     }
 
@@ -222,11 +252,41 @@ class PokemonModel {
                     dps = :dps
                 WHERE id = :id
             ");
-            $data['id'] = $id;
-            return $stmt->execute($data);
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'move_type' => $data['move_type'],
+                'move_name' => $data['move_name'],
+                'damage' => $data['damage'],
+                'eps' => $data['eps'],
+                'dps' => $data['dps']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar el movimiento');
+            }
+
+            return true;
         } catch (\PDOException $e) {
             error_log("Error en updateMove: " . $e->getMessage());
-            throw $e;
+            throw new \Exception('Error al actualizar el movimiento: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteMove($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM moves WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar el movimiento');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteMove: " . $e->getMessage());
+            throw new \Exception('Error al eliminar el movimiento: ' . $e->getMessage());
         }
     }
 
@@ -366,6 +426,219 @@ class PokemonModel {
         } catch (\PDOException $e) {
             error_log("Error en getAllPokemonsAdmin: " . $e->getMessage());
             throw $e;
+        }
+    }
+
+    public function getRaidById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT r.*, p.name as pokemon_name 
+                FROM raids r 
+                LEFT JOIN pokemons p ON r.pokemon_id = p.pokemon_id
+                WHERE r.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getRaidById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function addRaid($data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO raids (
+                    pokemon_id, raid_tier, boss_cp, boss_hp, 
+                    suggested_players, caught_cp_range, caught_cp_boosted, minimum_ivs
+                ) VALUES (
+                    :pokemon_id, :raid_tier, :boss_cp, :boss_hp,
+                    :suggested_players, :caught_cp_range, :caught_cp_boosted, :minimum_ivs
+                )
+            ");
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'raid_tier' => $data['raid_tier'],
+                'boss_cp' => $data['boss_cp'],
+                'boss_hp' => $data['boss_hp'],
+                'suggested_players' => $data['suggested_players'],
+                'caught_cp_range' => $data['caught_cp_range'],
+                'caught_cp_boosted' => $data['caught_cp_boosted'],
+                'minimum_ivs' => $data['minimum_ivs']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en addRaid: " . $e->getMessage());
+            throw new \Exception('Error al crear la raid: ' . $e->getMessage());
+        }
+    }
+
+    public function updateRaid($id, $data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                UPDATE raids 
+                SET pokemon_id = :pokemon_id,
+                    raid_tier = :raid_tier,
+                    boss_cp = :boss_cp,
+                    boss_hp = :boss_hp,
+                    suggested_players = :suggested_players,
+                    caught_cp_range = :caught_cp_range,
+                    caught_cp_boosted = :caught_cp_boosted,
+                    minimum_ivs = :minimum_ivs
+                WHERE id = :id
+            ");
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'raid_tier' => $data['raid_tier'],
+                'boss_cp' => $data['boss_cp'],
+                'boss_hp' => $data['boss_hp'],
+                'suggested_players' => $data['suggested_players'],
+                'caught_cp_range' => $data['caught_cp_range'],
+                'caught_cp_boosted' => $data['caught_cp_boosted'],
+                'minimum_ivs' => $data['minimum_ivs']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en updateRaid: " . $e->getMessage());
+            throw new \Exception('Error al actualizar la raid: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteRaid($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM raids WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteRaid: " . $e->getMessage());
+            throw new \Exception('Error al eliminar la raid: ' . $e->getMessage());
+        }
+    }
+
+    public function getFormById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT f.*, p.name as base_pokemon_name 
+                FROM pokemon_forms f 
+                LEFT JOIN pokemons p ON f.pokemon_id = p.pokemon_id
+                WHERE f.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getFormById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function addForm($data) {
+        try {
+            // Primero obtenemos el nombre del Pokémon
+            $stmtPokemon = $this->pdo->prepare("
+                SELECT name FROM pokemons WHERE pokemon_id = :pokemon_id
+            ");
+            $stmtPokemon->execute(['pokemon_id' => $data['pokemon_id']]);
+            $pokemon = $stmtPokemon->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$pokemon) {
+                throw new \Exception('Pokémon no encontrado');
+            }
+
+            $stmt = $this->pdo->prepare("
+                INSERT INTO pokemon_forms (
+                    pokemon_id, pokemon_name, form_name
+                ) VALUES (
+                    :pokemon_id, :pokemon_name, :form_name
+                )
+            ");
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'pokemon_name' => $pokemon['name'],
+                'form_name' => $data['form_name']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en addForm: " . $e->getMessage());
+            throw new \Exception('Error al crear la forma: ' . $e->getMessage());
+        }
+    }
+
+    public function updateForm($id, $data) {
+        try {
+            // Primero obtenemos el nombre del Pokémon
+            $stmtPokemon = $this->pdo->prepare("
+                SELECT name FROM pokemons WHERE pokemon_id = :pokemon_id
+            ");
+            $stmtPokemon->execute(['pokemon_id' => $data['pokemon_id']]);
+            $pokemon = $stmtPokemon->fetch(\PDO::FETCH_ASSOC);
+
+            if (!$pokemon) {
+                throw new \Exception('Pokémon no encontrado');
+            }
+
+            $stmt = $this->pdo->prepare("
+                UPDATE pokemon_forms 
+                SET pokemon_id = :pokemon_id,
+                    pokemon_name = :pokemon_name,
+                    form_name = :form_name
+                WHERE id = :id
+            ");
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'pokemon_name' => $pokemon['name'],
+                'form_name' => $data['form_name']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en updateForm: " . $e->getMessage());
+            throw new \Exception('Error al actualizar la forma: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteForm($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM pokemon_forms WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar la forma');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteForm: " . $e->getMessage());
+            throw new \Exception('Error al eliminar la forma: ' . $e->getMessage());
         }
     }
 }
