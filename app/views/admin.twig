@@ -73,19 +73,14 @@
                                         <a href="/admin/pokemon/edit/{{ pokemon.pokemon_id }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <button class="btn btn-sm btn-danger" 
-                                                onclick="deletePokemon('{{ pokemon.pokemon_id }}')"
-                                                type="button">
-                                            <i class="fas fa-trash"></i> Eliminar
-                                        </button>
+                                        <form method="POST" action="/admin/pokemon/delete/{{ pokemon.pokemon_id }}" style="display: inline;">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este Pokémon?')">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
-                            <form method="POST" action="/admin/pokemon/delete/{{ pokemon.pokemon_id }}" 
-                                  style="display: none;" 
-                                  id="delete-form-{{ pokemon.pokemon_id }}">
-                                <input type="hidden" name="_method" value="DELETE">
-                            </form>
                         {% endfor %}
                     </tbody>
                 </table>
