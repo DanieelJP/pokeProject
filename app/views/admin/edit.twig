@@ -1,1 +1,47 @@
- 
+{% extends 'layout.twig' %}
+
+{% block title %}{{ pokemon ? 'Editar' : 'Nuevo' }} Pokémon - Panel de Administración{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ pokemon ? 'Editar' : 'Nuevo' }} Pokémon</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/pokemon/save">
+                        {% if pokemon %}
+                            <input type="hidden" name="id" value="{{ pokemon.pokemon_id }}">
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            <label for="pokemon_id" class="form-label">ID Pokémon</label>
+                            <input type="text" class="form-control" id="pokemon_id" name="pokemon_id" 
+                                   value="{{ pokemon.pokemon_id }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   value="{{ pokemon.name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="region" class="form-label">Región</label>
+                            <input type="text" class="form-control" id="region" name="region" 
+                                   value="{{ pokemon.region }}" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a href="/admin" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

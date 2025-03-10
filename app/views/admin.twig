@@ -2,6 +2,11 @@
 
 {% block title %}Panel de Administración - Pokédex{% endblock %}
 
+{% block head %}
+{{ parent() }}
+<meta name="page-type" content="admin">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Panel de Administración</h1>
@@ -68,9 +73,11 @@
                                         <a href="/admin/pokemon/edit/{{ pokemon.pokemon_id }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <button class="btn btn-sm btn-danger" onclick="deletePokemon('{{ pokemon.pokemon_id }}')">
-                                            <i class="fas fa-trash"></i> Eliminar
-                                        </button>
+                                        <form method="POST" action="/admin/pokemon/delete/{{ pokemon.pokemon_id }}" style="display: inline;">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este Pokémon?')">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -244,5 +251,26 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/js/admin.js"></script>
+{{ parent() }}
+<script>
+    function deletePokemon(pokemonId) {
+        if (confirm('¿Estás seguro de que quieres eliminar este Pokémon? Esta acción no se puede deshacer.')) {
+            // Crear un formulario dinámicamente
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/admin/pokemon/delete/${pokemonId}`;
+            
+            // Añadir campo _method para simular DELETE
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'DELETE';
+            form.appendChild(methodInput);
+            
+            // Añadir el formulario al documento y enviarlo
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
 {% endblock %}

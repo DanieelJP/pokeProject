@@ -269,9 +269,8 @@ class AdminController {
 
     public function deletePokemon($params) {
         try {
-            if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
-                throw new \Exception('Método no permitido');
-            }
+            error_log("=== Iniciando deletePokemon ===");
+            error_log("Parámetros recibidos: " . print_r($params, true));
 
             $id = $params['id'] ?? null;
             if (!$id) {
@@ -279,12 +278,15 @@ class AdminController {
             }
 
             $result = $this->model->deletePokemon($id);
-            header('Content-Type: application/json');
-            return json_encode(['success' => $result]);
+            
+            // Redirigir después de la eliminación
+            header('Location: /admin?success=' . urlencode('Pokémon eliminado correctamente'));
+            exit;
         } catch (\Exception $e) {
             error_log("Error en deletePokemon: " . $e->getMessage());
-            header('Content-Type: application/json');
-            return json_encode(['success' => false, 'error' => $e->getMessage()]);
+            error_log("Stack trace: " . $e->getTraceAsString());
+            header('Location: /admin?error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 } 
