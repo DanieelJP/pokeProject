@@ -239,10 +239,16 @@ class AdminController {
     }
 
     public function newRaid() {
-        return $this->twig->render('admin/raid/edit.twig', [
-            'raid' => null,
-            'pokemons' => $this->model->getAllPokemons()
-        ]);
+        try {
+            return $this->twig->render('admin/raid/edit.twig', [
+                'raid' => null,
+                'action' => 'new',
+                'pokemons' => $this->model->getAllPokemons()
+            ]);
+        } catch (\Exception $e) {
+            error_log("Error en newRaid: " . $e->getMessage());
+            return $this->twig->render('404.twig', ['error' => $e->getMessage()]);
+        }
     }
 
     public function editRaid($params) {
@@ -259,7 +265,10 @@ class AdminController {
 
             return $this->twig->render('admin/raid/edit.twig', [
                 'raid' => $raid,
-                'pokemons' => $this->model->getAllPokemons()
+                'action' => 'edit',
+                'pokemons' => $this->model->getAllPokemons(),
+                'success' => $_GET['success'] ?? null,
+                'error' => $_GET['error'] ?? null
             ]);
         } catch (\Exception $e) {
             error_log("Error en editRaid: " . $e->getMessage());
@@ -269,20 +278,53 @@ class AdminController {
 
     public function saveRaid() {
         try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                throw new \Exception('Método no permitido');
+            }
+
             $data = $_POST;
             $id = $data['id'] ?? null;
-            
+
+            // Validaciones básicas
+            if (empty($data['pokemon_id'])) {
+                throw new \Exception('El Pokémon es requerido');
+            }
+
             if ($id) {
                 $this->model->updateRaid($id, $data);
+                $message = 'Raid actualizada correctamente';
             } else {
                 $this->model->addRaid($data);
+                $message = 'Raid añadida correctamente';
             }
-            
-            header('Location: /admin');
+
+            header('Location: /admin?success=' . urlencode($message));
             exit;
         } catch (\Exception $e) {
             error_log("Error en saveRaid: " . $e->getMessage());
-            return $this->twig->render('404.twig', ['error' => 'Error al guardar la raid']);
+            return $this->twig->render('admin/raid/edit.twig', [
+                'raid' => $data ?? null,
+                'action' => $id ? 'edit' : 'new',
+                'pokemons' => $this->model->getAllPokemons(),
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function deleteRaid($params) {
+        try {
+            $id = $params['id'] ?? null;
+            if (!$id) {
+                throw new \Exception('ID no especificado');
+            }
+
+            $this->model->deleteRaid($id);
+            header('Location: /admin?success=' . urlencode('Raid eliminada correctamente'));
+            exit;
+        } catch (\Exception $e) {
+            error_log("Error en deleteRaid: " . $e->getMessage());
+            header('Location: /admin?error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 

@@ -428,5 +428,109 @@ class PokemonModel {
             throw $e;
         }
     }
+
+    public function getRaidById($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT r.*, p.name as pokemon_name 
+                FROM raids r 
+                LEFT JOIN pokemons p ON r.pokemon_id = p.pokemon_id
+                WHERE r.id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error en getRaidById: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function addRaid($data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO raids (
+                    pokemon_id, raid_tier, boss_cp, boss_hp, 
+                    suggested_players, caught_cp_range, caught_cp_boosted, minimum_ivs
+                ) VALUES (
+                    :pokemon_id, :raid_tier, :boss_cp, :boss_hp,
+                    :suggested_players, :caught_cp_range, :caught_cp_boosted, :minimum_ivs
+                )
+            ");
+            
+            $result = $stmt->execute([
+                'pokemon_id' => $data['pokemon_id'],
+                'raid_tier' => $data['raid_tier'],
+                'boss_cp' => $data['boss_cp'],
+                'boss_hp' => $data['boss_hp'],
+                'suggested_players' => $data['suggested_players'],
+                'caught_cp_range' => $data['caught_cp_range'],
+                'caught_cp_boosted' => $data['caught_cp_boosted'],
+                'minimum_ivs' => $data['minimum_ivs']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al crear la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en addRaid: " . $e->getMessage());
+            throw new \Exception('Error al crear la raid: ' . $e->getMessage());
+        }
+    }
+
+    public function updateRaid($id, $data) {
+        try {
+            $stmt = $this->pdo->prepare("
+                UPDATE raids 
+                SET pokemon_id = :pokemon_id,
+                    raid_tier = :raid_tier,
+                    boss_cp = :boss_cp,
+                    boss_hp = :boss_hp,
+                    suggested_players = :suggested_players,
+                    caught_cp_range = :caught_cp_range,
+                    caught_cp_boosted = :caught_cp_boosted,
+                    minimum_ivs = :minimum_ivs
+                WHERE id = :id
+            ");
+            
+            $result = $stmt->execute([
+                'id' => $id,
+                'pokemon_id' => $data['pokemon_id'],
+                'raid_tier' => $data['raid_tier'],
+                'boss_cp' => $data['boss_cp'],
+                'boss_hp' => $data['boss_hp'],
+                'suggested_players' => $data['suggested_players'],
+                'caught_cp_range' => $data['caught_cp_range'],
+                'caught_cp_boosted' => $data['caught_cp_boosted'],
+                'minimum_ivs' => $data['minimum_ivs']
+            ]);
+
+            if (!$result) {
+                throw new \Exception('Error al actualizar la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en updateRaid: " . $e->getMessage());
+            throw new \Exception('Error al actualizar la raid: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteRaid($id) {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM raids WHERE id = :id");
+            $result = $stmt->execute(['id' => $id]);
+
+            if (!$result) {
+                throw new \Exception('Error al eliminar la raid');
+            }
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log("Error en deleteRaid: " . $e->getMessage());
+            throw new \Exception('Error al eliminar la raid: ' . $e->getMessage());
+        }
+    }
 }
 ?>

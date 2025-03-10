@@ -172,7 +172,7 @@ class Router {
         $this->add('GET', '/admin/raid/new', [$adminController, 'newRaid'], true);
         $this->add('GET', '/admin/raid/edit/:id', [$adminController, 'editRaid'], true);
         $this->add('POST', '/admin/raid/save', [$adminController, 'saveRaid'], true);
-        $this->add('DELETE', '/admin/raid/delete/:id', [$adminController, 'deleteRaid'], true);
+        $this->add('POST', '/admin/raid/delete/:id', [$adminController, 'deleteRaid'], true);
         
         // Rutas CRUD para Formas
         $this->add('GET', '/admin/form/new', [$adminController, 'newForm'], true);
