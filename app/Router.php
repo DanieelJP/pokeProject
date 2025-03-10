@@ -23,78 +23,96 @@ class Router {
     }
 
     public function handle($method, $uri) {
-        error_log("\n\n=== NUEVA PETICIÓN ===");
-        error_log("Método: " . $method);
-        error_log("URI: " . $uri);
-        
-        // Si es una ruta de API
-        if (strpos($uri, '/api/') === 0) {
-            header('Content-Type: application/json');
-            
-            // Verificar token para rutas protegidas
-            if ($uri !== '/api/login') {
-                $headers = getallheaders();
-                $authHeader = $headers['Authorization'] ?? '';
-                
-                if (!preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
-                    $this->sendJsonResponse([
-                        'status' => 'error',
-                        'message' => 'Token no proporcionado'
-                    ], 401);
-                }
+        try {
+            error_log("=== NUEVA PETICIÓN ===");
+            error_log("Método original: " . $method);
+            error_log("URI: " . $uri);
 
-                $token = $matches[1];
-                if (!$this->authController->validarToken($token)) {
-                    $this->sendJsonResponse([
-                        'status' => 'error',
-                        'message' => 'Token inválido'
-                    ], 401);
-                }
+            // Obtener el método real si es una petición POST con _method
+            if ($method === 'POST' && isset($_POST['_method'])) {
+                $method = strtoupper($_POST['_method']);
+                error_log("Método modificado a: " . $method);
             }
-        }
 
-        // Limpiamos la URI
-        $uri = parse_url($uri, PHP_URL_PATH);
-        $uri = rtrim($uri, '/');
-        if (empty($uri)) {
-            $uri = '/';
-        }
+            // Para peticiones AJAX, verificar el método X-HTTP-Method-Override
+            $headers = getallheaders();
+            if (isset($headers['X-HTTP-Method-Override'])) {
+                $method = strtoupper($headers['X-HTTP-Method-Override']);
+            }
 
-        error_log("\n=== INICIO ROUTER ===");
-        error_log("URI solicitada: " . $uri);
-        error_log("Método: " . $method);
-
-        foreach ($this->routes as $route) {
-            error_log("\nVerificando ruta: " . $route['path']);
-            error_log("URI actual: " . $uri);
-            error_log("Método actual: " . $method);
-            
-            $pattern = $this->convertRouteToRegex($route['path']);
-            error_log("Patrón regex: " . $pattern);
-            
-            if (preg_match($pattern, $uri, $matches)) {
-                error_log("¡Coincidencia encontrada!");
-                error_log("Matches: " . print_r($matches, true));
+            // Si es una ruta de API
+            if (strpos($uri, '/api/') === 0) {
+                header('Content-Type: application/json');
                 
-                $params = $this->extractParams($route['path'], $uri);
-                error_log("Parámetros extraídos: " . print_r($params, true));
-
-                if ($route['method'] === $method) {
-                    error_log("Ejecutando controlador para ruta: " . $route['path']);
-                    if ($route['requiresAuth']) {
-                        $token = $_COOKIE['jwt'] ?? null;
-                        if (!$token || !$this->authController->validarToken($token)) {
-                            header('Location: /login');
-                            exit;
-                        }
+                // Verificar token para rutas protegidas
+                if ($uri !== '/api/login') {
+                    $headers = getallheaders();
+                    $authHeader = $headers['Authorization'] ?? '';
+                    
+                    if (!preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+                        $this->sendJsonResponse([
+                            'status' => 'error',
+                            'message' => 'Token no proporcionado'
+                        ], 401);
                     }
-                    return call_user_func($route['handler'], $params);
+
+                    $token = $matches[1];
+                    if (!$this->authController->validarToken($token)) {
+                        $this->sendJsonResponse([
+                            'status' => 'error',
+                            'message' => 'Token inválido'
+                        ], 401);
+                    }
                 }
             }
-        }
 
-        error_log("=== No se encontró ninguna ruta ===\n");
-        return $this->twig->render('404.twig', ['error' => 'Página no encontrada']);
+            // Limpiamos la URI
+            $uri = parse_url($uri, PHP_URL_PATH);
+            $uri = rtrim($uri, '/');
+            if (empty($uri)) {
+                $uri = '/';
+            }
+
+            error_log("\n=== INICIO ROUTER ===");
+            error_log("URI solicitada: " . $uri);
+            error_log("Método: " . $method);
+
+            foreach ($this->routes as $route) {
+                error_log("\nVerificando ruta: " . $route['path']);
+                error_log("URI actual: " . $uri);
+                error_log("Método actual: " . $method);
+                
+                $pattern = $this->convertRouteToRegex($route['path']);
+                error_log("Patrón regex: " . $pattern);
+                
+                if (preg_match($pattern, $uri, $matches)) {
+                    error_log("¡Coincidencia encontrada!");
+                    error_log("Matches: " . print_r($matches, true));
+                    
+                    $params = $this->extractParams($route['path'], $uri);
+                    error_log("Parámetros extraídos: " . print_r($params, true));
+
+                    if ($route['method'] === $method) {
+                        error_log("Ejecutando controlador para ruta: " . $route['path']);
+                        if ($route['requiresAuth']) {
+                            $token = $_COOKIE['jwt'] ?? null;
+                            if (!$token || !$this->authController->validarToken($token)) {
+                                header('Location: /login');
+                                exit;
+                            }
+                        }
+                        return call_user_func($route['handler'], $params);
+                    }
+                }
+            }
+
+            error_log("=== No se encontró ninguna ruta ===\n");
+            return $this->twig->render('404.twig', ['error' => 'Página no encontrada']);
+        } catch (\Exception $e) {
+            error_log("Error en Router->handle: " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
+            return $this->twig->render('404.twig', ['error' => 'Error interno del servidor']);
+        }
     }
 
     private function convertRouteToRegex($route) {
@@ -142,7 +160,7 @@ class Router {
         $this->add('GET', '/admin/pokemon/new', [$adminController, 'newPokemon'], true);
         $this->add('GET', '/admin/pokemon/edit/:id', [$adminController, 'editPokemon'], true);
         $this->add('POST', '/admin/pokemon/save', [$adminController, 'savePokemon'], true);
-        $this->add('DELETE', '/admin/pokemon/delete/:id', [$adminController, 'deletePokemon'], true);
+        $this->add('POST', '/admin/pokemon/delete/:id', [$adminController, 'deletePokemon'], true);
         
         // Rutas CRUD para Movimientos
         $this->add('GET', '/admin/move/new', [$adminController, 'newMove'], true);
