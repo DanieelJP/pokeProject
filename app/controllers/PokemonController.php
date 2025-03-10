@@ -23,9 +23,32 @@ class PokemonController {
     }
 
     public function home() {
-        $pokemons = $this->model->getAllPokemons();
-        error_log("Pokemons con imágenes: " . print_r($pokemons, true));
-        return $this->twig->render('home.twig', ['pokemons' => $pokemons]);
+        try {
+            error_log("=== Iniciando método home() ===");
+            
+            // Obtener los Pokémon
+            $pokemons = $this->model->getAllPokemons();
+            if (!$pokemons) {
+                error_log("No se encontraron Pokémon");
+                $pokemons = [];
+            }
+            
+            // Renderizar la vista
+            return $this->twig->render('home.twig', [
+                'pokemons' => $pokemons,
+                'error' => null
+            ]);
+            
+        } catch (\Exception $e) {
+            error_log("Error en home(): " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
+            
+            // En caso de error, mostrar la página con un mensaje de error
+            return $this->twig->render('home.twig', [
+                'pokemons' => [],
+                'error' => 'Error al cargar los Pokémon: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function showPokemon($params) {

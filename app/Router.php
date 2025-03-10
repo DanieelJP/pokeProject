@@ -24,116 +24,56 @@ class Router {
 
     public function handle($method, $uri) {
         try {
-            error_log("=== NUEVA PETICIÓN ===");
-            error_log("Método original: " . $method);
-            error_log("URI: " . $uri);
-
-            // Obtener el método real si es una petición POST con _method
-            if ($method === 'POST' && isset($_POST['_method'])) {
-                $method = strtoupper($_POST['_method']);
-                error_log("Método modificado a: " . $method);
-            }
-
-            // Para peticiones AJAX, verificar el método X-HTTP-Method-Override
-            $headers = getallheaders();
-            if (isset($headers['X-HTTP-Method-Override'])) {
-                $method = strtoupper($headers['X-HTTP-Method-Override']);
-            }
-
-            // Si es una ruta de API
-            if (strpos($uri, '/api/') === 0) {
-                header('Content-Type: application/json');
-                
-                // Verificar token para rutas protegidas
-                if ($uri !== '/api/login') {
-                    $headers = getallheaders();
-                    $authHeader = $headers['Authorization'] ?? '';
-                    
-                    if (!preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
-                        $this->sendJsonResponse([
-                            'status' => 'error',
-                            'message' => 'Token no proporcionado'
-                        ], 401);
-                    }
-
-                    $token = $matches[1];
-                    if (!$this->authController->validarToken($token)) {
-                        $this->sendJsonResponse([
-                            'status' => 'error',
-                            'message' => 'Token inválido'
-                        ], 401);
-                    }
-                }
-            }
-
-            // Limpiamos la URI
-            $uri = parse_url($uri, PHP_URL_PATH);
-            $uri = rtrim($uri, '/');
-            if (empty($uri)) {
-                $uri = '/';
-            }
-
-            error_log("\n=== INICIO ROUTER ===");
-            error_log("URI solicitada: " . $uri);
-            error_log("Método: " . $method);
-
+            error_log("Manejando ruta: $method $uri");
+            
+            // Eliminar query strings
+            $uri = strtok($uri, '?');
+            
             foreach ($this->routes as $route) {
-                error_log("\nVerificando ruta: " . $route['path']);
-                error_log("URI actual: " . $uri);
-                error_log("Método actual: " . $method);
-                
-                $pattern = $this->convertRouteToRegex($route['path']);
-                error_log("Patrón regex: " . $pattern);
-                
-                if (preg_match($pattern, $uri, $matches)) {
-                    error_log("¡Coincidencia encontrada!");
-                    error_log("Matches: " . print_r($matches, true));
+                $pattern = $this->getPattern($route['path']);
+                if ($method === $route['method'] && preg_match($pattern, $uri, $matches)) {
+                    error_log("Ruta encontrada: " . $route['path']);
                     
-                    $params = $this->extractParams($route['path'], $uri);
-                    error_log("Parámetros extraídos: " . print_r($params, true));
-
-                    if ($route['method'] === $method) {
-                        error_log("Ejecutando controlador para ruta: " . $route['path']);
-                        if ($route['requiresAuth']) {
-                            $token = $_COOKIE['jwt'] ?? null;
-                            if (!$token || !$this->authController->validarToken($token)) {
-                                header('Location: /login');
-                                exit;
-                            }
-                        }
-                        return call_user_func($route['handler'], $params);
+                    // Verificar autenticación si es necesario
+                    if ($route['requiresAuth'] && !isset($_COOKIE['jwt'])) {
+                        error_log("Redirigiendo a login - autenticación requerida");
+                        header('Location: /login');
+                        exit;
                     }
+
+                    // Extraer parámetros de la URL
+                    $params = $this->extractParams($route['path'], $uri);
+                    
+                    // Llamar al controlador
+                    return call_user_func($route['handler'], $params);
                 }
             }
-
-            error_log("=== No se encontró ninguna ruta ===\n");
+            
+            error_log("Ruta no encontrada: $method $uri");
             return $this->twig->render('404.twig', ['error' => 'Página no encontrada']);
+            
         } catch (\Exception $e) {
-            error_log("Error en Router->handle: " . $e->getMessage());
+            error_log("Error en Router::handle: " . $e->getMessage());
             error_log("Stack trace: " . $e->getTraceAsString());
-            return $this->twig->render('404.twig', ['error' => 'Error interno del servidor']);
+            return $this->twig->render('404.twig', [
+                'error' => 'Error interno del servidor: ' . $e->getMessage()
+            ]);
         }
     }
 
-    private function convertRouteToRegex($route) {
-        $regex = '#^' . preg_replace('/:[a-zA-Z]+/', '([^/]+)', $route) . '$#';
-        error_log("Ruta convertida a regex: " . $route . " -> " . $regex);
-        return $regex;
+    private function getPattern($path) {
+        return '#^' . preg_replace('#:([a-zA-Z0-9_]+)#', '([^/]+)', $path) . '$#';
     }
 
-    private function extractParams($route, $uri) {
-        $routeParts = explode('/', trim($route, '/'));
+    private function extractParams($path, $uri) {
+        $params = [];
+        $pathParts = explode('/', trim($path, '/'));
         $uriParts = explode('/', trim($uri, '/'));
         
-        error_log("Partes de la ruta: " . print_r($routeParts, true));
-        error_log("Partes de la URI: " . print_r($uriParts, true));
-        
-        $params = [];
-        foreach ($routeParts as $index => $part) {
+        foreach ($pathParts as $index => $part) {
             if (strpos($part, ':') === 0) {
                 $paramName = substr($part, 1);
                 $params[$paramName] = $uriParts[$index];
-                error_log("Parámetro encontrado: {$paramName} = {$uriParts[$index]}");
             }
         }
         
