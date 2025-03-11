@@ -1,10 +1,10 @@
 {% extends 'base.twig' %}
 
-{% block title %}Inicio - Pokédex{% endblock %}
+{% block title %}{{ 'Inicio'|trans }} - {{ 'Pokédex'|trans }}{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Listado de Pokémon</h2>
+    <h2>{{ 'Listado de Pokémon'|trans }}</h2>
     <div class="row">
         {% for pokemon in pokemons %}
             <div class="col-md-4 mb-4">
@@ -20,12 +20,12 @@
                     {% else %}
                         <img src="/scripts/pokemon_images/unknown.png" 
                              class="card-img-top pokemon-image" 
-                             alt="Imagen no disponible">
+                             alt="{{ 'Imagen no disponible'|trans }}">
                     {% endif %}
                     <div class="card-body">
-                        <p class="card-text">Región: {{ pokemon.region }}</p>
+                        <p class="card-text">{{ 'Región'|trans }}: {{ pokemon.region|trans }}</p>
                         <a href="/pokemon/{{ pokemon.pokemon_id }}" class="btn btn-primary">
-                            Ver detalles
+                            {{ 'Ver detalles'|trans }}
                         </a>
                     </div>
                 </div>

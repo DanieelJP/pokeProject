@@ -10,32 +10,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Pokédex"
-msgstr "Pokédex"
-
+# Navegación
 msgid "Inicio"
 msgstr "Inicio"
 
 msgid "Panel Admin"
 msgstr "Panel Admin"
 
+msgid "Cerrar sesión"
+msgstr "Cerrar sesión"
+
+# Títulos y encabezados
+msgid "Listado de Pokémon"
+msgstr "Listado de Pokémon"
+
+msgid "Pokédex"
+msgstr "Pokédex"
+
+# Detalles de Pokémon
 msgid "Región"
 msgstr "Región"
 
 msgid "Ver detalles"
 msgstr "Ver detalles"
 
+msgid "Imagen no disponible"
+msgstr "Imagen no disponible"
+
+msgid "Formas"
+msgstr "Formas"
+
+msgid "Movimientos"
+msgstr "Movimientos"
+
+msgid "Movimientos Rápidos"
+msgstr "Movimientos Rápidos"
+
+msgid "Movimientos Principales"
+msgstr "Movimientos Principales"
+
+msgid "Información de Raid"
+msgstr "Información de Raid"
+
+# Atributos
+msgid "Nombre"
+msgstr "Nombre"
+
+msgid "Daño"
+msgstr "Daño"
+
+msgid "Nivel"
+msgstr "Nivel"
+
+msgid "CP del Jefe"
+msgstr "CP del Jefe"
+
+msgid "HP del Jefe"
+msgstr "HP del Jefe"
+
+msgid "Jugadores Sugeridos"
+msgstr "Jugadores Sugeridos"
+
+msgid "Rango CP al Capturar"
+msgstr "Rango CP al Capturar"
+
+msgid "CP Potenciado"
+msgstr "CP Potenciado"
+
+msgid "IVs Mínimos"
+msgstr "IVs Mínimos"
+
+# Botones y acciones
+msgid "Editar"
+msgstr "Editar"
+
+msgid "Eliminar"
+msgstr "Eliminar"
+
+msgid "Guardar"
+msgstr "Guardar"
+
+msgid "Cancelar"
+msgstr "Cancelar"
+
+msgid "Volver"
+msgstr "Volver"
+
+# Mensajes de error
 msgid "Página no encontrada"
 msgstr "Página no encontrada"
 
-msgid "Error"
-msgstr "Error"
+msgid "Error interno del servidor"
+msgstr "Error interno del servidor"
 
-msgid "Volver al inicio"
-msgstr "Volver al inicio"
+msgid "Error al cargar los Pokémon"
+msgstr "Error al cargar los Pokémon"
 
-msgid "Listado de Pokémon"
-msgstr "Listado de Pokémon"
+msgid "Pokémon no encontrado"
+msgstr "Pokémon no encontrado"
 
-msgid "Imagen no disponible"
-msgstr "Imagen no disponible" 
+# Regiones
+msgid "Teselia"
+msgstr "Teselia"
+
+msgid "Kalos"
+msgstr "Kalos"
+
+msgid "Alola"
+msgstr "Alola"
+
+msgid "Galar"
+msgstr "Galar"
+
+# Acciones y botones
+msgid "Crear"
+msgstr "Crear"
+
+msgid "Actualizar"
+msgstr "Actualizar"
+
+msgid "Nuevo"
+msgstr "Nuevo"
+
+# Mensajes de formularios
+msgid "Identificador único del Pokémon"
+msgstr "Identificador único del Pokémon"
+
+msgid "no se puede modificar después"
+msgstr "no se puede modificar después"
+
+msgid "Selecciona una región"
+msgstr "Selecciona una región"
+
+# Confirmaciones
+msgid "¿Estás seguro de que quieres actualizar este Pokémon?"
+msgstr "¿Estás seguro de que quieres actualizar este Pokémon?"
+
+msgid "¿Estás seguro de que quieres crear este Pokémon?"
+msgstr "¿Estás seguro de que quieres crear este Pokémon?"
+
+# Elementos de tabla
+msgid "ID"
+msgstr "ID"
+
+msgid "Acciones"
+msgstr "Acciones"
+
+# Imágenes
+msgid "Imágenes"
+msgstr "Imágenes"
+
+msgid "Añadir Movimiento"
+msgstr "Añadir Movimiento"
+
+msgid "Ejemplo: 001"
+msgstr "Ejemplo: 001"
+
+msgid "Ejemplo: Bulbasaur"
+msgstr "Ejemplo: Bulbasaur"
+
+# Estadísticas y contadores
+msgid "Pokémon (%d)"
+msgstr "Pokémon (%d)"
+
+msgid "Movimientos (%d)"
+msgstr "Movimientos (%d)"
+
+msgid "Raids (%d)"
+msgstr "Raids (%d)"
+
+msgid "Formas (%d)"
+msgstr "Formas (%d)"
+
+# Encabezados de tablas
+msgid "Gestión de Formas"
+msgstr "Gestión de Formas"
+
+msgid "Pokémon Base"
+msgstr "Pokémon Base"
+
+msgid "Nombre de Forma"
+msgstr "Nombre de Forma"
+
+msgid "CP Jefe"
+msgstr "CP Jefe"
+
+msgid "HP Jefe"
+msgstr "HP Jefe"
+
+msgid "Jugadores"
+msgstr "Jugadores"
+
+msgid "CP Normal"
+msgstr "CP Normal"
+
+msgid "CP Potenciado"
+msgstr "CP Potenciado"
+
+# Botones y acciones adicionales
+msgid "Nueva"
+msgstr "Nueva"
+
+msgid "Nuevo Movimiento"
+msgstr "Nuevo Movimiento"
+
+msgid "Nueva Forma"
+msgstr "Nueva Forma"
+
+# Autenticación
+msgid "Iniciar sesión"
+msgstr "Iniciar sesión"
+
+msgid "Usuario"
+msgstr "Usuario"
+
+msgid "Contraseña"
+msgstr "Contraseña"
+
+msgid "Credenciales inválidas"
+msgstr "Credenciales inválidas" 

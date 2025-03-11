@@ -641,5 +641,13 @@ class PokemonModel {
             throw new \Exception('Error al eliminar la forma: ' . $e->getMessage());
         }
     }
+
+    public function getCount()
+    {
+        $sql = "SELECT COUNT(*) as count FROM pokemons";
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
+    }
 }
 ?>

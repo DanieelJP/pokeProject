@@ -2,51 +2,73 @@
 namespace App\Controllers;
 
 use App\Models\PokemonModel;
+use App\Models\MoveModel;
+use App\Models\RaidModel;
+use App\Models\FormModel;
 
 class AdminController {
     private $model;
     private $twig;
     private $pdo;
+    private $authController;
 
-    public function __construct() {
+    public function __construct($twig = null) {
         global $pdo;
         $this->pdo = $pdo;
         $this->model = new PokemonModel();
         
-        // Verificar la ruta absoluta
-        $viewsPath = realpath(__DIR__ . '/../views');
-        error_log("Ruta de vistas: " . $viewsPath);
-        
-        if (!is_dir($viewsPath)) {
-            error_log("ERROR: La carpeta de vistas no existe: " . $viewsPath);
-            throw new \Exception("La carpeta de vistas no existe");
+        // Si no se proporciona una instancia de Twig, crear una nueva
+        if ($twig === null) {
+            $viewsPath = realpath(__DIR__ . '/../views');
+            $loader = new \Twig\Loader\FilesystemLoader($viewsPath);
+            $this->twig = new \Twig\Environment($loader, [
+                'cache' => false,
+                'debug' => true
+            ]);
+            // Añadir el filtro de traducción directamente
+            $this->twig->addFilter(new \Twig\TwigFilter('trans', function ($string) {
+                return gettext($string);
+            }));
+        } else {
+            $this->twig = $twig;
         }
-        
-        $loader = new \Twig\Loader\FilesystemLoader($viewsPath);
-        $this->twig = new \Twig\Environment($loader, [
-            'cache' => false,
-            'debug' => true
-        ]);
-        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+
+        $this->authController = new AuthController();
     }
 
     public function dashboard() {
-        try {
-            error_log("=== Iniciando carga del dashboard ===");
-            
-            $data = [
-                'pokemons' => $this->model->getAllPokemonsAdmin(),
-                'moves' => $this->model->getAllMoves(),
-                'raids' => $this->model->getAllRaids(),
-                'forms' => $this->model->getAllForms()
-            ];
-
-            return $this->twig->render('admin.twig', $data);
-        } catch (\Exception $e) {
-            error_log("Error en dashboard: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
-            return $this->twig->render('404.twig', ['error' => 'Error al cargar el panel: ' . $e->getMessage()]);
+        if (!$this->authController->isLoggedIn()) {
+            header('Location: /login');
+            exit;
         }
+
+        $pokemonModel = new PokemonModel();
+        $moveModel = new MoveModel();
+        $raidModel = new RaidModel();
+        $formModel = new FormModel();
+
+        // Obtener los contadores
+        $pokemon_count = $pokemonModel->getCount();
+        $moves_count = $moveModel->getCount();
+        $raids_count = $raidModel->getCount();
+        $forms_count = $formModel->getCount();
+
+        // Obtener los datos
+        $pokemons = $pokemonModel->getAllPokemons();
+        $moves = $moveModel->getAllMoves();
+        $raids = $raidModel->getAllRaids();
+        $forms = $formModel->getAllForms();
+
+        return $this->twig->render('admin/dashboard.twig', [
+            'pokemon_count' => $pokemon_count,
+            'moves_count' => $moves_count,
+            'raids_count' => $raids_count,
+            'forms_count' => $forms_count,
+            'pokemons' => $pokemons,
+            'moves' => $moves,
+            'raids' => $raids,
+            'forms' => $forms
+        ]);
     }
 
     public function editPokemon($params) {
