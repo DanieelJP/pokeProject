@@ -39,42 +39,46 @@ class AuthController {
     }
 
     public function isLoggedIn() {
-        // Verificar si existe la sesión
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
         return isset($_SESSION['user_id']);
     }
 
     public function loginPage() {
-        if ($this->isLoggedIn()) {
-            header('Location: /admin');
-            exit;
-        }
         return $this->twig->render('auth/login.twig');
     }
 
     public function login() {
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
+        try {
+            $username = $_POST['username'] ?? '';
+            $password = $_POST['password'] ?? '';
 
-        // Aquí deberías verificar las credenciales contra la base de datos
-        if ($username === 'admin' && $password === 'admin') {
-            session_start();
-            $_SESSION['user_id'] = 1;
-            $_SESSION['username'] = $username;
-            header('Location: /admin');
-            exit;
+            if ($username === 'admin' && $password === 'admin123') {
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['user_id'] = 1;
+                $_SESSION['username'] = $username;
+                header('Location: /admin');
+                exit;
+            }
+
+            return $this->twig->render('auth/login.twig', [
+                'error' => 'Credenciales inválidas'
+            ]);
+        } catch (\Exception $e) {
+            error_log("Error en login: " . $e->getMessage());
+            return $this->twig->render('auth/login.twig', [
+                'error' => 'Error al iniciar sesión'
+            ]);
         }
-
-        return $this->twig->render('auth/login.twig', [
-            'error' => 'Credenciales inválidas'
-        ]);
     }
 
     public function logout() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_destroy();
         header('Location: /login');
         exit;

@@ -35,17 +35,18 @@ class Router {
                     error_log("Ruta encontrada: " . $route['path']);
                     
                     // Verificar autenticación si es necesario
-                    if ($route['requiresAuth'] && !isset($_COOKIE['jwt'])) {
-                        error_log("Redirigiendo a login - autenticación requerida");
-                        header('Location: /login');
-                        exit;
+                    if ($route['requiresAuth']) {
+                        $authController = new \App\Controllers\AuthController($this->twig);
+                        if (!$authController->isLoggedIn()) {
+                            error_log("Redirigiendo a login - autenticación requerida");
+                            header('Location: /login');
+                            exit;
+                        }
                     }
 
                     // Extraer parámetros de la URL
-                    $params = $this->extractParams($route['path'], $uri);
-                    
-                    // Llamar al controlador
-                    return call_user_func($route['handler'], $params);
+                    array_shift($matches);
+                    return call_user_func_array($route['handler'], [['id' => $matches[0] ?? null]]);
                 }
             }
             
@@ -88,12 +89,19 @@ class Router {
     }
 
     public function setRoutes() {
-        // Rutas existentes...
-        
+        // Rutas de autenticación
+        $authController = new \App\Controllers\AuthController($this->twig);
+        $this->add('GET', '/login', [$authController, 'loginPage']);
+        $this->add('POST', '/login', [$authController, 'login']);
+        $this->add('GET', '/logout', [$authController, 'logout']);
+
+        // Rutas de API - Asegurarnos de que están antes de las rutas del admin
+        $apiController = new \App\Controllers\ApiController($this->twig);
+        $this->add('POST', '/api/login', [$apiController, 'login']);
+        $this->add('GET', '/api/validate-token', [$apiController, 'validateToken']);
+
         // Rutas del panel de administración
-        $adminController = new \App\Controllers\AdminController();
-        
-        // Ruta principal del admin
+        $adminController = new \App\Controllers\AdminController($this->twig);
         $this->add('GET', '/admin', [$adminController, 'dashboard'], true);
         
         // Rutas CRUD para Pokémon
@@ -119,5 +127,16 @@ class Router {
         $this->add('GET', '/admin/form/edit/:id', [$adminController, 'editForm'], true);
         $this->add('POST', '/admin/form/save', [$adminController, 'saveForm'], true);
         $this->add('POST', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
+    }
+
+    private function handleAuth($handler, $requiresAuth) {
+        if ($requiresAuth) {
+            $authController = new \App\Controllers\AuthController($this->twig);
+            if (!$authController->checkAuth()) {
+                header('Location: /login');
+                exit;
+            }
+        }
+        return $handler;
     }
 } 

@@ -204,5 +204,52 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/js/admin.js"></script>
+{{ parent() }}
+<script>
+function deletePokemon(pokemonId) {
+    console.log('Intentando eliminar pokemon:', pokemonId);
+    if (confirm('¿Estás seguro de que quieres eliminar este Pokémon?')) {
+        try {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/admin/pokemon/delete/${pokemonId}`;
+            document.body.appendChild(form);
+            console.log('Enviando formulario a:', form.action);
+            form.submit();
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+        }
+    }
+}
+
+function deleteMove(moveId) {
+    if (confirm('¿Estás seguro de que quieres eliminar este movimiento?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/move/delete/${moveId}`;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function deleteRaid(raidId) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta raid?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/raid/delete/${raidId}`;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function deleteForm(formId) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta forma?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/form/delete/${formId}`;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 {% endblock %} 
