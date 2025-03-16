@@ -369,49 +369,36 @@ class PokemonModel {
 
     public function deletePokemon($id) {
         try {
-            error_log("Iniciando eliminación de Pokémon con ID: " . $id);
-            
-            // Primero eliminamos las referencias en otras tablas
+            // Primero eliminamos registros relacionados
             $this->pdo->beginTransaction();
-            error_log("Transacción iniciada");
-
-            // Eliminar imágenes
-            $stmt = $this->pdo->prepare("DELETE FROM pokemon_images WHERE pokemon_id = :id");
-            $stmt->execute(['id' => $id]);
-            error_log("Imágenes eliminadas: " . $stmt->rowCount());
-
-            // Eliminar movimientos
+            
+            // Eliminar movimientos asociados
             $stmt = $this->pdo->prepare("DELETE FROM moves WHERE pokemon_id = :id");
             $stmt->execute(['id' => $id]);
-            error_log("Movimientos eliminados: " . $stmt->rowCount());
-
-            // Eliminar raids
+            
+            // Eliminar raids asociadas
             $stmt = $this->pdo->prepare("DELETE FROM raids WHERE pokemon_id = :id");
             $stmt->execute(['id' => $id]);
-            error_log("Raids eliminadas: " . $stmt->rowCount());
-
-            // Eliminar formas
+            
+            // Eliminar formas asociadas
             $stmt = $this->pdo->prepare("DELETE FROM pokemon_forms WHERE pokemon_id = :id");
             $stmt->execute(['id' => $id]);
-            error_log("Formas eliminadas: " . $stmt->rowCount());
-
-            // Finalmente eliminamos el Pokémon
+            
+            // Eliminar imágenes asociadas
+            $stmt = $this->pdo->prepare("DELETE FROM pokemon_images WHERE pokemon_id = :id");
+            $stmt->execute(['id' => $id]);
+            
+            // Finalmente eliminar el Pokémon
             $stmt = $this->pdo->prepare("DELETE FROM pokemons WHERE pokemon_id = :id");
             $result = $stmt->execute(['id' => $id]);
-            error_log("Pokémon eliminado: " . ($result ? 'éxito' : 'fallo'));
-
-            if (!$result) {
-                throw new \Exception('Error al eliminar el Pokémon');
-            }
-
+            
             $this->pdo->commit();
-            error_log("Transacción completada con éxito");
             return true;
-        } catch (\Exception $e) {
+            
+        } catch (\PDOException $e) {
             $this->pdo->rollBack();
             error_log("Error en deletePokemon: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
-            throw new \Exception('Error al eliminar el Pokémon: ' . $e->getMessage());
+            throw new \Exception('Error al eliminar el Pokémon');
         }
     }
 
@@ -640,6 +627,14 @@ class PokemonModel {
             error_log("Error en deleteForm: " . $e->getMessage());
             throw new \Exception('Error al eliminar la forma: ' . $e->getMessage());
         }
+    }
+
+    public function getCount()
+    {
+        $sql = "SELECT COUNT(*) as count FROM pokemons";
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetch();
+        return $result['count'];
     }
 }
 ?>

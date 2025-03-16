@@ -2,51 +2,46 @@
 namespace App\Controllers;
 
 use App\Models\PokemonModel;
+use App\Models\MoveModel;
+use App\Models\RaidModel;
+use App\Models\FormModel;
 
 class AdminController {
     private $model;
     private $twig;
     private $pdo;
+    private $authController;
 
-    public function __construct() {
+    public function __construct($twig) {
         global $pdo;
         $this->pdo = $pdo;
         $this->model = new PokemonModel();
-        
-        // Verificar la ruta absoluta
-        $viewsPath = realpath(__DIR__ . '/../views');
-        error_log("Ruta de vistas: " . $viewsPath);
-        
-        if (!is_dir($viewsPath)) {
-            error_log("ERROR: La carpeta de vistas no existe: " . $viewsPath);
-            throw new \Exception("La carpeta de vistas no existe");
-        }
-        
-        $loader = new \Twig\Loader\FilesystemLoader($viewsPath);
-        $this->twig = new \Twig\Environment($loader, [
-            'cache' => false,
-            'debug' => true
-        ]);
-        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->twig = $twig;
+        $this->authController = new AuthController($twig);
     }
 
     public function dashboard() {
-        try {
-            error_log("=== Iniciando carga del dashboard ===");
-            
-            $data = [
-                'pokemons' => $this->model->getAllPokemonsAdmin(),
-                'moves' => $this->model->getAllMoves(),
-                'raids' => $this->model->getAllRaids(),
-                'forms' => $this->model->getAllForms()
-            ];
+        // Verificar autenticación
+        $this->authController->requireAuth();
 
-            return $this->twig->render('admin.twig', $data);
-        } catch (\Exception $e) {
-            error_log("Error en dashboard: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
-            return $this->twig->render('404.twig', ['error' => 'Error al cargar el panel: ' . $e->getMessage()]);
-        }
+        // Instanciar modelos
+        $pokemonModel = new PokemonModel();
+        $moveModel = new MoveModel();
+        $raidModel = new RaidModel();
+        $formModel = new FormModel();
+
+        // Renderizar el dashboard con los datos
+        return $this->twig->render('admin/dashboard.twig', [
+            'pokemon_count' => $pokemonModel->getCount(),
+            'moves_count' => $moveModel->getCount(),
+            'raids_count' => $raidModel->getCount(),
+            'forms_count' => $formModel->getCount(),
+            'pokemons' => $pokemonModel->getAllPokemons(),
+            'moves' => $moveModel->getAllMoves(),
+            'raids' => $raidModel->getAllRaids(),
+            'forms' => $formModel->getAllForms(),
+            'is_authenticated' => true
+        ]);
     }
 
     public function editPokemon($params) {
@@ -164,16 +159,14 @@ class AdminController {
 
     public function deleteMove($params) {
         try {
+            $this->authController->requireAuth();
             $id = $params['id'] ?? null;
-            if (!$id) {
-                throw new \Exception('ID no especificado');
-            }
-
-            $this->model->deleteMove($id);
+            if (!$id) throw new \Exception('ID no especificado');
+            
+            $result = $this->model->deleteMove($id);
             header('Location: /admin?success=' . urlencode('Movimiento eliminado correctamente'));
             exit;
         } catch (\Exception $e) {
-            error_log("Error en deleteMove: " . $e->getMessage());
             header('Location: /admin?error=' . urlencode($e->getMessage()));
             exit;
         }
@@ -313,16 +306,14 @@ class AdminController {
 
     public function deleteRaid($params) {
         try {
+            $this->authController->requireAuth();
             $id = $params['id'] ?? null;
-            if (!$id) {
-                throw new \Exception('ID no especificado');
-            }
-
-            $this->model->deleteRaid($id);
+            if (!$id) throw new \Exception('ID no especificado');
+            
+            $result = $this->model->deleteRaid($id);
             header('Location: /admin?success=' . urlencode('Raid eliminada correctamente'));
             exit;
         } catch (\Exception $e) {
-            error_log("Error en deleteRaid: " . $e->getMessage());
             header('Location: /admin?error=' . urlencode($e->getMessage()));
             exit;
         }
@@ -406,16 +397,14 @@ class AdminController {
 
     public function deleteForm($params) {
         try {
+            $this->authController->requireAuth();
             $id = $params['id'] ?? null;
-            if (!$id) {
-                throw new \Exception('ID no especificado');
-            }
-
-            $this->model->deleteForm($id);
+            if (!$id) throw new \Exception('ID no especificado');
+            
+            $result = $this->model->deleteForm($id);
             header('Location: /admin?success=' . urlencode('Forma eliminada correctamente'));
             exit;
         } catch (\Exception $e) {
-            error_log("Error en deleteForm: " . $e->getMessage());
             header('Location: /admin?error=' . urlencode($e->getMessage()));
             exit;
         }
@@ -425,20 +414,27 @@ class AdminController {
         try {
             error_log("=== Iniciando deletePokemon ===");
             error_log("Parámetros recibidos: " . print_r($params, true));
-
+            
+            // Verificar autenticación
+            $this->authController->requireAuth();
+            
             $id = $params['id'] ?? null;
             if (!$id) {
                 throw new \Exception('ID no especificado');
             }
-
+            
+            // Intentar eliminar el Pokémon
             $result = $this->model->deletePokemon($id);
             
-            // Redirigir después de la eliminación
-            header('Location: /admin?success=' . urlencode('Pokémon eliminado correctamente'));
-            exit;
+            if ($result) {
+                header('Location: /admin?success=' . urlencode('Pokémon eliminado correctamente'));
+                exit;
+            } else {
+                throw new \Exception('Error al eliminar el Pokémon');
+            }
+            
         } catch (\Exception $e) {
             error_log("Error en deletePokemon: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
             header('Location: /admin?error=' . urlencode($e->getMessage()));
             exit;
         }

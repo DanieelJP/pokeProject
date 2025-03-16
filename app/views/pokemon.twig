@@ -1,6 +1,6 @@
 {% extends 'base.twig' %}
 
-{% block title %}{{ pokemon.name }} - Pokédex{% endblock %}
+{% block title %}{{ pokemon.name }} - {{ 'Pokédex'|trans }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -20,18 +20,18 @@
                         {% endfor %}
                     {% else %}
                         <img src="/scripts/pokemon_images/unknown.png" 
-                             alt="Imagen no disponible"
+                             alt="{{ 'Imagen no disponible'|trans }}"
                              class="img-fluid mb-3">
                     {% endif %}
                     
-                    <p><strong>Región:</strong> {{ pokemon.region }}</p>
+                    <p><strong>{{ 'Región'|trans }}:</strong> {{ pokemon.region|trans }}</p>
 
                     {% if pokemon.forms %}
-                        <h3>Formas</h3>
+                        <h3>{{ 'Formas'|trans }}</h3>
                         <ul class="list-group mb-3">
                             {% for form in pokemon.forms %}
                                 <li class="list-group-item">
-                                    <strong>{{ form.pokemon_name }}</strong>: {{ form.form_name }}
+                                    <strong>{{ form.pokemon_name }}</strong>: {{ form.form_name|trans }}
                                 </li>
                             {% endfor %}
                         </ul>
@@ -44,25 +44,25 @@
             {% if pokemon.moves.fast or pokemon.moves.main %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3>Movimientos</h3>
+                        <h3>{{ 'Movimientos'|trans }}</h3>
                     </div>
                     <div class="card-body">
                         {% if pokemon.moves.fast %}
-                            <h4>Movimientos Rápidos</h4>
+                            <h4>{{ 'Movimientos Rápidos'|trans }}</h4>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Daño</th>
-                                            <th>EPS</th>
-                                            <th>DPS</th>
+                                            <th>{{ 'Nombre'|trans }}</th>
+                                            <th>{{ 'Daño'|trans }}</th>
+                                            <th>{{ 'EPS'|trans }}</th>
+                                            <th>{{ 'DPS'|trans }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for move in pokemon.moves.fast %}
                                             <tr>
-                                                <td>{{ move.name }}</td>
+                                                <td>{{ move.name|trans }}</td>
                                                 <td>{{ move.damage }}</td>
                                                 <td>{{ move.eps }}</td>
                                                 <td>{{ move.dps }}</td>
@@ -74,21 +74,21 @@
                         {% endif %}
 
                         {% if pokemon.moves.main %}
-                            <h4>Movimientos Principales</h4>
+                            <h4>{{ 'Movimientos Principales'|trans }}</h4>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>Daño</th>
-                                            <th>EPS</th>
-                                            <th>DPS</th>
+                                            <th>{{ 'Nombre'|trans }}</th>
+                                            <th>{{ 'Daño'|trans }}</th>
+                                            <th>{{ 'EPS'|trans }}</th>
+                                            <th>{{ 'DPS'|trans }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for move in pokemon.moves.main %}
                                             <tr>
-                                                <td>{{ move.name }}</td>
+                                                <td>{{ move.name|trans }}</td>
                                                 <td>{{ move.damage }}</td>
                                                 <td>{{ move.eps }}</td>
                                                 <td>{{ move.dps }}</td>
@@ -105,17 +105,17 @@
             {% if pokemon.raid %}
                 <div class="card">
                     <div class="card-header">
-                        <h3>Información de Raid</h3>
+                        <h3>{{ 'Información de Raid'|trans }}</h3>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
-                            <li class="list-group-item"><strong>Nivel:</strong> {{ pokemon.raid.tier }}</li>
-                            <li class="list-group-item"><strong>CP del Jefe:</strong> {{ pokemon.raid.boss_cp }}</li>
-                            <li class="list-group-item"><strong>HP del Jefe:</strong> {{ pokemon.raid.boss_hp }}</li>
-                            <li class="list-group-item"><strong>Jugadores Sugeridos:</strong> {{ pokemon.raid.suggested_players }}</li>
-                            <li class="list-group-item"><strong>Rango CP al Capturar:</strong> {{ pokemon.raid.caught_cp_range }}</li>
-                            <li class="list-group-item"><strong>CP Potenciado:</strong> {{ pokemon.raid.caught_cp_boosted }}</li>
-                            <li class="list-group-item"><strong>IVs Mínimos:</strong> {{ pokemon.raid.minimum_ivs }}</li>
+                            <li class="list-group-item"><strong>{{ 'Nivel'|trans }}:</strong> {{ 'Tier'|trans }} {{ pokemon.raid.tier }}</li>
+                            <li class="list-group-item"><strong>{{ 'CP del Jefe'|trans }}:</strong> {{ pokemon.raid.boss_cp }}</li>
+                            <li class="list-group-item"><strong>{{ 'HP del Jefe'|trans }}:</strong> {{ pokemon.raid.boss_hp }}</li>
+                            <li class="list-group-item"><strong>{{ 'Jugadores Sugeridos'|trans }}:</strong> {{ pokemon.raid.suggested_players }}</li>
+                            <li class="list-group-item"><strong>{{ 'Rango CP al Capturar'|trans }}:</strong> {{ pokemon.raid.caught_cp_range }}</li>
+                            <li class="list-group-item"><strong>{{ 'CP Potenciado'|trans }}:</strong> {{ pokemon.raid.caught_cp_boosted }}</li>
+                            <li class="list-group-item"><strong>{{ 'IVs Mínimos'|trans }}:</strong> {{ pokemon.raid.minimum_ivs }}</li>
                         </ul>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
     </div>
     
     <div class="mt-4">
-        <a href="/" class="btn btn-primary">Volver al listado</a>
+        <a href="/" class="btn btn-primary">{{ 'Volver'|trans }}</a>
     </div>
 </div>
 {% endblock %}

@@ -8,79 +8,105 @@ require_once __DIR__ . '/../app/controllers/PokemonController.php';
 require_once __DIR__ . '/../app/controllers/AdminController.php';
 require_once __DIR__ . '/../app/controllers/ApiController.php';
 require_once __DIR__ . '/../app/models/PokemonModel.php';
+require_once __DIR__ . '/../app/models/MoveModel.php';
+require_once __DIR__ . '/../app/models/RaidModel.php';
+require_once __DIR__ . '/../app/models/FormModel.php';
+require_once __DIR__ . '/../app/extensions/TranslationExtension.php';
 
 use App\Router;
-use App\Controllers\PokemonController;
 use App\Controllers\AuthController;
+use App\Controllers\PokemonController;
 use App\Controllers\AdminController;
 use App\Controllers\ApiController;
+use App\Extensions\TranslationExtension;
+use Twig\TwigFilter;
 
-// Configuración de Twig
-$loader = new \Twig\Loader\FilesystemLoader('../app/views');
+// Configuración de idioma
+$availableLanguages = ['es', 'en'];
+$defaultLanguage = 'es';
+
+// Obtener el idioma de la cookie o usar el predeterminado
+$lang = $_COOKIE['lang'] ?? $defaultLanguage;
+$lang = in_array($lang, $availableLanguages) ? $lang : $defaultLanguage;
+
+// Mapear idiomas a locales disponibles
+$localeMap = [
+    'en' => 'en_US.utf8',
+    'es' => 'es_ES.utf8'
+];
+
+$locale = $localeMap[$lang] ?? 'es_ES.utf8';
+
+// Configurar locale y gettext
+putenv("LC_ALL=$locale");
+putenv("LANGUAGE=$locale");
+putenv("LANG=$locale");
+setlocale(LC_ALL, $locale);
+
+// Debug
+error_log("=== Configuración de idioma ===");
+error_log("Cookie lang: " . ($lang ?? 'no cookie'));
+error_log("Locale configurado: " . setlocale(LC_ALL, 0));
+error_log("LANG env: " . getenv("LANG"));
+error_log("LANGUAGE env: " . getenv("LANGUAGE"));
+error_log("LC_ALL env: " . getenv("LC_ALL"));
+
+// Especificar la ubicación de las traducciones
+$domain = "messages";
+$localePath = dirname(__DIR__) . "/app/lang";
+bindtextdomain($domain, $localePath);
+bind_textdomain_codeset($domain, 'UTF-8');
+textdomain($domain);
+
+// Probar una traducción
+error_log("Prueba de traducción 'Panel de Administración': " . gettext("Panel de Administración"));
+
+// Configurar Twig
+$loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/app/views');
 $twig = new \Twig\Environment($loader, [
     'cache' => false,
     'debug' => true
 ]);
 
+// Añadir extensiones de Twig
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-// Configuración de internacionalización
-$lang = $_COOKIE['lang'] ?? 'es';
-putenv("LANG=$lang");
-setlocale(LC_ALL, $lang);
-bindtextdomain("messages", "../app/lang");
-textdomain("messages");
-
-// Añadir filtro de traducción a Twig
-$twig->addFilter(new \Twig\TwigFilter('trans', function ($string) {
+// Añadir filtro de traducción directamente
+$twig->addFilter(new TwigFilter('trans', function ($string, $params = []) {
+    if (!empty($params)) {
+        return vsprintf(gettext($string), $params);
+    }
     return gettext($string);
 }));
 
-// Inicializar controladores
-$authController = new AuthController();
-$pokemonController = new PokemonController();
-$adminController = new AdminController();
+// Añadir variable global para el idioma actual
+$twig->addGlobal('locale', $lang);
+
+// Inicializar controladores con la misma instancia de Twig
+$authController = new AuthController($twig);
+$pokemonController = new PokemonController($twig);
+$adminController = new AdminController($twig);
 $apiController = new ApiController();
 
 // Configurar router
 $router = new Router($twig, $authController);
 
 // Definir rutas
-error_log("Registrando rutas...");
-
-// Ruta principal
 $router->add('GET', '/', [$pokemonController, 'home']);
-error_log("Ruta '/' registrada");
-
-// Ruta para Pokémon individual
 $router->add('GET', '/pokemon/:id', [$pokemonController, 'showPokemon']);
-error_log("Ruta '/pokemon/:id' registrada");
-
-// Otras rutas...
 $router->add('GET', '/admin', [$adminController, 'dashboard'], true);
-$router->add('GET', '/admin/pokemon/edit/:id', [$adminController, 'editPokemon'], true);
-$router->add('GET', '/admin/pokemon/new', [$adminController, 'newPokemon'], true);
 $router->add('GET', '/login', [$authController, 'loginPage']);
 $router->add('POST', '/login', [$authController, 'login']);
 $router->add('GET', '/logout', [$authController, 'logout']);
-
-// Añadir rutas de la API
-$router->add('POST', '/api/login', [$apiController, 'login']);
-$router->add('POST', '/api/validate-token', [$apiController, 'validateToken']);
 
 // Manejar la solicitud actual
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-error_log("\n=== PROCESANDO SOLICITUD ===");
-error_log("Método: " . $method);
-error_log("URI: " . $uri);
-
 try {
     echo $router->handle($method, $uri);
 } catch (Exception $e) {
     error_log("Error al procesar la solicitud: " . $e->getMessage());
-    error_log("Stack trace: " . $e->getTraceAsString());
     echo $twig->render('404.twig', [
         'error' => 'Error: ' . $e->getMessage()
     ]);

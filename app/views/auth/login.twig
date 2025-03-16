@@ -1,6 +1,6 @@
 {% extends 'base.twig' %}
 
-{% block title %}Iniciar Sesión - Pokédex{% endblock %}
+{% block title %}{{ 'Iniciar sesión'|trans }} - {{ 'Pokédex'|trans }}{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
@@ -8,35 +8,27 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">Iniciar Sesión</h2>
+                    <h2>{{ 'Iniciar sesión'|trans }}</h2>
                 </div>
                 <div class="card-body">
                     {% if error %}
                         <div class="alert alert-danger">
-                            {{ error }}
+                            {{ error|trans }}
                         </div>
                     {% endif %}
                     
                     <form method="POST" action="/login">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="username" 
-                                   name="username" 
-                                   required>
+                            <label for="username" class="form-label">{{ 'Usuario'|trans }}</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="password" 
-                                   name="password" 
-                                   required>
+                            <label for="password" class="form-label">{{ 'Contraseña'|trans }}</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">
-                                Iniciar Sesión
+                                {{ 'Iniciar sesión'|trans }}
                             </button>
                         </div>
                     </form>

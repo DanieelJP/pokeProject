@@ -1,26 +1,36 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ locale|default('es') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Pokédex{% endblock %}</title>
+    <title>{% block title %}{{ 'Pokédex'|trans }}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="/">Pokédex</a>
+                <a class="navbar-brand" href="/">{{ 'Pokédex'|trans }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Inicio</a>
+                            <a class="nav-link" href="/"><i class="fas fa-home"></i> {{ 'Inicio'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin"><i class="fas fa-cog"></i> {{ 'Panel Admin'|trans }}</a>
                         </li>
                     </ul>
+                    <div class="navbar-nav">
+                        <select class="form-select form-select-sm bg-dark text-light border-secondary" style="width: auto;" onchange="changeLanguage(this.value)">
+                            <option value="es" {% if locale == 'es' %}selected{% endif %}>🇪🇸 ES</option>
+                            <option value="en" {% if locale == 'en' %}selected{% endif %}>🇬🇧 EN</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -32,10 +42,40 @@
 
     <footer class="bg-dark text-light py-3 mt-5">
         <div class="container text-center">
-            <p>&copy; 2024 Pokédex</p>
+            <p>&copy; 2024 {{ 'Pokédex'|trans }}</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function changeLanguage(lang) {
+        // Establecer la cookie con una fecha de expiración de 1 año
+        let date = new Date();
+        date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+        document.cookie = `lang=${lang};path=/;expires=${date.toUTCString()}`;
+        
+        // Actualizar el selector antes de recargar
+        const select = document.querySelector('select');
+        if (select) {
+            select.value = lang;
+        }
+        
+        // Recargar la página
+        window.location.reload();
+    }
+
+    // Al cargar la página, asegurarse de que el selector refleje el idioma actual
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentLang = document.cookie.split('; ').find(row => row.startsWith('lang='));
+        if (currentLang) {
+            const lang = currentLang.split('=')[1];
+            const select = document.querySelector('select');
+            if (select) {
+                select.value = lang;
+            }
+        }
+    });
+    </script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

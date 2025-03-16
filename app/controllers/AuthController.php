@@ -9,15 +9,23 @@ class AuthController {
     private $pdo;
     private $secretKey;
 
-    public function __construct() {
+    public function __construct($twig = null) {
         global $pdo;
         $this->pdo = $pdo;
         $this->secretKey = $_ENV['JWT_SECRET'] ?? 'tu_clave_secreta';
-        $loader = new \Twig\Loader\FilesystemLoader('../app/views');
-        $this->twig = new \Twig\Environment($loader, [
-            'cache' => false,
-            'debug' => true
-        ]);
+        
+        if ($twig === null) {
+            $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/views');
+            $this->twig = new \Twig\Environment($loader, [
+                'cache' => false,
+                'debug' => true
+            ]);
+            // Añadir las extensiones necesarias
+            $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+            $this->twig->addExtension(new \App\Extensions\TranslationExtension());
+        } else {
+            $this->twig = $twig;
+        }
     }
 
     public function generateToken($username) {
@@ -30,10 +38,15 @@ class AuthController {
         return JWT::encode($payload, $this->secretKey, 'HS256');
     }
 
+    public function isLoggedIn() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return isset($_SESSION['user_id']);
+    }
+
     public function loginPage() {
-        return $this->twig->render('auth/login.twig', [
-            'error' => null
-        ]);
+        return $this->twig->render('auth/login.twig');
     }
 
     public function login() {
@@ -41,19 +54,12 @@ class AuthController {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            // Por ahora, usaremos credenciales hardcodeadas
-            // En producción, esto debería validar contra la base de datos
             if ($username === 'admin' && $password === 'admin123') {
-                $token = $this->generateToken($username);
-                
-                // Guardar token en cookie
-                setcookie('jwt', $token, [
-                    'expires' => time() + (7 * 24 * 60 * 60), // 1 semana
-                    'path' => '/',
-                    'httponly' => true,
-                    'samesite' => 'Strict'
-                ]);
-
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION['user_id'] = 1;
+                $_SESSION['username'] = $username;
                 header('Location: /admin');
                 exit;
             }
@@ -70,13 +76,19 @@ class AuthController {
     }
 
     public function logout() {
-        setcookie('jwt', '', [
-            'expires' => time() - 3600,
-            'path' => '/',
-            'httponly' => true
-        ]);
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        session_destroy();
         header('Location: /login');
         exit;
+    }
+
+    public function requireAuth() {
+        if (!$this->isLoggedIn()) {
+            header('Location: /login');
+            exit;
+        }
     }
 
     public function validarToken($token) {

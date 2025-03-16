@@ -1,6 +1,6 @@
 {% extends 'layout.twig' %}
 
-{% block title %}{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Pokémon - Panel de Administración{% endblock %}
+{% block title %}{{ action == 'edit' ? 'Editar'|trans : 'Nuevo'|trans }} {{ 'Pokémon'|trans }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -22,9 +22,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar' : 'Nuevo' }} Pokémon</h2>
+                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar'|trans : 'Nuevo'|trans }} {{ 'Pokémon'|trans }}</h2>
                     <a href="/admin" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Volver
+                        <i class="fas fa-arrow-left"></i> {{ 'Volver'|trans }}
                     </a>
                 </div>
                 <div class="card-body">
@@ -34,38 +34,38 @@
                         {% endif %}
                         
                         <div class="mb-3">
-                            <label for="pokemon_id" class="form-label">ID Pokémon</label>
+                            <label for="pokemon_id" class="form-label">{{ 'ID Pokémon'|trans }}</label>
                             <input type="text" class="form-control" id="pokemon_id" name="pokemon_id" 
                                    value="{{ pokemon.pokemon_id }}" {{ action == 'edit' ? 'readonly' : '' }} 
                                    placeholder="Ejemplo: 001" required>
-                            <div class="form-text">Identificador único del Pokémon (no se puede modificar después)</div>
+                            <div class="form-text">{{ 'Identificador único del Pokémon'|trans }} ({{ 'no se puede modificar después'|trans }})</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
+                            <label for="name" class="form-label">{{ 'Nombre'|trans }}</label>
                             <input type="text" class="form-control" id="name" name="name" 
                                    value="{{ pokemon.name }}" placeholder="Ejemplo: Bulbasaur" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="region" class="form-label">Región</label>
+                            <label for="region" class="form-label">{{ 'Región'|trans }}</label>
                             <select class="form-select" id="region" name="region" required>
-                                <option value="">Selecciona una región</option>
-                                <option value="Kanto" {{ pokemon.region == 'Kanto' ? 'selected' : '' }}>Kanto</option>
-                                <option value="Johto" {{ pokemon.region == 'Johto' ? 'selected' : '' }}>Johto</option>
-                                <option value="Hoenn" {{ pokemon.region == 'Hoenn' ? 'selected' : '' }}>Hoenn</option>
-                                <option value="Sinnoh" {{ pokemon.region == 'Sinnoh' ? 'selected' : '' }}>Sinnoh</option>
-                                <option value="Teselia" {{ pokemon.region == 'Teselia' ? 'selected' : '' }}>Teselia</option>
-                                <option value="Kalos" {{ pokemon.region == 'Kalos' ? 'selected' : '' }}>Kalos</option>
-                                <option value="Alola" {{ pokemon.region == 'Alola' ? 'selected' : '' }}>Alola</option>
-                                <option value="Galar" {{ pokemon.region == 'Galar' ? 'selected' : '' }}>Galar</option>
+                                <option value="">{{ 'Selecciona una región'|trans }}</option>
+                                <option value="Kanto" {{ pokemon.region == 'Kanto' ? 'selected' : '' }}>{{ 'Kanto'|trans }}</option>
+                                <option value="Johto" {{ pokemon.region == 'Johto' ? 'selected' : '' }}>{{ 'Johto'|trans }}</option>
+                                <option value="Hoenn" {{ pokemon.region == 'Hoenn' ? 'selected' : '' }}>{{ 'Hoenn'|trans }}</option>
+                                <option value="Sinnoh" {{ pokemon.region == 'Sinnoh' ? 'selected' : '' }}>{{ 'Sinnoh'|trans }}</option>
+                                <option value="Teselia" {{ pokemon.region == 'Teselia' ? 'selected' : '' }}>{{ 'Teselia'|trans }}</option>
+                                <option value="Kalos" {{ pokemon.region == 'Kalos' ? 'selected' : '' }}>{{ 'Kalos'|trans }}</option>
+                                <option value="Alola" {{ pokemon.region == 'Alola' ? 'selected' : '' }}>{{ 'Alola'|trans }}</option>
+                                <option value="Galar" {{ pokemon.region == 'Galar' ? 'selected' : '' }}>{{ 'Galar'|trans }}</option>
                             </select>
                         </div>
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> 
-                                {{ action == 'edit' ? 'Actualizar' : 'Crear' }} Pokémon
+                                {{ action == 'edit' ? 'Actualizar'|trans : 'Crear'|trans }} {{ 'Pokémon'|trans }}
                             </button>
                         </div>
                     </form>
