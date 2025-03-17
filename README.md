@@ -46,7 +46,7 @@ Esta aplicación web es una Pokédex interactiva que permite a los usuarios expl
 
 3. Configurar la base de datos:
    - Crear una base de datos MySQL llamada `pokemon_db`
-   - Importar el archivo `database/pokemon_db.sql`
+   - Importar el archivo `dump-pokemon_db-202503170220.sql`
    - Configurar las credenciales en `config/config.php`
 
 4. Configurar el servidor web:
