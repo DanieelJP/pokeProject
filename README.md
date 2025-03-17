@@ -1,4 +1,4 @@
-# Pokédex - Aplicación Web con PHP, MySQL y Bootstrap
+# pokeProject - Aplicación Web con PHP, MySQL y Bootstrap
 
 ## Descripción
 
