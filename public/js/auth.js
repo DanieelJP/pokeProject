@@ -1,4 +1,17 @@
+/**
+ * Clase Auth
+ * 
+ * Maneja la autenticación del lado del cliente mediante JWT
+ */
 class Auth {
+    /**
+     * Realiza el login del usuario
+     * 
+     * @param {string} username Nombre de usuario
+     * @param {string} password Contraseña
+     * @returns {Promise<boolean>} True si el login es exitoso
+     * @throws {Error} Si hay un error en el proceso de login
+     */
     static async login(username, password) {
         try {
             const response = await fetch('/api/login', {
@@ -24,6 +37,11 @@ class Auth {
         }
     }
 
+    /**
+     * Valida si el token JWT almacenado es válido
+     * 
+     * @returns {Promise<boolean>} True si el token es válido
+     */
     static async validateToken() {
         try {
             const token = localStorage.getItem('jwt_token');
@@ -42,6 +60,11 @@ class Auth {
         }
     }
 
+    /**
+     * Cierra la sesión del usuario
+     * 
+     * Elimina el token JWT del localStorage y redirige a la página de login
+     */
     static logout() {
         localStorage.removeItem('jwt_token');
         window.location.href = '/login';

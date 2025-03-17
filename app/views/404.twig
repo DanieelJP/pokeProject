@@ -1,14 +1,21 @@
+{# Plantilla para la página de error 404 (no encontrado) #}
 {% extends 'base.twig' %}
 
+{# Título específico para la página de error #}
 {% block title %}404 - Página no encontrada{% endblock %}
 
 {% block content %}
 <div class="container text-center mt-5">
+    {# Encabezados que indican el tipo de error #}
     <h1>Error 404</h1>
     <h2>Página no encontrada</h2>
+    
+    {# Mensaje de error personalizado si se proporciona #}
     {% if error %}
         <p class="text-danger">{{ error }}</p>
     {% endif %}
+    
+    {# Botón para volver a la página principal #}
     <a href="/" class="btn btn-primary mt-3">Volver al inicio</a>
 </div>
 {% endblock %}

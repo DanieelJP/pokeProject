@@ -1,18 +1,38 @@
 <?php
 namespace App;
 
+/**
+ * Sistema de Routing
+ * 
+ * Maneja todas las rutas de la aplicación, mapea URLs a controladores
+ * y gestiona la autenticación para rutas protegidas.
+ */
 class Router {
-    private $routes = [];
+    private $routes = []; // Almacena todas las rutas registradas
     private $twig;
     private $authController;
     private $notFoundHandler;
 
+    /**
+     * Constructor que inicializa las dependencias y configura las rutas
+     * 
+     * @param object $twig Instancia de Twig para renderizar vistas
+     * @param object $authController Controlador de autenticación
+     */
     public function __construct($twig, $authController) {
         $this->twig = $twig;
         $this->authController = $authController;
         $this->setRoutes();
     }
 
+    /**
+     * Añade una nueva ruta al router
+     * 
+     * @param string $method Método HTTP (GET, POST, etc.)
+     * @param string $path Ruta URL
+     * @param callable $handler Función o método a ejecutar
+     * @param bool $requiresAuth Si la ruta requiere autenticación
+     */
     public function add($method, $path, $handler, $requiresAuth = false) {
         $this->routes[] = [
             'method' => $method,
@@ -22,6 +42,13 @@ class Router {
         ];
     }
 
+    /**
+     * Maneja una solicitud HTTP
+     * 
+     * @param string $method Método HTTP de la solicitud
+     * @param string $uri URI solicitada
+     * @return string Contenido HTML renderizado
+     */
     public function handle($method, $uri) {
         try {
             // Configurar el idioma
@@ -45,6 +72,7 @@ class Router {
             // Eliminar query strings
             $uri = strtok($uri, '?');
             
+            // Buscar la ruta que coincida con la solicitud
             foreach ($this->routes as $route) {
                 $pattern = $this->getPattern($route['path']);
                 if ($method === $route['method'] && preg_match($pattern, $uri, $matches)) {
@@ -66,10 +94,12 @@ class Router {
                 }
             }
             
+            // Si no se encuentra la ruta, mostrar página 404
             error_log("Ruta no encontrada: $method $uri");
             return $this->twig->render('404.twig', ['error' => 'Página no encontrada']);
             
         } catch (\Exception $e) {
+            // Manejar errores
             error_log("Error en Router::handle: " . $e->getMessage());
             error_log("Stack trace: " . $e->getTraceAsString());
             return $this->twig->render('404.twig', [
@@ -78,10 +108,23 @@ class Router {
         }
     }
 
+    /**
+     * Convierte una ruta con parámetros en un patrón regex
+     * 
+     * @param string $path Ruta con parámetros (ej: /pokemon/:id)
+     * @return string Patrón regex para hacer matching
+     */
     private function getPattern($path) {
         return '#^' . preg_replace('#:([a-zA-Z0-9_]+)#', '([^/]+)', $path) . '$#';
     }
 
+    /**
+     * Extrae parámetros de una URI basándose en una ruta
+     * 
+     * @param string $path Ruta con parámetros
+     * @param string $uri URI actual
+     * @return array Parámetros extraídos
+     */
     private function extractParams($path, $uri) {
         $params = [];
         $pathParts = explode('/', trim($path, '/'));
@@ -97,6 +140,12 @@ class Router {
         return $params;
     }
 
+    /**
+     * Envía una respuesta JSON
+     * 
+     * @param mixed $data Datos a enviar como JSON
+     * @param int $statusCode Código de estado HTTP
+     */
     private function sendJsonResponse($data, $statusCode = 200) {
         header('Content-Type: application/json');
         http_response_code($statusCode);
@@ -104,6 +153,9 @@ class Router {
         exit;
     }
 
+    /**
+     * Configura todas las rutas de la aplicación
+     */
     public function setRoutes() {
         // Rutas de autenticación
         $authController = new \App\Controllers\AuthController($this->twig);
@@ -145,6 +197,13 @@ class Router {
         $this->add('POST', '/admin/form/delete/:id', [$adminController, 'deleteForm'], true);
     }
 
+    /**
+     * Maneja la autenticación para una ruta
+     * 
+     * @param callable $handler Manejador de la ruta
+     * @param bool $requiresAuth Si la ruta requiere autenticación
+     * @return callable Manejador con autenticación si es necesario
+     */
     private function handleAuth($handler, $requiresAuth) {
         if ($requiresAuth) {
             $authController = new \App\Controllers\AuthController($this->twig);
