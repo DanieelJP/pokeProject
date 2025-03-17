@@ -8,6 +8,7 @@ class AuthController {
     private $twig;
     private $pdo;
     private $secretKey;
+    private $cookieLifetime = 2592000; // 30 días en segundos
 
     public function __construct($twig = null) {
         global $pdo;
@@ -32,7 +33,7 @@ class AuthController {
         $payload = [
             'username' => $username,
             'iat' => time(),
-            'exp' => time() + (7 * 24 * 60 * 60) // Token válido por 1 semana
+            'exp' => time() + $this->cookieLifetime // Token válido por 30 días
         ];
 
         return JWT::encode($payload, $this->secretKey, 'HS256');
@@ -42,10 +43,34 @@ class AuthController {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return isset($_SESSION['user_id']);
+        
+        if (isset($_SESSION['user_id'])) {
+            return true;
+        }
+        
+        if (isset($_COOKIE['remember_token'])) {
+            try {
+                $token = $_COOKIE['remember_token'];
+                $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
+                
+                $_SESSION['user_id'] = 1;
+                $_SESSION['username'] = $decoded->username;
+                
+                return true;
+            } catch (\Exception $e) {
+                setcookie('remember_token', '', time() - 3600, '/');
+                error_log("Error validando token de cookie: " . $e->getMessage());
+            }
+        }
+        
+        return false;
     }
 
     public function loginPage() {
+        if ($this->isLoggedIn()) {
+            header('Location: /admin');
+            exit;
+        }
         return $this->twig->render('auth/login.twig');
     }
 
@@ -53,6 +78,7 @@ class AuthController {
         try {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
+            $remember = isset($_POST['remember']) && $_POST['remember'] === 'on';
 
             if ($username === 'admin' && $password === 'admin123') {
                 if (session_status() === PHP_SESSION_NONE) {
@@ -60,6 +86,20 @@ class AuthController {
                 }
                 $_SESSION['user_id'] = 1;
                 $_SESSION['username'] = $username;
+                
+                if ($remember) {
+                    $token = $this->generateToken($username);
+                    setcookie(
+                        'remember_token',
+                        $token,
+                        time() + $this->cookieLifetime,
+                        '/',
+                        '',
+                        false,  // secure (false para desarrollo, true para producción)
+                        true    // httponly
+                    );
+                }
+                
                 header('Location: /admin');
                 exit;
             }
@@ -80,6 +120,9 @@ class AuthController {
             session_start();
         }
         session_destroy();
+        
+        setcookie('remember_token', '', time() - 3600, '/');
+        
         header('Location: /login');
         exit;
     }
