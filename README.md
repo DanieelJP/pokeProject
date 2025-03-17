@@ -97,7 +97,7 @@ El proyecto incluye un script de Python con Selenium para extraer datos de Poké
 
 ## Licencia
 
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
+Este proyecto está licenciado bajo la Licencia MIT
 
 ## Autor
 
