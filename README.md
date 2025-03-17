@@ -59,9 +59,7 @@ Esta aplicación web es una Pokédex interactiva que permite a los usuarios expl
    msgfmt -o app/lang/en/LC_MESSAGES/messages.mo app/lang/en/LC_MESSAGES/messages.po
    msgfmt -o app/lang/es/LC_MESSAGES/messages.mo app/lang/es/LC_MESSAGES/messages.po
    ```
-
-## Estructura del Proyecto 
-
+   
 ## Uso
 
 ### Panel de Administración
