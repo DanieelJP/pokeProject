@@ -1,0 +1,608 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Pokedex\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: Your Name <your.email@example.com>\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Pokédex"
+msgstr "Pokedex"
+
+msgid "Inicio"
+msgstr "Home"
+
+msgid "Panel Admin"
+msgstr "Admin Panel"
+
+msgid "Cerrar sesión"
+msgstr "Logout"
+
+msgid "Iniciar sesión"
+msgstr "Login"
+
+msgid "Listado de Pokémon"
+msgstr "Pokemon List"
+
+msgid "Región"
+msgstr "Region"
+
+msgid "Ver detalles"
+msgstr "View details"
+
+msgid "Imagen no disponible"
+msgstr "Image not available"
+
+msgid "Información del Pokémon"
+msgstr "Pokemon Information"
+
+msgid "Formas"
+msgstr "Forms"
+
+msgid "Movimientos"
+msgstr "Moves"
+
+msgid "Movimientos Rápidos"
+msgstr "Fast Moves"
+
+msgid "Movimientos Principales"
+msgstr "Main Moves"
+
+msgid "Panel de Administración"
+msgstr "Administration Panel"
+
+msgid "Gestión de Pokémon"
+msgstr "Pokémon Management"
+
+msgid "Gestión de Movimientos"
+msgstr "Move Management"
+
+msgid "Gestión de Raids"
+msgstr "Raids Management"
+
+msgid "Gestión de Formas"
+msgstr "Forms Management"
+
+msgid "Nuevo Pokémon"
+msgstr "New Pokemon"
+
+msgid "Editar Pokémon"
+msgstr "Edit Pokemon"
+
+msgid "Nuevo Movimiento"
+msgstr "New Move"
+
+msgid "Editar Movimiento"
+msgstr "Edit Move"
+
+msgid "Nueva Raid"
+msgstr "New Raid"
+
+msgid "Editar Raid"
+msgstr "Edit Raid"
+
+msgid "Nueva Forma"
+msgstr "New Form"
+
+msgid "Editar Forma"
+msgstr "Edit Form"
+
+msgid "Nombre"
+msgstr "Name"
+
+msgid "ID Pokémon"
+msgstr "Pokemon ID"
+
+msgid "Tipo"
+msgstr "Type"
+
+msgid "Daño"
+msgstr "Damage"
+
+msgid "EPS"
+msgstr "EPS (Energy Per Second)"
+
+msgid "DPS"
+msgstr "DPS (Damage Per Second)"
+
+msgid "Nivel"
+msgstr "Level"
+
+msgid "CP del Jefe"
+msgstr "Boss CP"
+
+msgid "HP del Jefe"
+msgstr "Boss HP"
+
+msgid "Jugadores Sugeridos"
+msgstr "Suggested Players"
+
+msgid "Rango CP al Capturar"
+msgstr "Catch CP Range"
+
+msgid "CP Potenciado"
+msgstr "Boosted CP"
+
+msgid "IVs Mínimos"
+msgstr "Minimum IVs"
+
+msgid "Editar"
+msgstr "Edit"
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Guardar"
+msgstr "Save"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Volver"
+msgstr "Back"
+
+msgid "Seleccionar archivo"
+msgstr "Select file"
+
+msgid "Subir imagen"
+msgstr "Upload image"
+
+msgid "¿Estás seguro de eliminar este Pokémon?"
+msgstr "Are you sure you want to delete this Pokemon?"
+
+msgid "¿Estás seguro de eliminar este movimiento?"
+msgstr "Are you sure you want to delete this move?"
+
+msgid "¿Estás seguro de eliminar esta raid?"
+msgstr "Are you sure you want to delete this raid?"
+
+msgid "¿Estás seguro de eliminar esta forma?"
+msgstr "Are you sure you want to delete this form?"
+
+msgid "Pokémon creado correctamente"
+msgstr "Pokemon created successfully"
+
+msgid "Pokémon actualizado correctamente"
+msgstr "Pokemon updated successfully"
+
+msgid "Pokémon eliminado correctamente"
+msgstr "Pokemon successfully deleted"
+
+msgid "Página no encontrada"
+msgstr "Page not found"
+
+msgid "Error interno del servidor"
+msgstr "Internal server error"
+
+msgid "Error al cargar los Pokémon"
+msgstr "Error loading Pokemon"
+
+msgid "Pokémon no encontrado"
+msgstr "Pokemon not found"
+
+msgid "Error de autenticación"
+msgstr "Authentication error"
+
+msgid "Credenciales inválidas"
+msgstr "Invalid credentials"
+
+msgid "Mega Evolution X"
+msgstr "Mega Evolution X"
+
+msgid "Mega Evolution Y"
+msgstr "Mega Evolution Y"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Ascuas Elite TM"
+msgstr "Ember Elite TM"
+
+msgid "Ataque Ala Elite TM"
+msgstr "Wing Attack Elite TM"
+
+msgid "Dragoaliento Elite TM"
+msgstr "Dragon Breath Elite TM"
+
+msgid "Giro Fuego"
+msgstr "Fire Spin"
+
+msgid "Tajo Aéreo"
+msgstr "Air Slash"
+
+msgid "Anillo Ígneo Elite TM"
+msgstr "Blast Burn Elite TM"
+
+msgid "Frustración Shadow"
+msgstr "Frustration (Shadow)"
+
+msgid "Garra Dragón"
+msgstr "Dragon Claw"
+
+msgid "Lanzallamas Elite TM"
+msgstr "Flamethrower Elite TM"
+
+msgid "Llamarada"
+msgstr "Fire Blast"
+
+msgid "Retribución Purified"
+msgstr "Return (Purified)"
+
+msgid "Sofoco"
+msgstr "Overheat"
+
+msgid "Tier"
+msgstr "Tier"
+
+msgid "Información de Raid"
+msgstr "Raid Information"
+
+msgid "Kanto"
+msgstr "Kanto"
+
+msgid "Johto"
+msgstr "Johto"
+
+msgid "Hoenn"
+msgstr "Hoenn"
+
+msgid "Sinnoh"
+msgstr "Sinnoh"
+
+msgid "Teselia"
+msgstr "Unova"
+
+msgid "Kalos"
+msgstr "Kalos"
+
+msgid "Alola"
+msgstr "Alola"
+
+msgid "Galar"
+msgstr "Galar"
+
+msgid "Estadísticas"
+msgstr "Stats"
+
+msgid "Ataque"
+msgstr "Attack"
+
+msgid "Defensa"
+msgstr "Defense"
+
+msgid "Velocidad"
+msgstr "Speed"
+
+msgid "Fuego"
+msgstr "Fire"
+
+msgid "Volador"
+msgstr "Flying"
+
+msgid "Dragón"
+msgstr "Dragon"
+
+msgid "Crear"
+msgstr "Create"
+
+msgid "Actualizar"
+msgstr "Update"
+
+msgid "Nuevo"
+msgstr "New"
+
+msgid "Identificador único del Pokémon"
+msgstr "Unique Pokemon identifier"
+
+msgid "no se puede modificar después"
+msgstr "cannot be modified later"
+
+msgid "Selecciona una región"
+msgstr "Select a region"
+
+msgid "¿Estás seguro de que quieres actualizar este Pokémon?"
+msgstr "Are you sure you want to update this Pokemon?"
+
+msgid "¿Estás seguro de que quieres crear este Pokémon?"
+msgstr "Are you sure you want to create this Pokemon?"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Acciones"
+msgstr "Actions"
+
+msgid "Imágenes"
+msgstr "Images"
+
+msgid "Añadir Movimiento"
+msgstr "Add Move"
+
+msgid "Ejemplo: 001"
+msgstr "Example: 001"
+
+msgid "Ejemplo: Bulbasaur"
+msgstr "Example: Bulbasaur"
+
+msgid "Pokémon (%d)"
+msgstr "Pokemon (%d)"
+
+msgid "Movimientos (%d)"
+msgstr "Moves (%d)"
+
+msgid "Raids (%d)"
+msgstr "Raids (%d)"
+
+msgid "Formas (%d)"
+msgstr "Forms (%d)"
+
+msgid "Pokémon Base"
+msgstr "Base Pokemon"
+
+msgid "Nombre de Forma"
+msgstr "Form Name"
+
+msgid "CP Jefe"
+msgstr "Boss CP"
+
+msgid "HP Jefe"
+msgstr "Boss HP"
+
+msgid "Jugadores"
+msgstr "Players"
+
+msgid "CP Normal"
+msgstr "Normal CP"
+
+msgid "Nueva"
+msgstr "New"
+
+msgid "Usuario"
+msgstr "Username"
+
+msgid "Contraseña"
+msgstr "Password"
+
+msgid "¿Estás seguro de que quieres eliminar este Pokémon?"
+msgstr "Are you sure you want to delete this Pokemon?"
+
+msgid "¿Estás seguro de que quieres eliminar este movimiento?"
+msgstr "Are you sure you want to delete this move?"
+
+msgid "¿Estás seguro de que quieres eliminar esta raid?"
+msgstr "Are you sure you want to delete this raid?"
+
+msgid "¿Estás seguro de que quieres eliminar esta forma?"
+msgstr "Are you sure you want to delete this form?"
+
+msgid "Placaje"
+msgstr "Tackle"
+
+msgid "Látigo Cepa"
+msgstr "Vine Whip"
+
+msgid "Bomba Germen"
+msgstr "Seed Bomb"
+
+msgid "Bomba Lodo"
+msgstr "Sludge Bomb"
+
+msgid "Latigazo"
+msgstr "Power Whip"
+
+msgid "No hay Pokémon registrados"
+msgstr "No Pokemon registered"
+
+msgid "No hay movimientos registrados"
+msgstr "No moves registered"
+
+msgid "No hay raids registradas"
+msgstr "No raids registered"
+
+msgid "No hay formas registradas"
+msgstr "No forms registered"
+
+msgid "Ataque Rápido"
+msgstr "Quick Attack"
+
+msgid "Ataque Rápido Legacy"
+msgstr "Quick Attack Legacy"
+
+msgid "Golpe Cuerpo"
+msgstr "Body Slam"
+
+msgid "Cabezazo"
+msgstr "Headbutt"
+
+msgid "Hipercolmillo"
+msgstr "Hyper Fang"
+
+msgid "Hiperrayo"
+msgstr "Hyper Beam"
+
+msgid "Hoja Afilada"
+msgstr "Razor Leaf"
+
+msgid "Rayo Solar"
+msgstr "Solar Beam"
+
+msgid "Tormenta Floral"
+msgstr "Petal Blizzard"
+
+msgid "Planta Feroz Elite TM"
+msgstr "Frenzy Plant Elite TM"
+
+msgid "Ascuas"
+msgstr "Ember"
+
+msgid "Lanzallamas"
+msgstr "Flamethrower"
+
+msgid "Nitrocarga"
+msgstr "Flame Charge"
+
+msgid "Pirotecnia"
+msgstr "Fire Blast"
+
+msgid "Colmillo Ígneo"
+msgstr "Fire Fang"
+
+msgid "Puño Fuego"
+msgstr "Fire Punch"
+
+msgid "Pistola Agua"
+msgstr "Water Gun"
+
+msgid "Hidrobomba"
+msgstr "Hydro Pump"
+
+msgid "Hidrocañón Elite TM"
+msgstr "Hydro Cannon Elite TM"
+
+msgid "Hidropulso"
+msgstr "Water Pulse"
+
+msgid "Acua Jet"
+msgstr "Aqua Jet"
+
+msgid "Acua Cola"
+msgstr "Aqua Tail"
+
+msgid "Burbuja"
+msgstr "Bubble"
+
+msgid "Ataque Ala"
+msgstr "Wing Attack"
+
+msgid "Golpe Aéreo"
+msgstr "Aerial Ace"
+
+msgid "Aire Afilado"
+msgstr "Air Cutter"
+
+msgid "Pájaro Osado"
+msgstr "Brave Bird"
+
+msgid "Vendaval"
+msgstr "Hurricane"
+
+msgid "Tornado Elite TM"
+msgstr "Twister Elite TM"
+
+msgid "Danza Pluma"
+msgstr "Feather Dance"
+
+msgid "Ala de Acero"
+msgstr "Steel Wing"
+
+msgid "Ácido"
+msgstr "Acid"
+
+msgid "Bomba Ácida"
+msgstr "Acid Spray"
+
+msgid "Picotazo Veneno"
+msgstr "Poison Sting"
+
+msgid "Puya Nociva"
+msgstr "Poison Jab"
+
+msgid "Colmillo Veneno"
+msgstr "Poison Fang"
+
+msgid "Onda Tóxica"
+msgstr "Acid Spray"
+
+msgid "Lanzamugre"
+msgstr "Gunk Shot"
+
+msgid "Impactrueno"
+msgstr "Thunder Shock"
+
+msgid "Rayo"
+msgstr "Thunderbolt"
+
+msgid "Chispazo"
+msgstr "Discharge"
+
+msgid "Puño Trueno"
+msgstr "Thunder Punch"
+
+msgid "Cola Dragón"
+msgstr "Dragon Tail"
+
+msgid "Rayo Hielo"
+msgstr "Ice Beam"
+
+msgid "Confusión"
+msgstr "Confusion"
+
+msgid "Psíquico"
+msgstr "Psychic"
+
+msgid "Foco Resplandor"
+msgstr "Flash Cannon"
+
+msgid "Picadura"
+msgstr "Bug Bite"
+
+msgid "Tijera X"
+msgstr "X-Scissor"
+
+msgid "Aguijón Letal"
+msgstr "Fell Stinger"
+
+msgid "Zumbido"
+msgstr "Bug Buzz"
+
+msgid "Mordisco"
+msgstr "Bite"
+
+msgid "Pulso Umbrío"
+msgstr "Dark Pulse"
+
+msgid "Arañazo"
+msgstr "Scratch"
+
+msgid "Combate"
+msgstr "Struggle"
+
+msgid "Ciclón"
+msgstr "Twister"
+
+msgid "Excavar"
+msgstr "Dig"
+
+msgid "Picotazo"
+msgstr "Peck"
+
+msgid "Pico Taladro"
+msgstr "Drill Peck"
+
+msgid "Taladradora"
+msgstr "Drill Run"
+
+msgid "Constricción"
+msgstr "Wrap"
+
+msgid "Presente Elite TM"
+msgstr "Present Elite TM"
+
+msgid "Voz Cautivadora"
+msgstr "Disarming Voice"
+
+msgid "Estoicismo"
+msgstr "Struggle Bug"
+
+msgid "Acoso"
+msgstr "Hex"
+
+msgid "Doble Rayo"
+msgstr "Double Beam"
+
+msgid "Elite TM"
+msgstr "Elite TM"

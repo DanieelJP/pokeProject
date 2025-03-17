@@ -1,13 +1,13 @@
 {% extends 'layout.twig' %}
 
-{% block title %}{{ action == 'edit' ? 'Editar' : 'Nueva' }} Raid - Panel de Administración{% endblock %}
+{% block title %}{{ (action == 'edit' ? 'Editar' : 'Nueva') | trans }} {{ 'Raid' | trans }} - {{ 'Panel de Administración' | trans }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     {% if error %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ error }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ error | trans }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Cerrar' | trans }}"></button>
         </div>
     {% endif %}
 
@@ -15,9 +15,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar' : 'Nueva' }} Raid</h2>
+                    <h2 class="mb-0">{{ (action == 'edit' ? 'Editar' : 'Nueva') | trans }} {{ 'Raid' | trans }}</h2>
                     <a href="/admin" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Volver
+                        <i class="fas fa-arrow-left"></i> {{ 'Volver' | trans }}
                     </a>
                 </div>
                 <div class="card-body">
@@ -27,64 +27,64 @@
                         {% endif %}
 
                         <div class="mb-3">
-                            <label for="pokemon_id" class="form-label">Pokémon</label>
+                            <label for="pokemon_id" class="form-label">{{ 'Pokémon' | trans }}</label>
                             <select class="form-select" id="pokemon_id" name="pokemon_id" required>
-                                <option value="">Selecciona un Pokémon</option>
+                                <option value="">{{ 'Selecciona un Pokémon' | trans }}</option>
                                 {% for pokemon in pokemons %}
                                     <option value="{{ pokemon.pokemon_id }}" 
                                             {{ raid and raid.pokemon_id == pokemon.pokemon_id ? 'selected' : '' }}>
-                                        {{ pokemon.name }}
+                                        {{ pokemon.name | trans }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="raid_tier" class="form-label">Nivel de Raid</label>
+                            <label for="raid_tier" class="form-label">{{ 'Nivel de Raid' | trans }}</label>
                             <input type="number" class="form-control" id="raid_tier" name="raid_tier" 
-                                   value="{{ raid.raid_tier }}" min="1" max="5" required>
+                                   value="{{ raid.raid_tier }}" min="{{ '1' | trans }}" max="{{ '5' | trans }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="boss_cp" class="form-label">CP del Jefe</label>
+                            <label for="boss_cp" class="form-label">{{ 'CP del Jefe' | trans }}</label>
                             <input type="number" class="form-control" id="boss_cp" name="boss_cp" 
                                    value="{{ raid.boss_cp }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="boss_hp" class="form-label">HP del Jefe</label>
+                            <label for="boss_hp" class="form-label">{{ 'HP del Jefe' | trans }}</label>
                             <input type="number" class="form-control" id="boss_hp" name="boss_hp" 
                                    value="{{ raid.boss_hp }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="suggested_players" class="form-label">Jugadores Sugeridos</label>
+                            <label for="suggested_players" class="form-label">{{ 'Jugadores Sugeridos' | trans }}</label>
                             <input type="number" class="form-control" id="suggested_players" name="suggested_players" 
                                    value="{{ raid.suggested_players }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="caught_cp_range" class="form-label">Rango de CP al Capturar</label>
+                            <label for="caught_cp_range" class="form-label">{{ 'Rango de CP al Capturar' | trans }}</label>
                             <input type="text" class="form-control" id="caught_cp_range" name="caught_cp_range" 
-                                   value="{{ raid.caught_cp_range }}" placeholder="Ejemplo: 1800-2025" required>
+                                   value="{{ raid.caught_cp_range }}" placeholder="{{ 'Ejemplo: 1800-2025' | trans }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="caught_cp_boosted" class="form-label">CP Potenciado</label>
+                            <label for="caught_cp_boosted" class="form-label">{{ 'CP Potenciado' | trans }}</label>
                             <input type="text" class="form-control" id="caught_cp_boosted" name="caught_cp_boosted" 
-                                   value="{{ raid.caught_cp_boosted }}" placeholder="Ejemplo: 2250-2531" required>
+                                   value="{{ raid.caught_cp_boosted }}" placeholder="{{ 'Ejemplo: 2250-2531' | trans }}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="minimum_ivs" class="form-label">IVs Mínimos</label>
+                            <label for="minimum_ivs" class="form-label">{{ 'IVs Mínimos' | trans }}</label>
                             <input type="text" class="form-control" id="minimum_ivs" name="minimum_ivs" 
-                                   value="{{ raid.minimum_ivs }}" placeholder="Ejemplo: 10/10/10" required>
+                                   value="{{ raid.minimum_ivs }}" placeholder="{{ 'Ejemplo: 10/10/10' | trans }}" required>
                         </div>
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> 
-                                {{ action == 'edit' ? 'Actualizar' : 'Crear' }} Raid
+                                {{ (action == 'edit' ? 'Actualizar' : 'Crear') | trans }} {{ 'Raid' | trans }}
                             </button>
                         </div>
                     </form>
@@ -98,7 +98,7 @@
 {% block scripts %}
 <script>
 document.getElementById('raidForm').addEventListener('submit', function(e) {
-    if (!confirm('¿Estás seguro de que quieres {{ action == "edit" ? "actualizar" : "crear" }} esta raid?')) {
+    if (!confirm('{{ (action == "edit" ? "¿Estás seguro de que quieres actualizar esta raid?" : "¿Estás seguro de que quieres crear esta raid?") | trans }}')) {
         e.preventDefault();
     }
 });

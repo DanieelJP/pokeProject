@@ -95,8 +95,8 @@
                             {% for move in moves %}
                                 <tr>
                                     <td>{{ move.pokemon_name }}</td>
-                                    <td>{{ move.move_type }}</td>
-                                    <td>{{ move.move_name }}</td>
+                                    <td>{{ move.move_type|trans }}</td>
+                                    <td>{{ move.move_name|trans }}</td>
                                     <td>{{ move.damage }}</td>
                                     <td class="text-end">
                                         <a href="/admin/move/edit/{{ move.id }}" class="btn btn-sm btn-outline-primary">
@@ -208,7 +208,7 @@
 <script>
 function deletePokemon(pokemonId) {
     console.log('Intentando eliminar pokemon:', pokemonId);
-    if (confirm('¿Estás seguro de que quieres eliminar este Pokémon?')) {
+    if (confirm('{{ '¿Estás seguro de que quieres eliminar este Pokémon?'|trans }}')) {
         try {
             const form = document.createElement('form');
             form.method = 'POST';
@@ -223,7 +223,7 @@ function deletePokemon(pokemonId) {
 }
 
 function deleteMove(moveId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este movimiento?')) {
+    if (confirm('{{ '¿Estás seguro de que quieres eliminar este movimiento?'|trans }}')) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/admin/move/delete/${moveId}`;

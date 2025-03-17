@@ -1,13 +1,13 @@
 {% extends 'layout.twig' %}
 
-{% block title %}{{ action == 'edit' ? 'Editar' : 'Nueva' }} Forma - Panel de Administración{% endblock %}
+{% block title %}{{ (action == 'edit' ? 'Editar' : 'Nueva') | trans }} {{ 'Forma' | trans }} - {{ 'Panel de Administración' | trans }}{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     {% if error %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ error }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {{ error | trans }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ 'Cerrar' | trans }}"></button>
         </div>
     {% endif %}
 
@@ -15,9 +15,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h2 class="mb-0">{{ action == 'edit' ? 'Editar' : 'Nueva' }} Forma</h2>
+                    <h2 class="mb-0">{{ (action == 'edit' ? 'Editar' : 'Nueva') | trans }} {{ 'Forma' | trans }}</h2>
                     <a href="/admin" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Volver
+                        <i class="fas fa-arrow-left"></i> {{ 'Volver' | trans }}
                     </a>
                 </div>
                 <div class="card-body">
@@ -27,20 +27,20 @@
                         {% endif %}
 
                         <div class="mb-3">
-                            <label for="pokemon_id" class="form-label">Pokémon Base</label>
+                            <label for="pokemon_id" class="form-label">{{ 'Pokémon Base' | trans }}</label>
                             <select class="form-select" id="pokemon_id" name="pokemon_id" required>
-                                <option value="">Selecciona un Pokémon</option>
+                                <option value="">{{ 'Selecciona un Pokémon' | trans }}</option>
                                 {% for pokemon in pokemons %}
                                     <option value="{{ pokemon.pokemon_id }}" 
                                             {{ form and form.pokemon_id == pokemon.pokemon_id ? 'selected' : '' }}>
-                                        {{ pokemon.name }}
+                                        {{ pokemon.name | trans }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="form_name" class="form-label">Nombre de la Forma</label>
+                            <label for="form_name" class="form-label">{{ 'Nombre de la Forma' | trans }}</label>
                             <input type="text" class="form-control" id="form_name" name="form_name" 
                                    value="{{ form.form_name }}" required>
                         </div>
@@ -48,7 +48,7 @@
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> 
-                                {{ action == 'edit' ? 'Actualizar' : 'Crear' }} Forma
+                                {{ (action == 'edit' ? 'Actualizar' : 'Crear') | trans }} {{ 'Forma' | trans }}
                             </button>
                         </div>
                     </form>
@@ -62,9 +62,9 @@
 {% block scripts %}
 <script>
 document.getElementById('formForm').addEventListener('submit', function(e) {
-    if (!confirm('¿Estás seguro de que quieres {{ action == "edit" ? "actualizar" : "crear" }} esta forma?')) {
+    if (!confirm('{{ (action == "edit" ? "¿Estás seguro de que quieres actualizar esta forma?" : "¿Estás seguro de que quieres crear esta forma?") | trans }}')) {
         e.preventDefault();
     }
 });
 </script>
-{% endblock %} 
+{% endblock %}

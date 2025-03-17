@@ -24,6 +24,22 @@ class Router {
 
     public function handle($method, $uri) {
         try {
+            // Configurar el idioma
+            $lang = $_COOKIE['lang'] ?? 'es';
+            $locale = $lang == 'en' ? 'en_US.UTF-8' : 'es_ES.UTF-8';
+            
+            // Configuración de gettext
+            setlocale(LC_ALL, $locale);
+            putenv("LANG=$locale");
+            putenv("LANGUAGE=$locale");
+            putenv("LC_ALL=$locale");
+            
+            // Establecer el dominio y directorio de traducciones
+            $path = dirname(__DIR__) . '/app/lang';
+            bindtextdomain('messages', $path);
+            bind_textdomain_codeset('messages', 'UTF-8');
+            textdomain('messages');
+            
             error_log("Manejando ruta: $method $uri");
             
             // Eliminar query strings
