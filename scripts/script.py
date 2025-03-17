@@ -4,7 +4,7 @@ import subprocess
 
 # Lista de scripts de Python a ejecutar en el orden deseado
 scripts = [
-   # "poke11.py",
+    "poke11.py",
     "dataPokes.py",
     "dataMoves.py",
     "dataForms.py",
