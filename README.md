@@ -35,8 +35,8 @@ Esta aplicación web es una Pokédex interactiva que permite a los usuarios expl
 
 1. Clonar el repositorio:
    ```
-   git clone https://github.com/DanieelJP/pokedex.git
-   cd pokedex
+   git clone https://github.com/DanieelJP/pokeProject.git
+   cd pokeProject
    ```
 
 2. Instalar dependencias con Composer:
@@ -52,6 +52,7 @@ Esta aplicación web es una Pokédex interactiva que permite a los usuarios expl
 4. Configurar el servidor web:
    - Asegurarse de que el directorio `public` sea la raíz del sitio web
    - Habilitar el módulo de reescritura de URL (mod_rewrite para Apache)
+   - Crear virtual host en Apache
 
 5. Compilar los archivos de traducción:
    ```
@@ -65,7 +66,7 @@ Esta aplicación web es una Pokédex interactiva que permite a los usuarios expl
 
 ### Panel de Administración
 
-1. Acceder a `/login` con las credenciales:
+1. Acceder a `/login` o al panel de administración `/admin` (te redirigirá a la página de login) con las credenciales:
    - Usuario: `admin`
    - Contraseña: `admin123`
 
@@ -90,10 +91,9 @@ El proyecto incluye un script de Python con Selenium para extraer datos de Poké
 
 2. Ejecutar el script de scraping:
    ```
-   python public/scripts/scraper.py
+   python public/scripts/script.py
    ```
 
-3. Los datos extraídos se guardarán en formato CSV y luego se pueden importar a la base de datos.
 
 ## Licencia
 
@@ -101,10 +101,4 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE par
 
 ## Autor
 
-Tu Nombre - [tu-email@ejemplo.com](mailto:tu-email@ejemplo.com)
-
-## Agradecimientos
-
-- The Pokémon Company por la información y las imágenes
-- Bootstrap por el framework CSS
-- Chart.js por la librería de gráficos 
+Daniel Jiménez Parreño - [jimenezdaniel@elpuig.xeill.net](mailto:jimenezdaniel@elpuig.xeill.net)
