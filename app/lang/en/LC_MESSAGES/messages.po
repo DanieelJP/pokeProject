@@ -56,16 +56,16 @@ msgid "Panel de Administración"
 msgstr "Administration Panel"
 
 msgid "Gestión de Pokémon"
-msgstr "Pokemon Management"
+msgstr "Pokémon Management"
 
 msgid "Gestión de Movimientos"
 msgstr "Move Management"
 
 msgid "Gestión de Raids"
-msgstr "Raid Management"
+msgstr "Raids Management"
 
 msgid "Gestión de Formas"
-msgstr "Form Management"
+msgstr "Forms Management"
 
 msgid "Nuevo Pokémon"
 msgstr "New Pokemon"
@@ -104,10 +104,10 @@ msgid "Daño"
 msgstr "Damage"
 
 msgid "EPS"
-msgstr "EPS"
+msgstr "EPS (Energy Per Second)"
 
 msgid "DPS"
-msgstr "DPS"
+msgstr "DPS (Damage Per Second)"
 
 msgid "Nivel"
 msgstr "Level"
@@ -122,6 +122,9 @@ msgid "Jugadores Sugeridos"
 msgstr "Suggested Players"
 
 msgid "Rango CP al Capturar"
+msgstr "Catch CP Range"
+
+msgid "Rango de CP al Capturar"
 msgstr "Catch CP Range"
 
 msgid "CP Potenciado"
@@ -170,7 +173,7 @@ msgid "Pokémon actualizado correctamente"
 msgstr "Pokemon updated successfully"
 
 msgid "Pokémon eliminado correctamente"
-msgstr "Pokemon deleted successfully"
+msgstr "Pokemon successfully deleted"
 
 msgid "Página no encontrada"
 msgstr "Page not found"
@@ -190,7 +193,6 @@ msgstr "Authentication error"
 msgid "Credenciales inválidas"
 msgstr "Invalid credentials"
 
-# Términos específicos de Pokémon
 msgid "Mega Evolution X"
 msgstr "Mega Evolution X"
 
@@ -200,7 +202,6 @@ msgstr "Mega Evolution Y"
 msgid "Normal"
 msgstr "Normal"
 
-# Movimientos
 msgid "Ascuas Elite TM"
 msgstr "Ember Elite TM"
 
@@ -220,7 +221,7 @@ msgid "Anillo Ígneo Elite TM"
 msgstr "Blast Burn Elite TM"
 
 msgid "Frustración Shadow"
-msgstr "Frustration Shadow"
+msgstr "Frustration (Shadow)"
 
 msgid "Garra Dragón"
 msgstr "Dragon Claw"
@@ -232,19 +233,17 @@ msgid "Llamarada"
 msgstr "Fire Blast"
 
 msgid "Retribución Purified"
-msgstr "Return Purified"
+msgstr "Return (Purified)"
 
 msgid "Sofoco"
 msgstr "Overheat"
 
-# Términos de Raid
 msgid "Tier"
 msgstr "Tier"
 
 msgid "Información de Raid"
 msgstr "Raid Information"
 
-# Regiones
 msgid "Kanto"
 msgstr "Kanto"
 
@@ -257,7 +256,6 @@ msgstr "Hoenn"
 msgid "Sinnoh"
 msgstr "Sinnoh"
 
-# Regiones adicionales
 msgid "Teselia"
 msgstr "Unova"
 
@@ -270,9 +268,8 @@ msgstr "Alola"
 msgid "Galar"
 msgstr "Galar"
 
-# Estadísticas
 msgid "Estadísticas"
-msgstr "Stats"
+msgstr "Statistics"
 
 msgid "Ataque"
 msgstr "Attack"
@@ -283,7 +280,6 @@ msgstr "Defense"
 msgid "Velocidad"
 msgstr "Speed"
 
-# Tipos
 msgid "Fuego"
 msgstr "Fire"
 
@@ -293,7 +289,6 @@ msgstr "Flying"
 msgid "Dragón"
 msgstr "Dragon"
 
-# Acciones y botones adicionales
 msgid "Crear"
 msgstr "Create"
 
@@ -303,7 +298,6 @@ msgstr "Update"
 msgid "Nuevo"
 msgstr "New"
 
-# Mensajes de formularios
 msgid "Identificador único del Pokémon"
 msgstr "Unique Pokemon identifier"
 
@@ -313,21 +307,18 @@ msgstr "cannot be modified later"
 msgid "Selecciona una región"
 msgstr "Select a region"
 
-# Confirmaciones
 msgid "¿Estás seguro de que quieres actualizar este Pokémon?"
 msgstr "Are you sure you want to update this Pokemon?"
 
 msgid "¿Estás seguro de que quieres crear este Pokémon?"
 msgstr "Are you sure you want to create this Pokemon?"
 
-# Elementos de tabla
 msgid "ID"
 msgstr "ID"
 
 msgid "Acciones"
 msgstr "Actions"
 
-# Imágenes
 msgid "Imágenes"
 msgstr "Images"
 
@@ -340,7 +331,6 @@ msgstr "Example: 001"
 msgid "Ejemplo: Bulbasaur"
 msgstr "Example: Bulbasaur"
 
-# Estadísticas y contadores
 msgid "Pokémon (%d)"
 msgstr "Pokemon (%d)"
 
@@ -352,10 +342,6 @@ msgstr "Raids (%d)"
 
 msgid "Formas (%d)"
 msgstr "Forms (%d)"
-
-# Encabezados de tablas
-msgid "Gestión de Formas"
-msgstr "Form Management"
 
 msgid "Pokémon Base"
 msgstr "Base Pokemon"
@@ -375,22 +361,817 @@ msgstr "Players"
 msgid "CP Normal"
 msgstr "Normal CP"
 
-msgid "CP Potenciado"
-msgstr "Boosted CP"
-
-# Botones y acciones adicionales
-msgid "Nueva"
-msgstr "New"
-
-msgid "Nuevo Movimiento"
-msgstr "New Move"
-
-msgid "Nueva Forma"
-msgstr "New Form"
-
-# Authentication
 msgid "Usuario"
 msgstr "Username"
 
 msgid "Contraseña"
-msgstr "Password" 
+msgstr "Password"
+
+msgid "¿Estás seguro de que quieres eliminar este Pokémon?"
+msgstr "Are you sure you want to delete this Pokemon?"
+
+msgid "¿Estás seguro de que quieres eliminar este movimiento?"
+msgstr "Are you sure you want to delete this move?"
+
+msgid "¿Estás seguro de que quieres eliminar esta raid?"
+msgstr "Are you sure you want to delete this raid?"
+
+msgid "¿Estás seguro de que quieres eliminar esta forma?"
+msgstr "Are you sure you want to delete this form?"
+
+msgid "Placaje"
+msgstr "Tackle"
+
+msgid "Látigo Cepa"
+msgstr "Vine Whip"
+
+msgid "Bomba Germen"
+msgstr "Seed Bomb"
+
+msgid "Bomba Lodo"
+msgstr "Sludge Bomb"
+
+msgid "Latigazo"
+msgstr "Power Whip"
+
+msgid "No hay Pokémon registrados"
+msgstr "No Pokemon registered"
+
+msgid "No hay movimientos registrados"
+msgstr "No moves registered"
+
+msgid "No hay raids registradas"
+msgstr "No raids registered"
+
+msgid "No hay formas registradas"
+msgstr "No forms registered"
+
+msgid "Ataque Rápido"
+msgstr "Quick Attack"
+
+msgid "Ataque Rápido Legacy"
+msgstr "Quick Attack Legacy"
+
+msgid "Golpe Cuerpo"
+msgstr "Body Slam"
+
+msgid "Cabezazo"
+msgstr "Headbutt"
+
+msgid "Hipercolmillo"
+msgstr "Hyper Fang"
+
+msgid "Hiperrayo"
+msgstr "Hyper Beam"
+
+msgid "Hoja Afilada"
+msgstr "Razor Leaf"
+
+msgid "Rayo Solar"
+msgstr "Solar Beam"
+
+msgid "Tormenta Floral"
+msgstr "Petal Blizzard"
+
+msgid "Planta Feroz Elite TM"
+msgstr "Frenzy Plant Elite TM"
+
+msgid "Ascuas"
+msgstr "Ember"
+
+msgid "Lanzallamas"
+msgstr "Flamethrower"
+
+msgid "Nitrocarga"
+msgstr "Flame Charge"
+
+msgid "Pirotecnia"
+msgstr "Fire Blast"
+
+msgid "Colmillo Ígneo"
+msgstr "Fire Fang"
+
+msgid "Puño Fuego"
+msgstr "Fire Punch"
+
+msgid "Pistola Agua"
+msgstr "Water Gun"
+
+msgid "Hidrobomba"
+msgstr "Hydro Pump"
+
+msgid "Hidropulso"
+msgstr "Water Pulse"
+
+msgid "Acua Jet"
+msgstr "Aqua Jet"
+
+msgid "Acua Cola"
+msgstr "Aqua Tail"
+
+msgid "Burbuja"
+msgstr "Bubble"
+
+msgid "Ataque Ala"
+msgstr "Wing Attack"
+
+msgid "Golpe Aéreo"
+msgstr "Aerial Ace"
+
+msgid "Aire Afilado"
+msgstr "Air Cutter"
+
+msgid "Pájaro Osado"
+msgstr "Brave Bird"
+
+msgid "Vendaval"
+msgstr "Hurricane"
+
+msgid "Tornado Elite TM"
+msgstr "Twister Elite TM"
+
+msgid "Danza Pluma"
+msgstr "Feather Dance"
+
+msgid "Ala de Acero"
+msgstr "Steel Wing"
+
+msgid "Ácido"
+msgstr "Acid"
+
+msgid "Bomba Ácida"
+msgstr "Acid Spray"
+
+msgid "Picotazo Veneno"
+msgstr "Poison Sting"
+
+msgid "Puya Nociva"
+msgstr "Poison Jab"
+
+msgid "Colmillo Veneno"
+msgstr "Poison Fang"
+
+msgid "Onda Tóxica"
+msgstr "Acid Spray"
+
+msgid "Lanzamugre"
+msgstr "Gunk Shot"
+
+msgid "Impactrueno"
+msgstr "Thunder Shock"
+
+msgid "Rayo"
+msgstr "Thunderbolt"
+
+msgid "Chispazo"
+msgstr "Discharge"
+
+msgid "Puño Trueno"
+msgstr "Thunder Punch"
+
+msgid "Cola Dragón"
+msgstr "Dragon Tail"
+
+msgid "Rayo Hielo"
+msgstr "Ice Beam"
+
+msgid "Confusión"
+msgstr "Confusion"
+
+msgid "Psíquico"
+msgstr "Psychic"
+
+msgid "Foco Resplandor"
+msgstr "Flash Cannon"
+
+msgid "Picadura"
+msgstr "Bug Bite"
+
+msgid "Tijera X"
+msgstr "X-Scissor"
+
+msgid "Aguijón Letal"
+msgstr "Fell Stinger"
+
+msgid "Zumbido"
+msgstr "Bug Buzz"
+
+msgid "Mordisco"
+msgstr "Bite"
+
+msgid "Pulso Umbrío"
+msgstr "Dark Pulse"
+
+msgid "Arañazo"
+msgstr "Scratch"
+
+msgid "Combate"
+msgstr "Struggle"
+
+msgid "Ciclón"
+msgstr "Twister"
+
+msgid "Excavar"
+msgstr "Dig"
+
+msgid "Picotazo"
+msgstr "Peck"
+
+msgid "Pico Taladro"
+msgstr "Drill Peck"
+
+msgid "Taladradora"
+msgstr "Drill Run"
+
+msgid "Constricción"
+msgstr "Wrap"
+
+msgid "Presente Elite TM"
+msgstr "Present Elite TM"
+
+msgid "Voz Cautivadora"
+msgstr "Disarming Voice"
+
+msgid "Estoicismo"
+msgstr "Struggle Bug"
+
+msgid "Acoso"
+msgstr "Hex"
+
+msgid "Doble Rayo"
+msgstr "Double Beam"
+
+msgid "Elite TM"
+msgstr "Elite TM"
+
+# Movimientos básicos
+msgid "Chispa"
+msgstr "Spark"
+
+msgid "Giro Bola"
+msgstr "Gyro Ball"
+
+msgid "Infortunio"
+msgstr "Hex"
+
+msgid "Impresionar"
+msgstr "Astonish"
+
+msgid "Onda Certera"
+msgstr "Focus Blast"
+
+msgid "Brillo Mágico"
+msgstr "Dazzling Gleam"
+
+msgid "Bola Sombra"
+msgstr "Shadow Ball"
+
+msgid "Voltiocambio"
+msgstr "Volt Switch"
+
+msgid "Juego Sucio"
+msgstr "Foul Play"
+
+msgid "Semilladora"
+msgstr "Bullet Seed"
+
+msgid "Poder Pasado"
+msgstr "Ancient Power"
+
+msgid "Cabezazo Zen"
+msgstr "Zen Headbutt"
+
+msgid "Bofetón Lodo"
+msgstr "Mud-Slap"
+
+msgid "Golpe Roca"
+msgstr "Rock Smash"
+
+msgid "Hueso Palo"
+msgstr "Bone Club"
+
+msgid "Terratemblor"
+msgstr "Bulldoze"
+
+msgid "Pisotón"
+msgstr "Stomp"
+
+msgid "A Bocajarro"
+msgstr "Close Combat"
+
+msgid "Puntapié"
+msgstr "Low Kick"
+
+msgid "Roca Afilada"
+msgstr "Stone Edge"
+
+msgid "Puño Bala"
+msgstr "Bullet Punch"
+
+msgid "Contraataque"
+msgstr "Counter"
+
+msgid "Puño Incremento"
+msgstr "Power-Up Punch"
+
+msgid "Puño Hielo"
+msgstr "Ice Punch"
+
+msgid "Lengüetazo"
+msgstr "Lick"
+
+msgid "Residuos"
+msgstr "Sludge"
+
+msgid "Doble Rayo Elite TM"
+msgstr "Double Beam Elite TM"
+
+msgid "Cabezazo Zen Elite TM"
+msgstr "Zen Headbutt Elite TM"
+
+msgid "Pisotón Elite TM"
+msgstr "Stomp Elite TM"
+
+msgid "Demolición Elite TM"
+msgstr "Demolition Elite TM"
+
+msgid "Golpe Roca Elite TM"
+msgstr "Rock Smash Elite TM"
+
+msgid "Golpe Cuerpo Elite TM"
+msgstr "Body Slam Elite TM"
+
+msgid "Última Baza Elite TM"
+msgstr "Last Resort Elite TM"
+
+msgid "Escaldar Elite TM"
+msgstr "Scald Elite TM"
+
+msgid "Electrocañón Elite TM"
+msgstr "Electro Cannon Elite TM"
+
+msgid "Onda Ígnea Elite TM"
+msgstr "Flame Burst Elite TM"
+
+msgid "Fuerza Bruta Elite TM"
+msgstr "Brutal Swing Elite TM"
+
+msgid "Ventisca Elite TM"
+msgstr "Blizzard Elite TM"
+
+msgid "Pulso Dragón Elite TM"
+msgstr "Dragon Pulse Elite TM"
+
+msgid "Acua Cola Elite TM"
+msgstr "Aqua Tail Elite TM"
+
+msgid "Cometa Draco Elite TM"
+msgstr "Draco Meteor Elite TM"
+
+msgid "Hiperrayo Elite TM"
+msgstr "Hyper Beam Elite TM"
+
+msgid "Onda Mental Elite TM"
+msgstr "Psychic Elite TM"
+
+msgid "Bola Sombra Elite TM"
+msgstr "Shadow Ball Elite TM"
+
+msgid "Psicorrayo Elite TM"
+msgstr "Psyshock Elite TM"
+
+msgid "Chispazo Elite TM"
+msgstr "Spark Elite TM"
+
+msgid "Tumba Rocas Elite TM"
+msgstr "Rock Tomb Elite TM"
+
+msgid "Salmuera Elite TM"
+msgstr "Brine Elite TM"
+
+msgid "Taladradora Elite TM"
+msgstr "Drill Run Elite TM"
+
+msgid "Viento Hielo Elite TM"
+msgstr "Icy Wind Elite TM"
+
+msgid "Aire Afilado Elite TM"
+msgstr "Air Slash Elite TM"
+
+msgid "Feather Dance"
+msgstr "Feather Dance"
+
+msgid "Giro Vil"
+msgstr "Foul Play"
+
+msgid "Carámbano Elite TM"
+msgstr "Icicle Spear Elite TM"
+
+msgid "Romperrocas Elite TM"
+msgstr "Rock Wrecker Elite TM"
+
+msgid "Esfera Aural Elite TM"
+msgstr "Aura Sphere Elite TM"
+
+msgid "Triataque Elite TM"
+msgstr "Tri Attack Elite TM"
+
+msgid "Golpe Umbrío Elite TM"
+msgstr "Dark Pulse Elite TM"
+
+msgid "Aerochorro Elite TM"
+msgstr "Aeroblast Elite TM"
+
+msgid "Fuego Sagrado Elite TM"
+msgstr "Sacred Fire Elite TM"
+
+msgid "Hoja Mágica Elite TM"
+msgstr "Magical Leaf Elite TM"
+
+msgid "Tajo Umbrío Elite TM"
+msgstr "Night Slash Elite TM"
+
+msgid "Hidropulso Elite TM"
+msgstr "Hydro Pump Elite TM"
+
+msgid "Poder Pasado Elite TM"
+msgstr "Ancient Power Elite TM"
+
+msgid "Sincrorruido Elite TM"
+msgstr "Synchronoise Elite TM"
+
+msgid "Trueno Elite TM"
+msgstr "Thunder Elite TM"
+
+msgid "Vasto Impacto Elite TM"
+msgstr "Giga Impact Elite TM"
+
+msgid "Mundo Gélido Elite TM"
+msgstr "Glaciate Elite TM"
+
+msgid "Llama Fusión Elite TM"
+msgstr "Fusion Flare Elite TM"
+
+msgid "Rayo Fusión Elite TM"
+msgstr "Fusion Bolt Elite TM"
+
+msgid "Estruendo Elite TM"
+msgstr "Boomburst Elite TM"
+
+msgid "Tecno Shock Elite TM"
+msgstr "Techno Blast Elite TM"
+
+msgid "Brillo Mágico Elite TM"
+msgstr "Dazzling Gleam Elite TM"
+
+msgid "Psíquico Elite TM"
+msgstr "Psychic Elite TM"
+
+msgid "Vendaval Elite TM"
+msgstr "Hurricane Elite TM"
+
+msgid "Vendetta Elite TM"
+msgstr "Payback Elite TM"
+
+msgid "Puño Drenaje Elite TM"
+msgstr "Drain Punch Elite TM"
+
+msgid "Sumisión Elite TM"
+msgstr "Submission Elite TM"
+
+msgid "Roca Afilada Elite TM"
+msgstr "Stone Edge Elite TM"
+
+msgid "Contraataque Elite TM"
+msgstr "Counter Elite TM"
+
+msgid "Espada Santa Elite TM"
+msgstr "Sacred Sword Elite TM"
+
+msgid "Llamarada Elite TM"
+msgstr "Flare Blitz Elite TM"
+
+msgid "Ataque Ala Legacy"
+msgstr "Wing Attack Legacy"
+
+msgid "Ataque Aéreo Legacy"
+msgstr "Sky Attack Legacy"
+
+msgid "Carga Parábola Legacy"
+msgstr "Parabolic Charge Legacy"
+
+msgid "Gigadrenado Legacy"
+msgstr "Giga Drain Legacy"
+
+msgid "Manto Espejo Legacy"
+msgstr "Mirror Coat Legacy"
+
+msgid "Triturar Legacy"
+msgstr "Crunch Legacy"
+
+msgid "Plancha Legacy"
+msgstr "Body Press Legacy"
+
+msgid "Burbuja Legacy"
+msgstr "Bubble Legacy"
+
+msgid "Pistola Agua Legacy"
+msgstr "Water Gun Legacy"
+
+msgid "Tajo Umbrío Legacy"
+msgstr "Night Slash Legacy"
+
+msgid "Chispazo Legacy"
+msgstr "Spark Legacy"
+
+msgid "Trueno Legacy"
+msgstr "Thunder Legacy"
+
+msgid "Terratemblor Legacy"
+msgstr "Earthquake Legacy"
+
+msgid "Tijera X Legacy"
+msgstr "X-Scissor Legacy"
+
+msgid "Picotazo Legacy"
+msgstr "Peck Legacy"
+
+msgid "Combate Legacy"
+msgstr "Struggle Legacy"
+
+msgid "Placaje Legacy"
+msgstr "Tackle Legacy"
+
+msgid "Presente Legacy"
+msgstr "Present Legacy"
+
+msgid "Mordisco Legacy"
+msgstr "Bite Legacy"
+
+msgid "Golpe Roca Legacy"
+msgstr "Rock Smash Legacy"
+
+msgid "Roca Afilada Legacy"
+msgstr "Stone Edge Legacy"
+
+msgid "Alud Legacy"
+msgstr "Avalanche Legacy"
+
+msgid "Cuerpo Pesado Legacy"
+msgstr "Heavy Slam Legacy"
+
+msgid "Gigaimpacto Legacy"
+msgstr "Giga Impact Legacy"
+
+msgid "Viento Hielo Legacy"
+msgstr "Icy Wind Legacy"
+
+msgid "Latigazo Legacy"
+msgstr "Vine Whip Legacy"
+
+msgid "Terratemblor Elite TM"
+msgstr "Earthquake Elite TM"
+
+msgid "Hoja Afilada Legacy"
+msgstr "Razor Leaf Legacy"
+
+msgid "Ataque Rápido Event"
+msgstr "Quick Attack Event"
+
+msgid "Psicorrayo Event"
+msgstr "Psyshock Event"
+
+msgid "Disparo Lodo Event"
+msgstr "Mud Shot Event"
+
+msgid "Ácido Legacy"
+msgstr "Acid Legacy"
+
+msgid "Agua Lodosa Legacy"
+msgstr "Muddy Water Legacy"
+
+msgid "Bomba Lodo Elite TM"
+msgstr "Mud Bomb Elite TM"
+
+msgid "Viento Aciago Elite TM"
+msgstr "Ominous Wind Elite TM"
+
+msgid "Poltergeist Elite TM"
+msgstr "Poltergeist Elite TM"
+
+msgid "Terremoto"
+msgstr "Earthquake"
+
+msgid "Ejemplo"
+msgstr "Example"
+
+msgid "Ejemplo: 1800-2025"
+msgstr "Example: 1800-2025"
+
+msgid "Ejemplo: 2250-2531"
+msgstr "Example: 2250-2531"
+
+msgid "Avalancha"
+msgstr "Avalanche"
+
+msgid "Patada Baja"
+msgstr "Low Kick"
+
+msgid "Cornada"
+msgstr "Horn Attack"
+
+msgid "Megacuerno Elite TM"
+msgstr "Megahorn Elite TM"
+
+msgid "Hierba Lazo"
+msgstr "Vine Whip"
+
+msgid "Latigazo Elite TM"
+msgstr "Power Whip Elite TM"
+
+msgid "Enfado"
+msgstr "Outrage"
+
+msgid "Triturar"
+msgstr "Crunch"
+
+msgid "Rayo Burbuja"
+msgstr "Bubble Beam"
+
+msgid "Pulso Dragón"
+msgstr "Dragon Pulse"
+
+msgid "Dragoaliento"
+msgstr "Dragon Breath"
+
+msgid "Rayo Aurora"
+msgstr "Aurora Beam"
+
+msgid "Cascada"
+msgstr "Waterfall"
+
+msgid "Disparo Lodo"
+msgstr "Mud Shot"
+
+msgid "Megacuerno"
+msgstr "Megahorn"
+
+msgid "Puya Nociva Elite TM"
+msgstr "Poison Jab Elite TM"
+
+msgid "Picadura Elite TM"
+msgstr "Bug Bite Elite TM"
+
+msgid "Rapidez"
+msgstr "Quick Attack"
+
+msgid "Joya de Luz"
+msgstr "Dazzling Gleam"
+
+msgid "Placaje Elite TM"
+msgstr "Tackle Elite TM"
+
+msgid "Trueno"
+msgstr "Thunder"
+
+msgid "Psicorrayo"
+msgstr "Psyshock"
+
+msgid "Corte Furia"
+msgstr "Fury Cutter"
+
+msgid "Ala de Acero Elite TM"
+msgstr "Steel Wing Elite TM"
+
+msgid "Tajo Umbrío"
+msgstr "Night Slash"
+
+msgid "Vaho Gélido"
+msgstr "Frost Breath"
+
+msgid "Beso Drenaje"
+msgstr "Draining Kiss"
+
+msgid "Puño Hielo Elite TM"
+msgstr "Ice Punch Elite TM"
+
+msgid "Alud"
+msgstr "Avalanche"
+
+msgid "Psicocarga"
+msgstr "Psychic"
+
+msgid "Agarre"
+msgstr "Bind"
+
+msgid "Fuerza Bruta"
+msgstr "Brutal Swing"
+
+msgid "Cabeza de Hierro"
+msgstr "Iron Head"
+
+msgid "Salpicadura"
+msgstr "Splash"
+
+msgid "Dragoaliento Event"
+msgstr "Dragon Breath Event"
+
+msgid "Cola Dragón Elite TM"
+msgstr "Dragon Tail Elite TM"
+
+msgid "Canto Helado Elite TM"
+msgstr "Ice Shard Elite TM"
+
+msgid "Rayo Hielo Elite TM"
+msgstr "Ice Beam Elite TM"
+
+msgid "Transformación"
+msgstr "Transform"
+
+msgid "Rayo Carga"
+msgstr "Charge Beam"
+
+msgid "Poder Oculto"
+msgstr "Hidden Power"
+
+msgid "Electrocañón"
+msgstr "Electro Cannon"
+
+msgid "Pedrada"
+msgstr "Rock Throw"
+
+msgid "Lanzarrocas Elite TM"
+msgstr "Rock Slide Elite TM"
+
+msgid "Avalancha Elite TM"
+msgstr "Avalanche Elite TM"
+
+msgid "Tumba Rocas"
+msgstr "Rock Tomb"
+
+msgid "Corte Furia Elite TM"
+msgstr "Fury Cutter Elite TM"
+
+msgid "Cuerpo Pesado"
+msgstr "Heavy Slam"
+
+msgid "Garra Metal"
+msgstr "Metal Claw"
+
+msgid "Disparo Lodo Elite TM"
+msgstr "Mud Shot Elite TM"
+
+msgid "Premonición"
+msgstr "Future Sight"
+
+# Menús de administración
+msgid "Añadir Pokémon"
+msgstr "Add Pokemon"
+
+msgid "Añadir Forma"
+msgstr "Add Form"
+
+msgid "Selecciona un Pokémon"
+msgstr "Select a Pokemon"
+
+msgid "Tipo de Movimiento"
+msgstr "Move Type"
+
+msgid "Nombre del Movimiento"
+msgstr "Move Name"
+
+msgid "Nivel de Raid"
+msgstr "Raid Level"
+
+msgid "Nombre de la Forma"
+msgstr "Form Name"
+
+# Botones y acciones
+msgid "Guardar Cambios"
+msgstr "Save Changes"
+
+msgid "¿Estás seguro de que quieres guardar los cambios?"
+msgstr "Are you sure you want to save the changes?"
+
+msgid "¿Estás seguro de que quieres eliminar este elemento?"
+msgstr "Are you sure you want to delete this item?"
+
+msgid "Selecciona un Tipo"
+msgstr "Select a Type"
+
+# Gráficos y estadísticas
+msgid "Distribución por Región"
+msgstr "Distribution by Region"
+
+msgid "Pokémon por Región"
+msgstr "Pokémon by Region"
+
+msgid "Pokémon por Generación"
+msgstr "Pokémon by Generation"
+
+# Filtros
+msgid "Buscar por nombre"
+msgstr "Search by name"
+
+msgid "Todas las regiones"
+msgstr "All regions"

@@ -28,7 +28,8 @@ class PokemonController {
             
             // Renderizar la vista
             return $this->twig->render('home.twig', [
-                'pokemons' => $pokemons
+                'pokemons' => $pokemons,
+                'locale' => $_COOKIE['lang'] ?? 'es'
             ]);
             
         } catch (\Exception $e) {

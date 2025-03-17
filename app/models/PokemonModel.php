@@ -46,31 +46,32 @@ class PokemonModel {
 
     public function getPokemonById($id) {
         try {
-            // Consulta principal para obtener datos básicos e imágenes
+            // Obtener información básica del Pokémon
             $stmt = $this->pdo->prepare("
                 SELECT p.*, 
-                       GROUP_CONCAT(DISTINCT pi.image_path) as image_paths,
-                       GROUP_CONCAT(DISTINCT CONCAT(m.move_type, ':', m.move_name, ':', COALESCE(m.damage, '0'), ':', COALESCE(m.eps, '0'), ':', COALESCE(m.dps, '0'))) as moves,
-                       r.raid_tier, r.boss_cp, r.boss_hp, r.suggested_players, r.caught_cp_range, r.caught_cp_boosted, r.minimum_ivs,
-                       GROUP_CONCAT(DISTINCT CONCAT(pf.pokemon_name, ':', pf.form_name)) as forms
-                FROM pokemons p
-                LEFT JOIN pokemon_images pi ON p.pokemon_id = pi.pokemon_id
-                LEFT JOIN moves m ON p.pokemon_id = m.pokemon_id
-                LEFT JOIN raids r ON p.pokemon_id = r.pokemon_id
-                LEFT JOIN pokemon_forms pf ON p.pokemon_id = pf.pokemon_id
+                       (SELECT pi.image_path 
+                        FROM pokemon_images pi 
+                        WHERE pi.pokemon_id = p.pokemon_id 
+                        LIMIT 1) as image_path
+                FROM pokemons p 
                 WHERE p.pokemon_id = :id
-                GROUP BY p.id, r.id
             ");
             
-            $stmt->bindValue(':id', (string)$id, \PDO::PARAM_STR);
-            $stmt->execute();
-            
+            $stmt->execute(['id' => $id]);
             $pokemon = $stmt->fetch(\PDO::FETCH_ASSOC);
             
             if (!$pokemon) {
                 return null;
             }
-
+            
+            // Obtener imágenes
+            $stmt = $this->pdo->prepare("
+                SELECT * FROM pokemon_images 
+                WHERE pokemon_id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            $images = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
             // Procesar el resultado
             $result = [
                 'id' => $pokemon['id'],
@@ -87,45 +88,70 @@ class PokemonModel {
             ];
 
             // Procesar imágenes
-            if ($pokemon['image_paths']) {
-                foreach (explode(',', $pokemon['image_paths']) as $path) {
-                    $result['images'][] = ['image_path' => trim($path)];
+            if ($images) {
+                foreach ($images as $image) {
+                    $result['images'][] = ['image_path' => $image['image_path']];
                 }
             }
 
             // Procesar movimientos
-            if ($pokemon['moves']) {
-                foreach (explode(',', $pokemon['moves']) as $move) {
-                    list($type, $name, $damage, $eps, $dps) = explode(':', $move);
-                    $result['moves'][$type][] = [
-                        'name' => $name,
-                        'damage' => $damage,
-                        'eps' => $eps,
-                        'dps' => $dps
+            $stmt = $this->pdo->prepare("
+                SELECT m.*, p.name as pokemon_name 
+                FROM moves m 
+                LEFT JOIN pokemons p ON m.pokemon_id = p.pokemon_id
+                WHERE m.pokemon_id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            $moves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            if ($moves) {
+                foreach ($moves as $move) {
+                    $result['moves'][$move['move_type']][] = [
+                        'name' => $move['move_name'],
+                        'damage' => $move['damage'],
+                        'eps' => $move['eps'],
+                        'dps' => $move['dps']
                     ];
                 }
             }
 
             // Procesar información de raid
-            if ($pokemon['raid_tier']) {
+            $stmt = $this->pdo->prepare("
+                SELECT r.*, p.name as pokemon_name 
+                FROM raids r 
+                LEFT JOIN pokemons p ON r.pokemon_id = p.pokemon_id
+                WHERE r.pokemon_id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            $raid = $stmt->fetch(\PDO::FETCH_ASSOC);
+            
+            if ($raid) {
                 $result['raid'] = [
-                    'tier' => $pokemon['raid_tier'],
-                    'boss_cp' => $pokemon['boss_cp'],
-                    'boss_hp' => $pokemon['boss_hp'],
-                    'suggested_players' => $pokemon['suggested_players'],
-                    'caught_cp_range' => $pokemon['caught_cp_range'],
-                    'caught_cp_boosted' => $pokemon['caught_cp_boosted'],
-                    'minimum_ivs' => $pokemon['minimum_ivs']
+                    'tier' => $raid['raid_tier'],
+                    'boss_cp' => $raid['boss_cp'],
+                    'boss_hp' => $raid['boss_hp'],
+                    'suggested_players' => $raid['suggested_players'],
+                    'caught_cp_range' => $raid['caught_cp_range'],
+                    'caught_cp_boosted' => $raid['caught_cp_boosted'],
+                    'minimum_ivs' => $raid['minimum_ivs']
                 ];
             }
 
             // Procesar formas
-            if ($pokemon['forms']) {
-                foreach (explode(',', $pokemon['forms']) as $form) {
-                    list($pokemonName, $formName) = explode(':', $form);
+            $stmt = $this->pdo->prepare("
+                SELECT pf.*, p.name as base_pokemon_name 
+                FROM pokemon_forms pf 
+                LEFT JOIN pokemons p ON pf.pokemon_id = p.pokemon_id
+                WHERE pf.pokemon_id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            $forms = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            if ($forms) {
+                foreach ($forms as $form) {
                     $result['forms'][] = [
-                        'pokemon_name' => $pokemonName,
-                        'form_name' => $formName
+                        'pokemon_name' => $form['pokemon_name'],
+                        'form_name' => $form['form_name']
                     ];
                 }
             }
@@ -145,7 +171,18 @@ class PokemonModel {
                 LEFT JOIN pokemons p ON m.pokemon_id = p.pokemon_id
                 ORDER BY m.pokemon_id, m.move_type
             ");
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $moves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            // Traducir los nombres de los movimientos
+            foreach ($moves as &$move) {
+                // Traducir el nombre del movimiento
+                $move['move_name'] = dgettext('messages', trim($move['move_name']));
+                
+                // Traducir el tipo de movimiento
+                $move['move_type'] = dgettext('messages', trim($move['move_type']));
+            }
+            
+            return $moves;
         } catch (\PDOException $e) {
             error_log("Error en getAllMoves: " . $e->getMessage());
             throw $e;

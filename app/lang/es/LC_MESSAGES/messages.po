@@ -228,4 +228,196 @@ msgid "Contraseña"
 msgstr "Contraseña"
 
 msgid "Credenciales inválidas"
-msgstr "Credenciales inválidas" 
+msgstr "Credenciales inválidas"
+
+msgid "¿Estás seguro de que quieres eliminar este Pokémon?"
+msgstr "¿Estás seguro de que quieres eliminar este Pokémon?"
+
+msgid "¿Estás seguro de que quieres eliminar este movimiento?"
+msgstr "¿Estás seguro de que quieres eliminar este movimiento?"
+
+msgid "Movimiento eliminado correctamente"
+msgstr "Movimiento eliminado correctamente"
+
+msgid "Error al eliminar el movimiento"
+msgstr "Error al eliminar el movimiento"
+
+# Tipos de movimientos
+msgid "fast"
+msgstr "Rápido"
+
+msgid "main"
+msgstr "Principal"
+
+# Encabezados
+msgid "Main Moves"
+msgstr "Movimientos Principales"
+
+# Movimientos básicos
+msgid "Placaje"
+msgstr "Placaje"
+
+msgid "Látigo Cepa"
+msgstr "Látigo Cepa"
+
+msgid "Bomba Germen"
+msgstr "Bomba Germen"
+
+msgid "Bomba Lodo"
+msgstr "Bomba Lodo"
+
+msgid "Latigazo"
+msgstr "Latigazo"
+
+msgid "Frustración Shadow"
+msgstr "Frustración Shadow"
+
+msgid "Retribución Purified"
+msgstr "Retribución Purified"
+
+# Columnas
+msgid "Tipo"
+msgstr "Tipo"
+
+msgid "EPS"
+msgstr "EPS"
+
+msgid "DPS"
+msgstr "DPS"
+
+# También verificar posibles variaciones
+msgid "placaje"
+msgstr "Placaje"
+
+msgid "PLACAJE"
+msgstr "Placaje"
+
+msgid " Placaje "
+msgstr "Placaje"
+
+# Añadir las mismas entradas pero con la traducción al español
+msgid "Impresionar"
+msgstr "Impresionar"
+
+msgid "Bola Sombra"
+msgstr "Bola Sombra"
+
+msgid "Juego Sucio"
+msgstr "Juego Sucio"
+
+msgid "Golpe Bajo"
+msgstr "Golpe Bajo"
+
+msgid "Garra Umbría"
+msgstr "Garra Umbría"
+
+msgid "Sombra Vil"
+msgstr "Sombra Vil"
+
+msgid "Hierba Lazo"
+msgstr "Hierba Lazo"
+
+# Menús de administración
+msgid "Añadir Pokémon"
+msgstr "Añadir Pokémon"
+
+msgid "Editar Pokémon"
+msgstr "Editar Pokémon"
+
+msgid "Añadir Movimiento"
+msgstr "Añadir Movimiento"
+
+msgid "Editar Movimiento"
+msgstr "Editar Movimiento"
+
+msgid "Añadir Raid"
+msgstr "Añadir Raid"
+
+msgid "Editar Raid"
+msgstr "Editar Raid"
+
+msgid "Añadir Forma"
+msgstr "Añadir Forma"
+
+msgid "Editar Forma"
+msgstr "Editar Forma"
+
+# Campos de formularios
+msgid "ID Pokémon"
+msgstr "ID Pokémon"
+
+msgid "Selecciona una región"
+msgstr "Selecciona una región"
+
+msgid "Selecciona un Pokémon"
+msgstr "Selecciona un Pokémon"
+
+msgid "Tipo de Movimiento"
+msgstr "Tipo de Movimiento"
+
+msgid "Nombre del Movimiento"
+msgstr "Nombre del Movimiento"
+
+msgid "Nivel de Raid"
+msgstr "Nivel de Raid"
+
+msgid "CP del Jefe"
+msgstr "CP del Jefe"
+
+msgid "HP del Jefe"
+msgstr "HP del Jefe"
+
+msgid "Jugadores Sugeridos"
+msgstr "Jugadores Sugeridos"
+
+msgid "Rango CP al Capturar"
+msgstr "Rango CP al Capturar"
+
+msgid "CP Potenciado"
+msgstr "CP Potenciado"
+
+msgid "IVs Mínimos"
+msgstr "IVs Mínimos"
+
+msgid "Pokémon Base"
+msgstr "Pokémon Base"
+
+msgid "Nombre de la Forma"
+msgstr "Nombre de la Forma"
+
+# Botones y acciones
+msgid "Guardar Cambios"
+msgstr "Guardar Cambios"
+
+msgid "Cancelar"
+msgstr "Cancelar"
+
+msgid "Volver"
+msgstr "Volver"
+
+# Mensajes de confirmación
+msgid "¿Estás seguro de que quieres guardar los cambios?"
+msgstr "¿Estás seguro de que quieres guardar los cambios?"
+
+msgid "¿Estás seguro de que quieres eliminar este elemento?"
+msgstr "¿Estás seguro de que quieres eliminar este elemento?"
+
+# Gráficos y estadísticas
+msgid "Estadísticas"
+msgstr "Estadísticas"
+
+msgid "Distribución por Región"
+msgstr "Distribución por Región"
+
+msgid "Pokémon por Región"
+msgstr "Pokémon por Región"
+
+msgid "Pokémon por Generación"
+msgstr "Pokémon por Generación"
+
+# Filtros
+msgid "Buscar por nombre"
+msgstr "Buscar por nombre"
+
+msgid "Todas las regiones"
+msgstr "Todas las regiones"

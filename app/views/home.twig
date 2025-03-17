@@ -4,11 +4,49 @@
 
 {% block content %}
 <div class="container">
+    <!-- Sección de estadísticas -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>{{ 'Estadísticas'|trans }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="regionChart" width="400" height="300"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="typeChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h2>{{ 'Listado de Pokémon'|trans }}</h2>
+    
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="searchPokemon" placeholder="{{ 'Buscar por nombre'|trans }}">
+        </div>
+        <div class="col-md-6">
+            <select class="form-select" id="filterRegion">
+                <option value="">{{ 'Todas las regiones'|trans }}</option>
+                <option value="Kanto">{{ 'Kanto'|trans }}</option>
+                <option value="Johto">{{ 'Johto'|trans }}</option>
+                <option value="Hoenn">{{ 'Hoenn'|trans }}</option>
+                <option value="Sinnoh">{{ 'Sinnoh'|trans }}</option>
+                <option value="Teselia">{{ 'Teselia'|trans }}</option>
+                <option value="Kalos">{{ 'Kalos'|trans }}</option>
+                <option value="Alola">{{ 'Alola'|trans }}</option>
+                <option value="Galar">{{ 'Galar'|trans }}</option>
+            </select>
+        </div>
+    </div>
+    
     <div class="row">
         {% for pokemon in pokemons %}
-            <div class="col-md-4 mb-4">
-                <div class="card pokemon-card">
+            <div class="col-md-4 mb-4 pokemon-card">
+                <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h5>
                     </div>
@@ -33,4 +71,112 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Datos para las gráficas
+    const pokemons = {{ pokemons|json_encode|raw }};
+    
+    // Contar Pokémon por región
+    const regionCounts = {};
+    pokemons.forEach(pokemon => {
+        regionCounts[pokemon.region] = (regionCounts[pokemon.region] || 0) + 1;
+    });
+    
+    // Crear gráfica de regiones
+    const regionCtx = document.getElementById('regionChart').getContext('2d');
+    new Chart(regionCtx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(regionCounts),
+            datasets: [{
+                label: '{{ "Pokémon por Región"|trans }}',
+                data: Object.values(regionCounts),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(199, 199, 199, 0.7)',
+                    'rgba(83, 102, 255, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                },
+                title: {
+                    display: true,
+                    text: '{{ "Distribución por Región"|trans }}'
+                }
+            }
+        }
+    });
+    
+    // Crear gráfica de tipos (simulada)
+    const typeCtx = document.getElementById('typeChart').getContext('2d');
+    new Chart(typeCtx, {
+        type: 'bar',
+        data: {
+            labels: [
+                '{{ "Kanto"|trans }}', 
+                '{{ "Johto"|trans }}', 
+                '{{ "Hoenn"|trans }}', 
+                '{{ "Sinnoh"|trans }}', 
+                '{{ "Teselia"|trans }}', 
+                '{{ "Kalos"|trans }}', 
+                '{{ "Alola"|trans }}', 
+                '{{ "Galar"|trans }}'
+            ],
+            datasets: [{
+                label: '{{ "Pokémon por Generación"|trans }}',
+                data: [151, 100, 135, 107, 156, 72, 88, 89],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '{{ "Pokémon por Generación"|trans }}'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Funcionalidad de búsqueda y filtrado
+    document.getElementById('searchPokemon').addEventListener('input', filterPokemons);
+    document.getElementById('filterRegion').addEventListener('change', filterPokemons);
+    
+    function filterPokemons() {
+        const searchTerm = document.getElementById('searchPokemon').value.toLowerCase();
+        const regionFilter = document.getElementById('filterRegion').value;
+        
+        document.querySelectorAll('.pokemon-card').forEach(card => {
+            const name = card.querySelector('.card-title').textContent.toLowerCase();
+            const region = card.querySelector('.card-text').textContent;
+            
+            const matchesSearch = name.includes(searchTerm);
+            const matchesRegion = !regionFilter || region.includes(regionFilter);
+            
+            card.style.display = (matchesSearch && matchesRegion) ? '' : 'none';
+        });
+    }
+</script>
 {% endblock %}
