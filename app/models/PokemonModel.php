@@ -1,16 +1,31 @@
 <?php
 namespace App\Models;
 
+/**
+ * Clase PokemonModel
+ * 
+ * Maneja todas las operaciones relacionadas con los Pokémon en la base de datos,
+ * incluyendo consultas, inserciones, actualizaciones y eliminaciones.
+ */
 class PokemonModel {
-    private $pdo;
+    private $pdo; // Conexión a la base de datos
 
+    /**
+     * Constructor que inicializa la conexión a la base de datos
+     */
     public function __construct() {
         global $pdo;
         $this->pdo = $pdo;
     }
 
+    /**
+     * Obtiene todos los Pokémon de la base de datos
+     * 
+     * @return array Lista de todos los Pokémon con su imagen principal
+     */
     public function getAllPokemons() {
         try {
+            // Consulta que obtiene los Pokémon junto con su primera imagen
             $stmt = $this->pdo->query("
                 SELECT p.*, 
                        (SELECT pi.image_path 
@@ -23,7 +38,7 @@ class PokemonModel {
             
             $pokemons = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             
-            // Procesamos los resultados
+            // Procesamos los resultados para darles formato
             $result = [];
             foreach ($pokemons as $pokemon) {
                 $result[] = [
@@ -39,11 +54,18 @@ class PokemonModel {
             
             return $result;
         } catch (\PDOException $e) {
+            // Registramos el error y lo propagamos
             error_log("Error en getAllPokemons: " . $e->getMessage());
             throw $e;
         }
     }
 
+    /**
+     * Obtiene un Pokémon específico por su ID
+     * 
+     * @param string $id ID del Pokémon a buscar
+     * @return array|null Datos completos del Pokémon o null si no existe
+     */
     public function getPokemonById($id) {
         try {
             // Obtener información básica del Pokémon
@@ -163,6 +185,11 @@ class PokemonModel {
         }
     }
 
+    /**
+     * Obtiene todos los movimientos de la base de datos
+     * 
+     * @return array Lista de todos los movimientos con traducción
+     */
     public function getAllMoves() {
         try {
             $stmt = $this->pdo->query("

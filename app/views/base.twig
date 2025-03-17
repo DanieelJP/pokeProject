@@ -1,15 +1,19 @@
+{# Plantilla base que define la estructura común para todas las páginas del sitio #}
 <!DOCTYPE html>
 <html lang="{{ locale|default('es') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# Título dinámico que puede ser sobrescrito por las plantillas hijas #}
     <title>{% block title %}{{ 'Pokédex'|trans }}{% endblock %}</title>
+    {# Carga de hojas de estilo: Bootstrap, Font Awesome y estilos personalizados #}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header>
+        {# Barra de navegación principal #}
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="/">{{ 'Pokédex'|trans }}</a>
@@ -25,6 +29,7 @@
                             <a class="nav-link" href="/admin"><i class="fas fa-cog"></i> {{ 'Panel Admin'|trans }}</a>
                         </li>
                     </ul>
+                    {# Selector de idioma con banderas #}
                     <div class="navbar-nav">
                         <select class="form-select form-select-sm bg-dark text-light border-secondary" style="width: auto;" onchange="changeLanguage(this.value)">
                             <option value="es" {% if locale == 'es' %}selected{% endif %}>🇪🇸 ES</option>
@@ -36,18 +41,22 @@
         </nav>
     </header>
 
+    {# Contenedor principal para el contenido específico de cada página #}
     <main class="py-4">
         {% block content %}{% endblock %}
     </main>
 
+    {# Pie de página común para todas las páginas #}
     <footer class="bg-dark text-light py-3 mt-5">
         <div class="container text-center">
             <p>&copy; 2024 {{ 'Pokédex'|trans }}</p>
         </div>
     </footer>
 
+    {# Carga de scripts: Bootstrap y funcionalidad de cambio de idioma #}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // Función para cambiar el idioma y guardar la preferencia en una cookie
     function changeLanguage(lang) {
         // Establecer la cookie con una fecha de expiración de 1 año
         let date = new Date();
@@ -60,7 +69,7 @@
             select.value = lang;
         }
         
-        // Recargar la página
+        // Recargar la página para aplicar el nuevo idioma
         window.location.reload();
     }
 
@@ -76,6 +85,7 @@
         }
     });
     </script>
+    {# Bloque para scripts adicionales que pueden ser añadidos por las plantillas hijas #}
     {% block scripts %}{% endblock %}
 </body>
 </html>

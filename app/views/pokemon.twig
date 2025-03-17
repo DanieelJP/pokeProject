@@ -1,5 +1,7 @@
+{# Plantilla para mostrar los detalles de un Pokémon específico #}
 {% extends 'base.twig' %}
 
+{# Título de la página con el nombre del Pokémon #}
 {% block title %}{{ pokemon.name }} - {{ 'Pokédex'|trans }}{% endblock %}
 
 {% block content %}
@@ -8,9 +10,11 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
+                    {# Encabezado con ID y nombre del Pokémon #}
                     <h2>#{{ pokemon.pokemon_id }} - {{ pokemon.name }}</h2>
                 </div>
                 <div class="card-body">
+                    {# Muestra las imágenes del Pokémon si están disponibles #}
                     {% if pokemon.images and pokemon.images|length > 0 %}
                         {% for image in pokemon.images %}
                             <img src="/scripts/{{ image.image_path }}" 
@@ -19,13 +23,16 @@
                                  onerror="this.src='/scripts/pokemon_images/unknown.png'">
                         {% endfor %}
                     {% else %}
+                        {# Imagen por defecto si no hay imágenes disponibles #}
                         <img src="/scripts/pokemon_images/unknown.png" 
                              alt="{{ 'Imagen no disponible'|trans }}"
                              class="img-fluid mb-3">
                     {% endif %}
                     
+                    {# Información de la región del Pokémon #}
                     <p><strong>{{ 'Región'|trans }}:</strong> {{ pokemon.region|trans }}</p>
 
+                    {# Sección de formas alternativas del Pokémon #}
                     {% if pokemon.forms %}
                         <h3>{{ 'Formas'|trans }}</h3>
                         <ul class="list-group mb-3">
@@ -41,12 +48,14 @@
         </div>
 
         <div class="col-md-6">
+            {# Sección de movimientos del Pokémon #}
             {% if pokemon.moves.fast or pokemon.moves.main %}
                 <div class="card mb-4">
                     <div class="card-header">
                         <h3>{{ 'Movimientos'|trans }}</h3>
                     </div>
                     <div class="card-body">
+                        {# Tabla de movimientos rápidos #}
                         {% if pokemon.moves.fast %}
                             <h4>{{ 'Movimientos Rápidos'|trans }}</h4>
                             <div class="table-responsive">
@@ -72,7 +81,8 @@
                                 </table>
                             </div>
                         {% endif %}
-
+                        
+                        {# Tabla de movimientos principales #}
                         {% if pokemon.moves.main %}
                             <h4>{{ 'Main Moves'|trans }}</h4>
                             <div class="table-responsive">
@@ -102,6 +112,7 @@
                 </div>
             {% endif %}
 
+            {# Sección de información de raid si el Pokémon aparece en raids #}
             {% if pokemon.raid %}
                 <div class="card">
                     <div class="card-header">
@@ -123,6 +134,7 @@
         </div>
     </div>
     
+    {# Botón para volver a la página principal #}
     <div class="mt-4">
         <a href="/" class="btn btn-primary">{{ 'Volver'|trans }}</a>
     </div>
